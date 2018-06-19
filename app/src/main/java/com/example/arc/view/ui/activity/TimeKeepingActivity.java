@@ -1,0 +1,194 @@
+package com.example.arc.view.ui.activity;
+
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
+import android.database.DatabaseUtils;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+
+import com.example.arc.R;
+import com.example.arc.core.base.BaseActivity;
+import com.example.arc.core.listener.TimeKeepingUpdateDataListener;
+import com.example.arc.databinding.ActivityTimeKeepingBinding;
+import com.example.arc.model.api.RestData;
+import com.example.arc.model.api.request.TimeKeepReq;
+import com.example.arc.model.data.TimeKeep;
+import com.example.arc.util.ConstantsApp;
+import com.example.arc.util.DateTimeUtils;
+import com.example.arc.view.adapter.CustomPagerAdapter;
+import com.example.arc.view.adapter.TimeKeepingPagerAdapter;
+import com.example.arc.viewmodel.LoginViewModel;
+import com.example.arc.viewmodel.TimeKeepingViewModel;
+
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, ActivityTimeKeepingBinding> {
+
+
+    private static final String KEY_ITEM_ID = "item:article";
+    private FragmentManager fragmentManager;
+    private int currentPosOfDay = 0;
+    List<Date> mDates;
+    private  List<List<Date>> mParts;
+    ActivityTimeKeepingBinding binding;
+
+    @Override
+    protected Class<TimeKeepingViewModel> getViewModel() {
+        return TimeKeepingViewModel.class;
+    }
+
+    @Override
+    protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel, ActivityTimeKeepingBinding binding) {
+        this.binding = binding;
+
+        Calendar calSt = Calendar.getInstance();
+        calSt.set(Calendar.YEAR, 2018);
+        calSt.set(Calendar.MONTH, Calendar.JANUARY);
+        calSt.set(Calendar.DAY_OF_MONTH, 1);
+        Date stDate = calSt.getTime();
+
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.set(Calendar.YEAR, 2018);
+        calEnd.set(Calendar.MONTH, Calendar.UNDECIMBER);
+        calEnd.set(Calendar.DAY_OF_MONTH, 1);
+        Date stEnd = calEnd.getTime();
+
+        mDates =  getDatesBetweenUsingJava7(stDate, stEnd);
+
+
+        for (int i = mDates.size() - 1; i >= 0; i--) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mDates.get(i));
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY){
+                mDates.remove(i);
+            }
+        }
+
+        splidArray();
+
+        String fromDate = DateTimeUtils.getDayMonthYearFromDate(this,mParts.get(currentPosOfDay).get(0) );
+        String toDate = DateTimeUtils.getDayMonthYearFromDate(this,mParts.get(currentPosOfDay).get(mParts.get(currentPosOfDay).size() -1) );
+
+    }
+
+
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_time_keeping;
+    }
+
+    private void splidArray(){
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        Calendar calendar = Calendar.getInstance();
+        Date CurremtDate = calendar.getTime();
+        mParts = chopped(mDates, 5);
+
+        for (int i = 0; i < mParts.size(); i++) {
+            for (int i1 = 0; i1 < mParts.get(i).size(); i1++) {
+                if(dateFormat.format(CurremtDate).equals(dateFormat.format(mParts.get(i).get(i1)))){
+                    currentPosOfDay = i;
+                }
+            }
+        }
+        setupViewPager(mParts);
+    }
+
+    static <T> List<List<T>> chopped(List<T> list, final int L) {
+        List<List<T>> parts = new ArrayList<List<T>>();
+        final int N = list.size();
+        for (int i = 0; i < N; i += L) {
+            parts.add(new ArrayList<T>(
+                    list.subList(i, Math.min(N, i + L)))
+            );
+        }
+        return parts;
+    }
+
+    TimeKeepingUpdateDataListener timeKeepingUpdateDataListener;
+    public void setTimeKeepingUpdateDataListener(TimeKeepingUpdateDataListener pTimeKeepingUpdateDataListener){
+        timeKeepingUpdateDataListener = pTimeKeepingUpdateDataListener;
+    }
+
+    private void setupViewPager(List<List<Date>> pDates){
+
+        TimeKeepingPagerAdapter mDemoCollectionPagerAdapter = new TimeKeepingPagerAdapter(getSupportFragmentManager(),pDates);
+
+//        CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(this);
+        ViewPager mViewPager = findViewById(R.id.pager);
+        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        mViewPager.postDelayed(() -> mViewPager.setCurrentItem(currentPosOfDay,false), 50);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                timeKeepingUpdateDataListener.pushData(DateTimeUtils.getDayMonthYearFromDate(getApplicationContext(),pDates.get(position).get(0)),DateTimeUtils.getDayMonthYearFromDate(getApplicationContext(),pDates.get(position).get(pDates.get(position).size() - 1)));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    public static void start(Context context, int id) {
+        Intent starter = new Intent(context, TimeKeepingActivity.class);
+        starter.putExtra(KEY_ITEM_ID, id);
+        context.startActivity(starter);
+    }
+
+
+    public static List<Date> getDatesBetweenUsingJava7(
+            Date startDate, Date endDate) {
+        List<Date> datesInRange = new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startDate);
+
+        Calendar endCalendar = new GregorianCalendar();
+        endCalendar.setTime(endDate);
+
+        while (calendar.before(endCalendar)) {
+            Date result = calendar.getTime();
+            datesInRange.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return datesInRange;
+    }
+
+    public void getAllDayOfMonth(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(cal.getTime());
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        int myMonth=cal.get(Calendar.MONTH);
+        Log.e("hailpt"," getAllDayOfMonth myMonth "+myMonth);
+        while (myMonth == cal.get(Calendar.MONTH)) {
+            System.out.print(cal.getTime());
+            Log.e("hailpt"," getAllDayOfMonth "+cal.getTime());
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+    }
+
+}

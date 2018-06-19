@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F5FB"
+    tools:context="com.example.arc.view.ui.fragment.HomeFragment">
+
+    <RelativeLayout
+        android:background="#F4F5FB"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:src="@color/color_blue_qb"
+            android:layout_centerVertical="true"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo_small_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:src="@drawable/banner_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/home_fragment_first_item" />
+            <include layout="@layout/home_fragment_second_item" />
+            <include layout="@layout/home_fragment_third_item" />
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>

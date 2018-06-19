@@ -1,0 +1,306 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_height="wrap_content"
+    >
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imvLunchIc"
+            android:src="@drawable/lunch_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+       <TextView
+           android:text="Hôm nay ăn gì?"
+           android:layout_centerVertical="true"
+           android:layout_toRightOf="@+id/imvLunchIc"
+           style="@style/BlackColor" />
+
+       <RelativeLayout
+           android:layout_centerVertical="true"
+           android:layout_alignParentRight="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+           <ImageView
+               android:id="@+id/imvLunch"
+               android:layout_marginRight="5dp"
+               android:layout_centerVertical="true"
+               android:layout_toLeftOf="@+id/tvLunchRegister"
+               android:src="@drawable/lunch_eat_ic"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+           <TextView
+               android:textColor="#3B71BC"
+               android:textSize="16sp"
+               android:layout_centerVertical="true"
+               android:id="@+id/tvLunchRegister"
+               android:layout_alignParentRight="true"
+               android:text="Đã đăng ký"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+           <LinearLayout
+               android:visibility="gone"
+               android:id="@+id/lnRegisLunch"
+               android:gravity="center"
+               android:background="@drawable/radius_red_bg_red_srtoke_layout"
+               android:orientation="vertical"
+               android:layout_alignParentRight="true"
+               android:layout_width="125dp"
+               android:layout_height="35dp">
+
+               <TextView
+                   android:textColor="@color/white"
+                   android:textSize="13sp"
+                   android:text="HỦY ĐĂNG KÝ"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+               <TextView
+                   android:textSize="11sp"
+                   android:textColor="@color/white"
+                   android:text="Trước 9:00"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+
+           </LinearLayout>
+
+       </RelativeLayout>
+       
+
+
+
+   </RelativeLayout>
+
+    <ScrollView
+        android:layout_marginTop="10dp"
+        android:fadeScrollbars="false"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <LinearLayout
+            android:paddingBottom="5dp"
+            android:orientation="vertical"
+            android:background="@drawable/radius_weak_blue_bg_srtoke_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/blue_dot_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="#3B71BC"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Món chính"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvMainDish1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="1. Mực nhồi thịt"
+                style="@style/BlackColor" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvMainDish2"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="2. Mực nhồi thịt"
+                style="@style/BlackColor" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvMainDish3"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="3. Mực nhồi thịt"
+                style="@style/BlackColor" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvMainDish4"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="4. Mực nhồi thịt"
+                style="@style/BlackColor" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvMainDish5"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="5. Mực nhồi thịt"
+                style="@style/BlackColor" />
+
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/blue_dot_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="#3B71BC"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Món phụ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvSideDish1"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="1. Mực nhồi thịt"
+                style="@style/BlackColor" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvSideDish2"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="2. Mực nhồi thịt"
+                style="@style/BlackColor" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvSideDish3"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="3. Mực nhồi thịt"
+                style="@style/BlackColor" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvSideDish4"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="4. Mực nhồi thịt"
+                style="@style/BlackColor" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tvSideDish5"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="15dp"
+                android:text="5. Mực nhồi thịt"
+                style="@style/BlackColor" />
+        </LinearLayout>
+
+    </ScrollView>
+    
+    <LinearLayout
+        android:gravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <LinearLayout
+            android:id="@+id/lnLike"
+            android:gravity="center_vertical"
+            android:background="@drawable/radius_gray_bg_strong_gray_srtoke_layout"
+            android:layout_width="100dp"
+            android:layout_height="30dp">
+            <ImageView
+                android:id="@+id/imvLikeIc"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/smile_gray_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvLike"
+                android:paddingRight="5dp"
+                android:text="0"
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lnUnlike"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/radius_gray_bg_strong_gray_srtoke_layout"
+            android:layout_width="100dp"
+            android:layout_height="30dp">
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/sad_gray_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvDislike"
+                android:paddingRight="5dp"
+                android:text="0"
+                android:gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        
+        
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:textColorHint="#A8A8AE"
+            android:textColor="#A8A8AE"
+            android:paddingRight="20dp"
+            android:paddingLeft="5dp"
+            android:hint="Cảm nhận về bữa trưa của bạn"
+            android:background="@drawable/radius_gray_bg_strong_gray_srtoke_layout"
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+
+        <ImageView
+           android:padding="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/send_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

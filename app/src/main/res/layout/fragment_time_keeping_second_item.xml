@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="TimeKeep"
+            type="com.example.arc.model.data.TimeKeep"/>
+    </data>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:scaleType="fitXY"
+            android:src="@drawable/check_time_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_marginTop="10dp"
+            android:text="Hôm nay, 17/6/2018"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:id="@+id/lnTime"
+            android:padding="15dp"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/tvDate"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/radius_white_bg_white_srtoke_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvToday"
+                android:text="Hôm nay, 17/6/2018"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+
+                    android:text="Giờ check-in"
+                    style="@style/BlackColor" />
+
+                <TextView
+                    android:id="@+id/tvCheckIn"
+
+                    android:layout_alignParentRight="true"
+                    android:text="--/--"
+                    style="@style/BlackColor" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Giờ check-out"
+                    style="@style/BlackColor" />
+
+                <TextView
+                    android:id="@+id/tvCheckOut"
+                    android:layout_alignParentRight="true"
+                    android:text="--/--"
+                    style="@style/BlackColor" />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/lnTime"
+            android:text="Chúc bạn một ngày tràn đầy năng lượng và làm việc hiệu quả!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Thống Kê"
+        style="@style/BlackColor" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:weightSum="13"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="T1"
+        style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T2"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T3"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T4"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T5"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T6"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T7"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T8"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T9"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T10"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T11"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="T12"
+            style="@style/WeightWidthBlack" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="Năm"
+            style="@style/WeightWidthBlack" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:weightSum="3"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/on_time_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="Đúng Giờ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/over_time_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="Đi muộn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/miss_time_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="Vắng mặt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvOnTime"
+            android:gravity="center_horizontal"
+            android:text="15 ngày"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvLateTime"
+            android:gravity="center_horizontal"
+            android:text="15 ngày"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvAbsent"
+            android:gravity="center_horizontal"
+            android:text="15 ngày"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+
+</LinearLayout>
+</layout>

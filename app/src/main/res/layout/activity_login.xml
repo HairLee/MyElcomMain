@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout
+    android:layout_marginTop="80dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.arc.view.ui.LoginActivity">
+
+    <ImageView
+        android:src="@drawable/logo_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+    <EditText
+        android:textColor="#54586B"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
+        android:id="@+id/edtUsername"
+        android:text="hailt@elcom.com.vn"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <EditText
+        android:inputType="textPassword"
+        android:textColor="#54586B"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
+        android:id="@+id/edtPw"
+        android:text="12345678"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <TextView
+        android:textColor="#3B71BC"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:gravity="end"
+        android:text="Quên Mật Khẩu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:textColor="@color/white"
+        android:background="@color/color_blue_qb"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:id="@+id/btnLogin"
+        android:text="Đăng Nhập"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+</LinearLayout>
+</layout>

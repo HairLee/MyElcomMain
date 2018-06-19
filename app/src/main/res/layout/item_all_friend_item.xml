@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.quickblox.users.model.QBUser" />
+    </data>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/str_news"
+                android:minHeight="90dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent"
+             />
+
+            <TextView
+                android:layout_margin="5dp"
+                android:text="@{user.fullName}"
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/allerta_stencil"
+                android:singleLine="true"
+
+                android:textSize="12sp"
+                tools:text="@tools:sample/full_names" />
+
+            <TextView
+                android:layout_margin="5dp"
+                android:text="@{user.email}"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/allerta_stencil"
+                android:singleLine="true"
+                android:textSize="12sp"
+                tools:text="ahihi" />
+
+            <TextView
+                android:layout_margin="5dp"
+                android:text="@{user.email}"
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/allerta_stencil"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="@tools:sample/cities" />
+
+            <View
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+        </LinearLayout>
+
+
+</layout>
