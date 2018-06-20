@@ -47,12 +47,12 @@ android {
     productFlavors {
         internal {
             applicationId 'com.example.arc.internal'
-            resValue "string", "app_name", '"Arc Internal"'
+            resValue "string", "app_name", '"My Elcom"'
         }
 
         production {
             applicationId 'com.example.arc'
-            resValue "string", "app_name", '"Arc"'
+            resValue "string", "app_name", '"My Elcom"'
         }
     }
     dataBinding {

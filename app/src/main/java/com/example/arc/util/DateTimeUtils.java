@@ -31,6 +31,51 @@ public class DateTimeUtils {
         return  dateFormat.format(Calendar.getInstance().getTime());
     }
 
+    public static  List<List<Date>> getBigListCurrentDate(Context context){
+        List<List<Date>> mParts;
+        List<Date> mDates;
+        int currentPosOfDay = 0;
+
+        Calendar calSt = Calendar.getInstance();
+        calSt.set(Calendar.YEAR, 2018);
+        calSt.set(Calendar.MONTH, Calendar.JANUARY);
+        calSt.set(Calendar.DAY_OF_MONTH, 1);
+        Date stDate = calSt.getTime();
+
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.set(Calendar.YEAR, 2018);
+        calEnd.set(Calendar.MONTH, Calendar.UNDECIMBER);
+        calEnd.set(Calendar.DAY_OF_MONTH, 1);
+        Date stEnd = calEnd.getTime();
+
+        mDates =  getDatesBetweenUsingJava7(stDate, stEnd);
+
+
+        for (int i = mDates.size() - 1; i >= 0; i--) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mDates.get(i));
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY){
+                mDates.remove(i);
+            }
+        }
+
+        for (int i = mDates.size() - 1; i >= 0; i--) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(mDates.get(i));
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY){
+                mDates.remove(i);
+            }
+        }
+
+
+        mParts = chopped(mDates, 5);
+
+
+        return mParts;
+    }
+
 
 
     public static  List<Date> getListCurrentDate(Context context){
@@ -124,6 +169,18 @@ public class DateTimeUtils {
             calendar.add(Calendar.DATE, 1);
         }
         return datesInRange;
+    }
+
+    public static boolean isCurrentTimeIsBefore9Am(){
+        DateFormat dateFormat = new SimpleDateFormat("H");
+        int curentTime = Integer.parseInt(dateFormat.format(Calendar.getInstance().getTime()));
+        return curentTime < 9;
+    }
+
+    public static int currentDay(){
+        DateFormat dateFormat = new SimpleDateFormat("d");
+        int curentTime = Integer.parseInt(dateFormat.format(Calendar.getInstance().getTime()));
+        return curentTime;
     }
 
 }

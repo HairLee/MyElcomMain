@@ -52,11 +52,14 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         // Required empty public constructor
     }
 
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all_contact, container, false);
+
+        if(view == null){
+            view = inflater.inflate(R.layout.fragment_all_contact, container, false);
+        }
         // Inflate the layout for this fragment
 //        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 //        RecyclerView recyclerViewBottom = view.findViewById(R.id.recyclerViewBottom);
@@ -131,7 +134,6 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 
     @Override
     public void onViewProfile(View view,int userId) {
-        Log.e("hailpt"," onViewProfile "+userId);
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), view, getString(R.string.trans_shared_image));
         ProfileActivity.start(getContext(),userId,options);

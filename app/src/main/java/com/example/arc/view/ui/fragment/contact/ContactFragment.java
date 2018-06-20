@@ -28,23 +28,26 @@ public class ContactFragment extends Fragment {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private  AllContactFragment allContactFragment;
     public ContactFragment() {
         // Required empty public constructor
     }
 
-
+    private View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contact, container, false);
-        // Inflate the layout for this fragment
+        if (view == null){
+            view = inflater.inflate(R.layout.fragment_contact, container, false);
+            allContactFragment = new AllContactFragment();
+        }
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -55,7 +58,7 @@ public class ContactFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new AllContactFragment(), "Tất Cả");
+        adapter.addFragment(allContactFragment, "Tất Cả");
         adapter.addFragment(new OnlineContactFragment(), "Đang Hoạt Động");
         adapter.addFragment(new FavouriteContactFragment(), "Đã Đánh Dấu");
         viewPager.setAdapter(adapter);

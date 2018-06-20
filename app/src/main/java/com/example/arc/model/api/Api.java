@@ -52,6 +52,9 @@ public interface Api {
     @GET("mark-user")
     Observable<RestData<List<User>>> getFavouriteContact(@Header("Authorization") String s);
 
+    @POST("lunch-booking")
+    Observable<RestData<JsonElement>> registerLunch(@Body LunchCancelReq lunchCancelReq,@Header("Authorization") String s);
+
     @POST("lunch-cancel")
     Observable<RestData<JsonElement>> cancelLunch(@Body LunchCancelReq lunchCancelReq,@Header("Authorization") String s);
 

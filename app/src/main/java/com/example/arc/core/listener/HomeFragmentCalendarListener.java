@@ -7,7 +7,9 @@ public interface HomeFragmentCalendarListener {
     void onBack();
     void onCancelLunchRegister();
 
-    void onChooseDate(int position);
+    void onDoLunchRegister();
+
+    void onChooseDate(int position, int dayChoosed);
 
     void onLikeOrDislike(boolean isLike);
 

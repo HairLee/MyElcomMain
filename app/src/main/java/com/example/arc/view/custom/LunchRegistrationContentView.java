@@ -3,6 +3,7 @@ package com.example.arc.view.custom;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.arc.R;
 import com.example.arc.core.listener.HomeFragmentCalendarListener;
 import com.example.arc.model.api.response.Lunch;
+import com.example.arc.util.DateTimeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,11 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private TextView tvMainDish1,tvMainDish2,tvMainDish3,tvMainDish4,tvMainDish5,tvLunchRegister;
     private TextView tvSideDish1,tvSideDish2,tvSideDish3,tvSideDish4,tvSideDish5;
-    private TextView tvLike, tvDislike;
+    private TextView tvLike, tvDislike,txtRegisterLunch;
     private List<TextView> mMainDishLish = new ArrayList<>();
     private List<TextView> mSideDishLish = new ArrayList<>();
     private ImageView imvLunch,imvLikeIc;
+    private boolean isLunchRegister = false;
     private enum TimerStatus {
         STARTED,
         STOPPED
@@ -86,6 +89,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
         tvLike = view.findViewById(R.id.tvLike);
         tvDislike = view.findViewById(R.id.tvDislike);
+        txtRegisterLunch = view.findViewById(R.id.txtRegisterLunch);
 
         mMainDishLish.add(tvMainDish1);
         mMainDishLish.add(tvMainDish2);
@@ -107,7 +111,12 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                 mHomeFragmentCalendarListener.onBack();
                 break;
             case R.id.lnRegisLunch:
-                mHomeFragmentCalendarListener.onCancelLunchRegister();
+                if(isLunchRegister){
+                    mHomeFragmentCalendarListener.onCancelLunchRegister();
+                } else {
+                    mHomeFragmentCalendarListener.onDoLunchRegister();
+                }
+
                 break;
             case R.id.lnLike:
                 mHomeFragmentCalendarListener.onLikeOrDislike(true);
@@ -119,8 +128,11 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
     }
 
-    public void updateMainContent(Lunch lunch){
+    public void updateMainContent(Lunch lunch, int dayChoosed){
         resetView();
+
+        Log.e("hailpt"," DayChoosed "+dayChoosed);
+
 
         /* MainDish Start */
         int totalMainDish = 5 - lunch.getMainDishes().size(); // 3
@@ -162,27 +174,56 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
         tvLike.setText(lunch.getLike().toString());
         tvDislike.setText(lunch.getDislike().toString());
+        int statusLunch = lunch.getStatusLunch();
 
-        switch (lunch.getStatusLunch()){
+        Log.e("hailpt"," statusLunch ~~~> "+statusLunch);
 
-            case 0:
-                setTextForLunchRegister("Không ăn");
-                imvLunch.setBackgroundResource(R.drawable.lunch_not_eat);
-                break;
-            case 1:
-                setTextForLunchRegister("Đã ăn");
-                imvLunch.setBackgroundResource(R.drawable.lunch_eat_ic);
-                break;
-            case 2:
-                setTextForLunchRegister("Đăng ký không ăn");
-                break;
-            case 3:
-                setTextForLunchRegister("Ngày mai");
-                break;
-            case 4:
-                setTextForLunchRegister("Hủy ăn trưa");
-                break;
+        // Dont wanna have a lunch - dont use card to go to the company - have a day off
+//        if(statusLunch == 0){
+//            setTextForLunchRegister("Không ăn");
+//            imvLunch.setBackgroundResource(R.drawable.lunch_not_eat);
+//            return;
+//        }
+
+        // Previous Day, the title is always ..
+        if(DateTimeUtils.isCurrentTimeIsBefore9Am() && DateTimeUtils.currentDay() == dayChoosed){
+            if(statusLunch == 4){
+                // have not order
+                isLunchRegister = false;
+                lnRegisLunch.setVisibility(VISIBLE);
+                lnRegisLunch.setBackgroundResource(R.drawable.radius_blue_bg_blue_srtoke_layout);
+                txtRegisterLunch.setText("ĐĂNG KÝ");
+            } else {
+                isLunchRegister = true;
+                lnRegisLunch.setVisibility(VISIBLE);
+                lnRegisLunch.setBackgroundResource(R.drawable.radius_red_bg_red_srtoke_layout);
+                txtRegisterLunch.setText("HỦY ĐĂNG KÝ");
+            }
+        } else {
+            lnRegisLunch.setVisibility(INVISIBLE);
+            switch (statusLunch){
+
+                case 0:
+                    setTextForLunchRegister("Không ăn");
+                    imvLunch.setBackgroundResource(R.drawable.lunch_not_eat);
+                    break;
+                case 1:
+                    setTextForLunchRegister("Đã ăn");
+                    imvLunch.setBackgroundResource(R.drawable.lunch_eat_ic);
+                    break;
+                case 2:
+                    setTextForLunchRegister("Đăng ký không ăn");
+                    break;
+                case 3:
+                    setTextForLunchRegister("Ngày mai");
+                    break;
+                case 4:
+                    setTextForLunchRegister("Hủy ăn trưa");
+                    break;
+            }
+
         }
+
     }
 
     private void setTextForLunchRegister(String content){

@@ -38,6 +38,7 @@ public class LunchRegistrationRepository implements BaseViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
     private final Api api;
     private final MutableLiveData<RestData<JsonElement>> articleMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> registerLunchMutableLiveData;
     private final MutableLiveData<RestData<List<Lunch>>> lunchMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
@@ -52,6 +53,7 @@ public class LunchRegistrationRepository implements BaseViewModel {
         sourceList = sourceDao.getAllList();
         articleMutableLiveData = new MutableLiveData<>();
         lunchMutableLiveData = new MutableLiveData<>();
+        registerLunchMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<JsonElement>> cancelLunch(LunchCancelReq lunchCancelReq) {
@@ -79,6 +81,33 @@ public class LunchRegistrationRepository implements BaseViewModel {
                     }
                 });
         return articleMutableLiveData;
+    }
+
+    public MutableLiveData<RestData<JsonElement>> registerLunch(LunchCancelReq lunchCancelReq) {
+        api.registerLunch(lunchCancelReq, ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        registerLunchMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return registerLunchMutableLiveData;
     }
 
     public MutableLiveData<RestData<List<Lunch>>> getLunchMenu(String fromTime, String toTime) {

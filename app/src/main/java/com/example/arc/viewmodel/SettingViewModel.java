@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 
 import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.response.Contact;
@@ -30,7 +31,7 @@ public class SettingViewModel extends ViewModel {
     SettingViewModel(SettingRepository repository) {
         this.repository = repository;
         logoutResult = Transformations.switchMap(requestLogout,
-                param -> repository.logout());
+                param -> repository.logout(requestLogout.getValue()));
     }
 
     public LiveData<RestData<JsonElement>> logout() {

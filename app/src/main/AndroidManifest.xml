@@ -26,7 +26,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme.Base">
-        <activity android:name=".view.ui.LoginActivity">
+        <activity android:name=".view.ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -100,7 +100,8 @@
         <activity android:name=".view.ui.activity.ProfileActivity" />
         <activity android:name=".view.ui.activity.SettingActivity" />
         <activity android:name=".view.ui.activity.SettingChangePwActivity" />
-        <activity android:name=".view.ui.activity.NotificationActivity"></activity>
+        <activity android:name=".view.ui.activity.NotificationActivity" />
+        <activity android:name=".view.ui.LoginActivity"/>
     </application>
 
 </manifest>

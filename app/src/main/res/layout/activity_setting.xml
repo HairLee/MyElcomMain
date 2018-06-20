@@ -16,6 +16,7 @@
         android:layout_height="45dp">
 
         <ImageView
+            android:id="@+id/imvBack"
             android:padding="10dp"
             android:layout_centerVertical="true"
             android:src="@drawable/back_ic"

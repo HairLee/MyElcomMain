@@ -112,19 +112,19 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                 mHomeFragmentCalendarListener.onCancelLunchRegister();
                 break;
             case R.id.tv2:
-                mHomeFragmentCalendarListener.onChooseDate(0);
+                mHomeFragmentCalendarListener.onChooseDate(0,Integer.parseInt(tv2.getText().toString()));
                 break;
             case R.id.tv3:
-                mHomeFragmentCalendarListener.onChooseDate(1);
+                mHomeFragmentCalendarListener.onChooseDate(1,Integer.parseInt(tv3.getText().toString()));
                 break;
             case R.id.tv4:
-                mHomeFragmentCalendarListener.onChooseDate(2);
+                mHomeFragmentCalendarListener.onChooseDate(2,Integer.parseInt(tv4.getText().toString()));
                 break;
             case R.id.tv5:
-                mHomeFragmentCalendarListener.onChooseDate(3);
+                mHomeFragmentCalendarListener.onChooseDate(3,Integer.parseInt(tv5.getText().toString()));
                 break;
             case R.id.tv6:
-                mHomeFragmentCalendarListener.onChooseDate(4);
+                mHomeFragmentCalendarListener.onChooseDate(4,Integer.parseInt(tv6.getText().toString()));
                 break;
         }
 

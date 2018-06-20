@@ -5,6 +5,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.example.arc.R;
 import com.example.arc.core.listener.HomeFragmentCalendarListener;
 import com.example.arc.model.data.TimeKeep;
 import com.example.arc.util.DateTimeUtils;
+import com.google.gson.Gson;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -31,6 +33,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     private TextView tvCheckIn,tvCheckOut,tvOnTime,tvLateTime,tvAbsent,tvToday;
     private ImageView imvBack;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
+    private List<TimeKeep> timeKeeps;
     private    ViewDataBinding binding;
 
     private enum TimerStatus {
@@ -81,7 +84,35 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
 
     }
 
+    public void setDataForView(List<TimeKeep> timeKeeps){
+        this.timeKeeps = timeKeeps;
+        updateLayout(timeKeeps.get(0));
+    }
+
+    public void updatelayout(List<TimeKeep> timeKeeps, int currentLocation){
+        this.timeKeeps = timeKeeps;
+        tvCheckIn.setText(timeKeeps.get(currentLocation).getCheckIn());
+        tvCheckOut.setText(timeKeeps.get(currentLocation).getCheckOut());
+        tvOnTime.setText(timeKeeps.get(currentLocation).getStatistic().getOnTime().toString());
+        tvLateTime.setText(timeKeeps.get(currentLocation).getStatistic().getLate().toString());
+        tvAbsent.setText(timeKeeps.get(currentLocation).getStatistic().getAbsent().toString());
+        tvToday.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+    }
+
+    public void updateLayout(int pos){
+      ;
+        updateLayout(timeKeeps.get(pos));
+
+
+
+
+    }
+
     public void updateLayout(TimeKeep timeKeep){
+        Gson gson = new Gson();
+        String json = gson.toJson(timeKeep);
+        Log.e("hailpt"," HomeFragmentCheckTimeView updateLayout json "+json);
+
         tvCheckIn.setText(timeKeep.getCheckIn());
         tvCheckOut.setText(timeKeep.getCheckOut());
         tvOnTime.setText(timeKeep.getStatistic().getOnTime().toString());

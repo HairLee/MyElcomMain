@@ -1,7 +1,9 @@
 package com.example.arc.view.ui;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,7 +61,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         viewModel.getLoginResult().observe(this, data -> {
             if(data != null){
                 hideProgressDialog();
-                PreferUtils.setToken(this,ConstantsApp.BEAR + data.data.getApiToken());
+                PreferUtils.setToken(this,data.data.getApiToken());
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
 //                tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
                 startOpponentsActivity(); // For test Fast
@@ -120,5 +122,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 startOpponentsActivity();
             }
         }
+    }
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, LoginActivity.class);
+        context.startActivity(starter);
     }
 }

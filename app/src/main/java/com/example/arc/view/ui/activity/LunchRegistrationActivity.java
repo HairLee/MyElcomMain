@@ -25,6 +25,7 @@ import com.example.arc.view.custom.LunchRegistrationContentView;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
 import com.google.gson.JsonElement;
 
+import java.util.Date;
 import java.util.List;
 
 public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationViewModel, ActivityLunchRegistrationBinding> implements HomeFragmentCalendarListener {
@@ -46,10 +47,21 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
         init(viewModel);
 
         getListCurrentDate();
+
+
+        Log.e("hailpt"," currentDay ==== "+ DateTimeUtils.currentDay());
+
+
     }
 
     private void init(LunchRegistrationViewModel viewModel){
         lunchRegistrationViewModel = viewModel;
+        viewModel.registerLunch().observe(this, jsonElementRestData -> {
+            Toaster.longToast(jsonElementRestData.message);
+            hideProgressDialog();
+        });
+
+
         viewModel.cancelLunch().observe(this, jsonElementRestData -> {
             Toaster.longToast(jsonElementRestData.message);
             hideProgressDialog();
@@ -68,7 +80,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
             }
 
 
-            binding.lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay));
+            binding.lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),20);
         });
 
         viewModel.getLikeLunch().observe(this, jsonElementRestData -> {
@@ -102,9 +114,17 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
     }
 
     @Override
-    public void onChooseDate(int position) {
+    public void onDoLunchRegister() {
+        showProgressDialog();
+        LunchCancelReq lunchCancelReq = new LunchCancelReq();
+        lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(this));
+        lunchRegistrationViewModel.setRegisterLunchRequest(lunchCancelReq);
+    }
+
+    @Override
+    public void onChooseDate(int position, int dayChoosed) {
         if (lunchList != null){
-            binding.lunchRegistrationContentView.updateMainContent(lunchList.get(position));
+            binding.lunchRegistrationContentView.updateMainContent(lunchList.get(position),dayChoosed);
             Log.e("hailpt"," lunchRegistrationContentView "+lunchList.get(position).getDate());
         }
         Toaster.longToast(position + "Dish");

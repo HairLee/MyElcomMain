@@ -26,10 +26,12 @@ import javax.inject.Inject;
 
 public class LunchRegistrationViewModel extends ViewModel {
     private final MutableLiveData<LunchCancelReq> request = new MutableLiveData<>();
+    private final MutableLiveData<LunchCancelReq> requestRegisterLunch = new MutableLiveData<>();
     private final MutableLiveData<TimeKeepReq> timeReq = new MutableLiveData<>();
     private final MutableLiveData<LunchLikeReq> likeLunchRequest = new MutableLiveData<>();
 
     private final LiveData<RestData<JsonElement>> timeKeepListResult;
+    private final LiveData<RestData<JsonElement>> registerLunchResult;
     private final LiveData<RestData<JsonElement>> likeLunchResult;
     private final LiveData<RestData<List<Lunch>>> lunchListResult;
     private final LunchRegistrationRepository repository;
@@ -37,6 +39,10 @@ public class LunchRegistrationViewModel extends ViewModel {
     @Inject
     LunchRegistrationViewModel(LunchRegistrationRepository repository) {
         this.repository = repository;
+
+        registerLunchResult = Transformations.switchMap(requestRegisterLunch,
+                param -> repository.registerLunch(requestRegisterLunch.getValue()));
+
         timeKeepListResult = Transformations.switchMap(request,
                 param -> repository.cancelLunch(request.getValue()));
 
@@ -52,6 +58,10 @@ public class LunchRegistrationViewModel extends ViewModel {
         return timeKeepListResult;
     }
 
+    public LiveData<RestData<JsonElement>> registerLunch() {
+        return registerLunchResult;
+    }
+
     public LiveData<RestData<List<Lunch>>> getLunchMenu() {
         return lunchListResult;
     }
@@ -62,6 +72,10 @@ public class LunchRegistrationViewModel extends ViewModel {
 
     public void setRequest(LunchCancelReq lunchCancelReq){
         request.setValue(lunchCancelReq);
+    }
+
+    public void setRegisterLunchRequest(LunchCancelReq lunchCancelReq){
+        requestRegisterLunch.setValue(lunchCancelReq);
     }
 
     public void setLikeLunchRequest(LunchLikeReq lunchLikeReq){

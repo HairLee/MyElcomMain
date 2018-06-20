@@ -57,51 +57,11 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
     @Override
     protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel, ActivityTimeKeepingBinding binding) {
         this.binding = binding;
+        mParts = DateTimeUtils.getBigListCurrentDate(this);
 
-        Calendar calSt = Calendar.getInstance();
-        calSt.set(Calendar.YEAR, 2018);
-        calSt.set(Calendar.MONTH, Calendar.JANUARY);
-        calSt.set(Calendar.DAY_OF_MONTH, 1);
-        Date stDate = calSt.getTime();
-
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.set(Calendar.YEAR, 2018);
-        calEnd.set(Calendar.MONTH, Calendar.UNDECIMBER);
-        calEnd.set(Calendar.DAY_OF_MONTH, 1);
-        Date stEnd = calEnd.getTime();
-
-        mDates =  getDatesBetweenUsingJava7(stDate, stEnd);
-
-
-        for (int i = mDates.size() - 1; i >= 0; i--) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(mDates.get(i));
-            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY){
-                mDates.remove(i);
-            }
-        }
-
-        splidArray();
-
-        String fromDate = DateTimeUtils.getDayMonthYearFromDate(this,mParts.get(currentPosOfDay).get(0) );
-        String toDate = DateTimeUtils.getDayMonthYearFromDate(this,mParts.get(currentPosOfDay).get(mParts.get(currentPosOfDay).size() -1) );
-
-    }
-
-
-
-    @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_time_keeping;
-    }
-
-    private void splidArray(){
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
         Calendar calendar = Calendar.getInstance();
         Date CurremtDate = calendar.getTime();
-        mParts = chopped(mDates, 5);
-
+        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
         for (int i = 0; i < mParts.size(); i++) {
             for (int i1 = 0; i1 < mParts.get(i).size(); i1++) {
                 if(dateFormat.format(CurremtDate).equals(dateFormat.format(mParts.get(i).get(i1)))){
@@ -109,7 +69,23 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
                 }
             }
         }
+
         setupViewPager(mParts);
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_time_keeping;
+    }
+
+    private void splidArray(){
+
+        Calendar calendar = Calendar.getInstance();
+        Date CurremtDate = calendar.getTime();
+        mParts = chopped(mDates, 5);
+
+
+
     }
 
     static <T> List<List<T>> chopped(List<T> list, final int L) {

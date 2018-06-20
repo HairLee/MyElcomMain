@@ -15,13 +15,14 @@ import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 public class ArtistViewHolder extends ChildViewHolder {
 
   private TextView childTextView;
-  private ImageView imageView3;
+  private ImageView imageView3,imvAva;
   private AllContactFragmentListener allContactFragmentListener;
   private User user;
   public ArtistViewHolder(View itemView) {
     super(itemView);
     childTextView = (TextView) itemView.findViewById(R.id.list_item_artist_name);
     imageView3 = (ImageView) itemView.findViewById(R.id.imageView3);
+    imvAva = (ImageView) itemView.findViewById(R.id.imageView2);
 
     imageView3.setOnClickListener(v -> Log.e("hailpt"," ~~~~~Call~~~~~"));
 
@@ -39,7 +40,7 @@ public class ArtistViewHolder extends ChildViewHolder {
     if (user.getAvatar() != null){
       Glide.with(context).load(user.getAvatar())
               .thumbnail(0.5f)
-              .into(imageView3);
+              .into(imvAva);
     }
   }
 

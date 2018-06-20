@@ -24,6 +24,8 @@ public class HomeActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     private Fragment fragment;
     private FragmentManager fragmentManager;
+    private HomeFragment homeFragment = new HomeFragment();
+    private ContactFragment contactFragment = new ContactFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,19 +41,23 @@ public class HomeActivity extends AppCompatActivity {
             int id = item.getItemId();
             switch (id){
                 case R.id.action_item1:
-                    fragment = new HomeFragment();
+                    fragment = homeFragment;
                     break;
                 case R.id.action_item2:
                     fragment = new NewsFragment();
                     break;
                 case R.id.action_item3:
-                    fragment = new ContactFragment();
+                    fragment = contactFragment;
                     break;
             }
             final FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.frame_layout, fragment).commit();
             return true;
         });
+
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.frame_layout, homeFragment).commit();
+
     }
 
     @Override
@@ -64,6 +70,15 @@ public class HomeActivity extends AppCompatActivity {
                     CallActivity.start(HomeActivity.this, true);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0){
+            finish();
+        } else {
+            getSupportFragmentManager().popBackStackImmediate();
         }
     }
 

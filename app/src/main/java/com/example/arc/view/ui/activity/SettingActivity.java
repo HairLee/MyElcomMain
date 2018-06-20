@@ -14,7 +14,9 @@ import com.example.arc.core.base.BaseActivity;
 import com.example.arc.databinding.ActivitySettingBinding;
 import com.example.arc.model.api.RestData;
 import com.example.arc.util.Consts;
+import com.example.arc.util.PreferUtils;
 import com.example.arc.util.Toaster;
+import com.example.arc.view.ui.LoginActivity;
 import com.example.arc.viewmodel.SettingViewModel;
 import com.google.gson.JsonElement;
 
@@ -33,8 +35,18 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
 
         findViewById(R.id.rlPassword).setOnClickListener(this);
         findViewById(R.id.tvLogout).setOnClickListener(this);
+        findViewById(R.id.imvBack).setOnClickListener(this);
 
-        viewModel.logout().observe(this, jsonElementRestData -> Toaster.longToast(jsonElementRestData.message));
+        viewModel.logout().observe(this, jsonElementRestData ->
+                {
+                    if (jsonElementRestData.status_code == 200){
+                        LoginActivity.start(this);
+                        finish();
+                    } else {
+                        Toaster.longToast(jsonElementRestData.message);
+                    }
+                }
+        );
     }
 
     @Override
@@ -53,8 +65,11 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
             case R.id.rlPassword:
                 SettingChangePwActivity.start(this);
                 break;
-            case  R.id.tvLogout:
-                viewModel.setRequest("Logout");
+            case R.id.tvLogout:
+                viewModel.setRequest(PreferUtils.getToken(this));
+                break;
+            case R.id.imvBack:
+                onBackPressed();
                 break;
         }
     }

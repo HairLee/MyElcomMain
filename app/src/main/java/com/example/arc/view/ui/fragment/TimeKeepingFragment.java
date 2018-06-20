@@ -52,11 +52,10 @@ import io.reactivex.schedulers.Schedulers;
 public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> implements HomeFragmentCalendarListener,TimeKeepingUpdateDataListener {
 
 
-
     TimeKeepingViewModel timeKeepingViewModel;
     private List<Date> mDates = new ArrayList<>();
     private HomeFragmentCheckTimeView homeFragmentCheckTimeView;
-
+    private List<TimeKeep> timeKeeps = new ArrayList<>();
     public TimeKeepingFragment() {
         // Required empty public constructor
     }
@@ -101,8 +100,14 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     }
 
     @Override
-    public void onChooseDate(int position) {
+    public void onDoLunchRegister() {
 
+    }
+
+    @Override
+    public void onChooseDate(int position, int dayChoosed) {
+        Log.e("hailpt"," TimeKeepingFragment "+dayChoosed + " position "+position );
+        homeFragmentCheckTimeView.updateLayout(position);
     }
 
     @Override
@@ -123,11 +128,32 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     }
 
     private int mCount = 0;
+    private int currentPosDay = 0;
     private void init(){
         if (mCount == 0 ){
             mCount = mCount + 1;
             timeKeepingViewModel.getTimeKeepingList().observe(this, listRestData ->{
+
+
                         homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
+
+
+//                        for (int i = 0; i < listRestData.data.size(); i++) {
+//                            if(listRestData.data.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat(getContext()))){
+//                                currentPosDay = i;
+//                            }
+//                        }
+//
+//                        if(currentPosDay != 0){
+//                            homeFragmentCheckTimeView.updateLayout(listRestData.data.get(currentPosDay));
+//                        } else {
+//                            homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
+//                        }
+
+                        Log.e("hailpt"," TimeKeepingppFragment init "+currentPosDay);
+
+                        timeKeeps = listRestData.data;
+                        homeFragmentCheckTimeView.setDataForView(timeKeeps);
                     }
             );
         }

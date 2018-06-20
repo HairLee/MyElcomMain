@@ -1,6 +1,7 @@
 package com.example.arc.repository;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 
 import com.example.arc.core.AppSchedulerProvider;
 import com.example.arc.core.BaseViewModel;
@@ -13,6 +14,7 @@ import com.example.arc.model.db.AppDatabase;
 import com.example.arc.model.db.ArticleDao;
 import com.example.arc.model.db.SourceDao;
 import com.example.arc.util.ConstantsApp;
+import com.example.arc.util.PreferUtils;
 import com.google.gson.JsonElement;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class SettingRepository implements BaseViewModel {
         articleMutableLiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<RestData<JsonElement>> logout() {
-        api.logout(ConstantsApp.BASE64_HEADER)
+    public MutableLiveData<RestData<JsonElement>> logout(String token) {
+        api.logout(token)
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .map(data -> data)

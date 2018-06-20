@@ -39,14 +39,15 @@
                 android:id="@+id/textView15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bạn đã muộn 5 phút" />
+                android:text="@{notification.name}" />
 
             <TextView
+
                 android:textSize="13sp"
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5 phút trước" />
+                android:text="@{notification.message}" />
         </LinearLayout>
 
         <View
