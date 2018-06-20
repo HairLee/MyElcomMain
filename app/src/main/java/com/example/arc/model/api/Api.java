@@ -2,12 +2,14 @@ package com.example.arc.model.api;
 
 import android.arch.lifecycle.LiveData;
 
+import com.example.arc.model.api.request.ChangePwRq;
 import com.example.arc.model.api.request.LoginReq;
 import com.example.arc.model.api.request.LunchCancelReq;
 import com.example.arc.model.api.request.LunchLikeReq;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.ContactSuggest;
 import com.example.arc.model.api.response.Lunch;
+import com.example.arc.model.api.response.Notification;
 import com.example.arc.model.api.response.User;
 import com.example.arc.model.data.Articles;
 import com.example.arc.model.data.Sources;
@@ -63,5 +65,16 @@ public interface Api {
     Observable<RestData<JsonElement>> dislikeLunch(@Body LunchLikeReq lunchCancelReq,@Header("Authorization") String s);
 
     @GET("user/{userId}")
-    Observable<RestData<User>> getUserProfile(@Path("userId")  String userId, @Header("Authorization") String s);
+    Observable<RestData<User>> getUserProfile(@Path("userId")  int userId, @Header("Authorization") String s);
+
+     /*Setting*/
+     @POST("change-pwd")
+     Observable<RestData<JsonElement>> changePassword(@Body ChangePwRq changePwRq, @Header("Authorization") String s);
+
+    @GET("notify")
+    Observable<RestData<List<Notification>>> getAllNotification(@Header("Authorization") String s);
+
+    @GET("auth/logout/{token}")
+    Observable<RestData<JsonElement>> logout(@Path("token")  String token);
+
 }

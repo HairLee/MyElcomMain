@@ -20,13 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/plate_ic"
+                android:src="@drawable/menu_time_keeping_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginTop="15dp"
                 android:textSize="14sp"
-                android:text="abc"
+                android:text="Chấm công"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -54,7 +54,7 @@
             <TextView
                 android:layout_marginTop="15dp"
                 android:textSize="14sp"
-                android:text="abc"
+                android:text="Cơm Trưa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -73,13 +73,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/plate_ic"
+                android:src="@drawable/menu_room_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginTop="15dp"
                 android:textSize="14sp"
-                android:text="abc"
+                android:text="Phòng họp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

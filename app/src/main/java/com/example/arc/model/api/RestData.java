@@ -10,6 +10,7 @@ package com.example.arc.model.api;
  */
 public class RestData<D> {
     public int code;
+    public int status_code;
     public D data;
     public String message;
 }

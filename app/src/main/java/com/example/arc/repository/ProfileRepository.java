@@ -47,7 +47,7 @@ public class ProfileRepository implements BaseViewModel {
         userMutableLiveData = new MutableLiveData<>();
     }
 
-    public MutableLiveData<RestData<User>> getUserProfile(String userId) {
+    public MutableLiveData<RestData<User>> getUserProfile(int userId) {
         api.getUserProfile(userId,ConstantsApp.BASE64_HEADER)
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())

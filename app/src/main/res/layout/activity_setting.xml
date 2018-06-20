@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.arc.view.ui.activity.SettingActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:padding="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/back_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:textSize="17sp"
+            android:text="Thiết lập"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textColor="#3B71BC"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="TÀI KHOẢN"
+                android:background="#F4F5FB"
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+            <!--Start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/imvEmail"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_email_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="hailt@gmail.com"
+                    android:layout_marginLeft="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+                <View
+                    android:layout_marginLeft="58dp"
+                    android:background="@color/colorLine"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+            <!--End-->
+
+            <!--Start-->
+            <RelativeLayout
+                android:id="@+id/rlPassword"
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/imvPassword"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_lock_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Mật khẩu"
+                    android:layout_marginLeft="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imvPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imvPwChange"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_next_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_marginLeft="58dp"
+                    android:background="@color/colorLine"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+            <!--End-->
+
+            <TextView
+                android:textColor="#3B71BC"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="ỨNG DỤNG"
+                android:background="#F4F5FB"
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+            <!--Start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/imvMessage"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_message_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="hailt@gmail.com"
+                    android:layout_marginLeft="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imvMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/imvMessageChange"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_next_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:visibility="gone"
+                    android:layout_marginLeft="58dp"
+                    android:background="@color/colorLine"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+            <!--End-->
+
+            <TextView
+                android:textColor="#3B71BC"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="HỖ TRỢ"
+                android:background="#F4F5FB"
+                android:layout_width="match_parent"
+                android:layout_height="45dp" />
+
+            <!--Start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/imvSupport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_tool_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Kỹ thuật tòa nhà"
+                    android:layout_marginLeft="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imvSupport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="8888"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/tvSupport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_marginLeft="58dp"
+                    android:background="@color/colorLine"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+            <!--End-->
+
+
+            <!--Start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/imvItSupport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/setting_support_ic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Hỗ trợ IT"
+                    android:layout_marginLeft="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imvItSupport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="8888"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/tvItSupport"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_marginLeft="58dp"
+                    android:background="@color/colorLine"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+            <!--End-->
+
+            <!--Start-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp">
+
+                <ImageView
+                    android:id="@+id/imvCoffee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/setting_coffee_ic" />
+                <TextView
+                    android:text="Black Box Coffee"
+                    android:layout_marginLeft="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/imvCoffee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="8888"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/tvCofee"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_marginLeft="58dp"
+                    android:background="@color/colorLine"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+            </RelativeLayout>
+            <!--End-->
+
+
+
+            <LinearLayout
+                android:background="#F4F5FB"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:padding="10dp"
+                    android:gravity="bottom|center_horizontal"
+                    android:text="Version 1.0"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
+                <TextView
+                    android:id="@+id/tvLogout"
+                    android:background="@color/white"
+                    android:textSize="17sp"
+                    android:gravity="center"
+                    android:textColor="#FB676C"
+                    android:text="Đăng Xuất"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>
+</layout>

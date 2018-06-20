@@ -1,10 +1,12 @@
 package com.example.arc.view.adapter.Contact;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.arc.R;
+import com.example.arc.core.listener.AllContactFragmentListener;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.User;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
@@ -15,8 +17,12 @@ import java.util.List;
 
 public class GenreAdapter extends ExpandableRecyclerViewAdapter<GenreViewHolder, ArtistViewHolder> {
 
-  public GenreAdapter(List<? extends ExpandableGroup> groups) {
+
+  private AllContactFragmentListener allContactFragmentListener;
+  private Context context;
+  public GenreAdapter(List<? extends ExpandableGroup> groups,Context context) {
     super(groups);
+    this.context = context;
   }
 
   @Override
@@ -37,8 +43,9 @@ public class GenreAdapter extends ExpandableRecyclerViewAdapter<GenreViewHolder,
   public void onBindChildViewHolder(ArtistViewHolder holder, int flatPosition,
       ExpandableGroup group, int childIndex) {
 
-    final User artist = ((Genre) group).getItems().get(childIndex);
-    holder.setArtistName(artist.getName());
+    final User user = ((Genre) group).getItems().get(childIndex);
+    holder.setArtistName(user.getName(),user,context);
+    holder.setAllContactFragmentListener(allContactFragmentListener);
   }
 
   @Override
@@ -46,5 +53,9 @@ public class GenreAdapter extends ExpandableRecyclerViewAdapter<GenreViewHolder,
       ExpandableGroup group) {
 
     holder.setGenreTitle(group);
+  }
+
+  public void setAllContactFragmentListener(AllContactFragmentListener allContactFragmentListener){
+    this.allContactFragmentListener = allContactFragmentListener;
   }
 }

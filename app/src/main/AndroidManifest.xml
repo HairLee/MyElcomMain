@@ -97,7 +97,10 @@
         <activity
             android:name=".view.ui.activity.LunchRegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".view.ui.activity.ProfileActivity"></activity>
+        <activity android:name=".view.ui.activity.ProfileActivity" />
+        <activity android:name=".view.ui.activity.SettingActivity" />
+        <activity android:name=".view.ui.activity.SettingChangePwActivity" />
+        <activity android:name=".view.ui.activity.NotificationActivity"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,10 @@ import com.example.arc.viewmodel.DetailViewModel;
 import com.example.arc.viewmodel.LoginViewModel;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
 import com.example.arc.viewmodel.MainViewModel;
+import com.example.arc.viewmodel.NotificationViewModel;
+import com.example.arc.viewmodel.ProfileViewModel;
+import com.example.arc.viewmodel.SettingChangePasswordViewModel;
+import com.example.arc.viewmodel.SettingViewModel;
 import com.example.arc.viewmodel.SourceViewModel;
 import com.example.arc.viewmodel.TimeKeepingViewModel;
 import com.example.arc.viewmodel.ViewModelFactory;
@@ -66,6 +70,26 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LunchRegistrationViewModel.class)
     abstract ViewModel bindsLunchRegistrationViewModel(LunchRegistrationViewModel lunchRegistrationViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel.class)
+    abstract ViewModel bindsProfileViewModel(ProfileViewModel profileViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingChangePasswordViewModel.class)
+    abstract ViewModel bindsSettingChangePasswordViewModel(SettingChangePasswordViewModel settingChangePasswordViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NotificationViewModel.class)
+    abstract ViewModel bindsNotificationViewModel(NotificationViewModel notificationViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingViewModel.class)
+    abstract ViewModel bindsSettingViewModel(SettingViewModel settingViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory viewModelFactory);

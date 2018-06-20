@@ -39,6 +39,7 @@ public class AllContactSuggestRepository implements BaseViewModel {
     private final SourceDao sourceDao;
     private final ArticleDao articleDao;
 
+
     @Inject
     AllContactSuggestRepository(AppDatabase database, Api api, AppSchedulerProvider schedulerProvider) {
         this.api = api;

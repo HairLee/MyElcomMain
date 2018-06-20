@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/rlSetting"
         android:background="@drawable/radius_white_bg_white_srtoke_layout"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -19,13 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/plate_ic"
+                android:src="@drawable/menu_setting_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginTop="15dp"
                 android:textSize="14sp"
-                android:text="abc"
+                android:text="Cài đặt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -33,6 +34,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="invisible"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/radius_white_bg_white_srtoke_layout"
@@ -60,6 +62,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="invisible"
         android:background="@drawable/radius_white_bg_white_srtoke_layout"
         android:layout_weight="1"
         android:layout_width="0dp"

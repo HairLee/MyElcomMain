@@ -14,6 +14,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.KeyEvent;
 
+import com.example.arc.util.ProgressDialogUtils;
+
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
@@ -45,33 +47,12 @@ public abstract class BaseActivity<M extends ViewModel, B extends ViewDataBindin
     @LayoutRes
     int getLayoutResId();
 
-    public void showProgressDialog(@StringRes int messageId) {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setCancelable(false);
-            progressDialog.setCanceledOnTouchOutside(false);
-
-            // Disable the back button
-            DialogInterface.OnKeyListener keyListener = new DialogInterface.OnKeyListener() {
-                @Override
-                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                    return keyCode == KeyEvent.KEYCODE_BACK;
-                }
-            };
-            progressDialog.setOnKeyListener(keyListener);
-        }
-
-        progressDialog.setMessage(getString(messageId));
-
-        progressDialog.show();
+    public void showProgressDialog() {
+        ProgressDialogUtils.showProgressDialog(this, 0, 0);
 
     }
 
     public void hideProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        ProgressDialogUtils.dismissProgressDialog();
     }
-
 }

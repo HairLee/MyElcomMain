@@ -23,7 +23,7 @@ import javax.inject.Inject;
  */
 
 public class ProfileViewModel extends ViewModel {
-    private final MutableLiveData<String> request = new MutableLiveData<>();
+    private final MutableLiveData<Integer> request = new MutableLiveData<>();
     private final LiveData<RestData<User>> userResult;
     private final ProfileRepository repository;
 
@@ -38,8 +38,8 @@ public class ProfileViewModel extends ViewModel {
         return userResult;
     }
 
-    public void setLikeLunchRequest(String lunchLikeReq){
-        request.setValue(lunchLikeReq);
+    public void setRequest(int userId){
+        request.setValue(userId);
     }
 
 

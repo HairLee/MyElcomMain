@@ -5,18 +5,18 @@
         app:showAsAction="ifRoom"
         android:id="@+id/action_item1"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Chủ đề"/>
+        android:title="Trang Chủ"/>
     <item
         app:showAsAction="ifRoom"
         android:id="@+id/action_item2"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Trang chủ"/>
+        android:icon="@drawable/ic_description_black_24dp"
+        android:title="Bản Tin"/>
 
     <item
         app:showAsAction="ifRoom"
         android:id="@+id/action_item3"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Live"/>
+        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:title="Liên Lạc"/>
 
 
 

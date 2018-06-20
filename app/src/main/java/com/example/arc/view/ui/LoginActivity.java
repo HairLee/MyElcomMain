@@ -42,15 +42,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         this.binding = binding;
         init(viewModel);
         binding.btnLogin.setOnClickListener(view -> {
-            showProgressDialog(R.string.action_start_login);
+            showProgressDialog();
             LoginReq loginReq = new LoginReq();
             loginReq.setEmail(binding.edtUsername.getText().toString());
             loginReq.setPassword(binding.edtPw.getText().toString());
             viewModel.setLoginParam(loginReq);
-
-//            tryToLoginQuickServer(binding.edtUsername.getText().toString(),"12345678");
-
-//            startOpponentsActivity(); // For test
         });
     }
 
@@ -60,20 +56,19 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
     }
 
     private void init(LoginViewModel viewModel) {
-//        tryToLoginQuickServer(binding.edtUsername.getText().toString(),"12345678");
         viewModel.getLoginResult().observe(this, data -> {
-//            tryToLoginQuickServer("hailt1","12345678");
             if(data != null){
                 hideProgressDialog();
                 PreferUtils.setToken(this,ConstantsApp.BEAR + data.data.getApiToken());
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
-                tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
+//                tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
+                startOpponentsActivity(); // For test Fast
             }
         });
     }
 
     public void tryToLoginQuickServer(String username, String pv){
-        showProgressDialog(R.string.login_quick);
+        showProgressDialog();
         QBUser user = new QBUser(username, pv);
         QBUsers.signIn(user).performAsync(new QBEntityCallback<QBUser>() {
             @Override

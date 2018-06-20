@@ -5,6 +5,10 @@ import com.example.arc.view.ui.LoginActivity;
 import com.example.arc.view.ui.MainActivity;
 import com.example.arc.view.ui.SourcesActivity;
 import com.example.arc.view.ui.activity.LunchRegistrationActivity;
+import com.example.arc.view.ui.activity.NotificationActivity;
+import com.example.arc.view.ui.activity.ProfileActivity;
+import com.example.arc.view.ui.activity.SettingActivity;
+import com.example.arc.view.ui.activity.SettingChangePwActivity;
 import com.example.arc.view.ui.activity.TimeKeepingActivity;
 import com.example.arc.view.ui.fragment.TimeKeepingFragment;
 import com.example.arc.view.ui.fragment.contact.AllContactFragment;
@@ -38,8 +42,17 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector
     abstract LunchRegistrationActivity bindLunchRegistrationActivity();
 
+    @ContributesAndroidInjector
+    abstract ProfileActivity bindProfileActivity();
 
+    @ContributesAndroidInjector
+    abstract SettingChangePwActivity bindSettingChangePwActivity();
 
+    @ContributesAndroidInjector
+    abstract NotificationActivity bindNotificationActivity();
+
+    @ContributesAndroidInjector
+    abstract SettingActivity bindSettingActivity();
 
 
     // Fragment

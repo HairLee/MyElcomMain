@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 
 import com.example.arc.R;
 import com.example.arc.view.ui.activity.LunchRegistrationActivity;
+import com.example.arc.view.ui.activity.NotificationActivity;
+import com.example.arc.view.ui.activity.SettingActivity;
 import com.example.arc.view.ui.activity.TimeKeepingActivity;
 
 /**
@@ -22,7 +24,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +41,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void initLayout(View view){
         view.findViewById(R.id.rlNote).setOnClickListener(this);
         view.findViewById(R.id.rlLunch).setOnClickListener(this);
+        view.findViewById(R.id.rlSetting).setOnClickListener(this);
+        view.findViewById(R.id.imvNotification).setOnClickListener(this);
     }
 
 
@@ -51,6 +54,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.rlLunch:
                 LunchRegistrationActivity.start(getContext(),1);
+                break;
+            case R.id.rlSetting:
+                SettingActivity.start(getContext());
+                break;
+                case R.id.imvNotification:
+                NotificationActivity.start(getContext());
                 break;
 
         }

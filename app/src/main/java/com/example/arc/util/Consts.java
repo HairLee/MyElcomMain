@@ -56,6 +56,10 @@ public interface Consts {
     String EXTRA_IS_STARTED_FOR_CALL = "isRunForCall";
     String ALREADY_LOGGED_IN = "You have already logged in chat";
 
+
+    String EXTRA_IS_USER_ID = "EXTRA_IS_USER_ID";
+
+
     enum StartConversationReason {
         INCOME_CALL_FOR_ACCEPTION,
         OUTCOME_CALL_MADE

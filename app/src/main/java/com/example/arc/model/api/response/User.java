@@ -3,9 +3,14 @@ package com.example.arc.model.api.response;
 /**
  * Created by Hailpt on 6/8/2018.
  */
+import android.databinding.BindingAdapter;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,9 +19,15 @@ public class User  implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
+    @SerializedName("job_title")
+    @Expose
+    private String job_title;
+
     @SerializedName("staff_id")
     @Expose
     private String staffId;
@@ -71,6 +82,14 @@ public class User  implements Parcelable {
     @SerializedName("group_name")
     @Expose
     private Object groupName;
+
+    public String getJob_title() {
+        return job_title;
+    }
+
+    public void setJob_title(String job_title) {
+        this.job_title = job_title;
+    }
 
     protected User(Parcel in) {
         if (in.readByte() == 0) {
@@ -332,6 +351,15 @@ public class User  implements Parcelable {
 
     public void setGroupName(Object groupName) {
         this.groupName = groupName;
+    }
+
+    @BindingAdapter({"app:glideLoading", "app:placeholde"})
+    public static void bindImage(ImageView imageView, String url, Drawable placeHolder) {
+        Glide.with(imageView)
+                .setDefaultRequestOptions(RequestOptions.placeholderOf(placeHolder))
+                .asBitmap()
+                .load(url)
+                .into(imageView);
     }
 
 }

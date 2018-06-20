@@ -4,6 +4,7 @@ package com.example.arc.view.ui.fragment.contact;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseFragment;
+import com.example.arc.core.listener.AllContactFragmentListener;
 import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.ContactSuggest;
@@ -25,6 +27,8 @@ import com.example.arc.view.adapter.AllContactAdapter;
 import com.example.arc.view.adapter.AllContactSuggestAdapter;
 import com.example.arc.view.adapter.Contact.Genre;
 import com.example.arc.view.adapter.Contact.GenreAdapter;
+import com.example.arc.view.ui.DetailActivity;
+import com.example.arc.view.ui.activity.ProfileActivity;
 import com.example.arc.viewmodel.AllContactSuggestViewModel;
 
 import java.util.ArrayList;
@@ -34,7 +38,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel> {
+public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel> implements AllContactFragmentListener {
 
 
 
@@ -110,7 +114,8 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
-        GenreAdapter adapter = new GenreAdapter(makeGenres());
+        GenreAdapter adapter = new GenreAdapter(makeGenres(),getContext());
+        adapter.setAllContactFragmentListener(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
@@ -122,5 +127,13 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
             genres.add(genre);
         }
         return genres;
+    }
+
+    @Override
+    public void onViewProfile(View view,int userId) {
+        Log.e("hailpt"," onViewProfile "+userId);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), view, getString(R.string.trans_shared_image));
+        ProfileActivity.start(getContext(),userId,options);
     }
 }

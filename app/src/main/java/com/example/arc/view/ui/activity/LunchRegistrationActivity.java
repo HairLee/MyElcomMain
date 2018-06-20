@@ -95,7 +95,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
 
     @Override
     public void onCancelLunchRegister() {
-        showProgressDialog(R.string.loading);
+        showProgressDialog();
         LunchCancelReq lunchCancelReq = new LunchCancelReq();
         lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(this));
         lunchRegistrationViewModel.setRequest(lunchCancelReq);
@@ -112,7 +112,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
 
     @Override
     public void onLikeOrDislike(boolean isLike) {
-        showProgressDialog(R.string.loading);
+        showProgressDialog();
         LunchLikeReq lunchLikeReq = new LunchLikeReq();
         lunchLikeReq.setData(DateTimeUtils.getToDayDateTime(this));
         lunchLikeReq.setLike(isLike);
@@ -120,7 +120,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
     }
 
     private void getListCurrentDate(){
-        showProgressDialog(R.string.loading);
+        showProgressDialog();
         Log.e("hailpt", " getListCurrentDate Date == "+DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0)));
         binding.homeFragmentCalendarView.updateData(DateTimeUtils.getListCurrentDate(this));
         String fromTime = DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0));
