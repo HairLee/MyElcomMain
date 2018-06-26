@@ -23,17 +23,35 @@ import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.ContactSuggest;
 import com.example.arc.model.api.response.User;
+import com.example.arc.model.db.QbUsersDbManager;
+import com.example.arc.services.CallService;
+import com.example.arc.util.CollectionsUtils;
+import com.example.arc.util.Consts;
+import com.example.arc.util.PermissionsChecker;
+import com.example.arc.util.PushNotificationSender;
+import com.example.arc.util.SharedPrefsHelper;
+import com.example.arc.util.Toaster;
+import com.example.arc.util.WebRtcSessionManager;
 import com.example.arc.view.adapter.AllContactAdapter;
 import com.example.arc.view.adapter.AllContactSuggestAdapter;
 import com.example.arc.view.adapter.Contact.Genre;
 import com.example.arc.view.adapter.Contact.GenreAdapter;
+import com.example.arc.view.ui.CallActivity;
 import com.example.arc.view.ui.DetailActivity;
+import com.example.arc.view.ui.PermissionsActivity;
 import com.example.arc.view.ui.activity.ProfileActivity;
 import com.example.arc.viewmodel.AllContactSuggestViewModel;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.users.model.QBUser;
+import com.quickblox.videochat.webrtc.QBRTCClient;
+import com.quickblox.videochat.webrtc.QBRTCSession;
+import com.quickblox.videochat.webrtc.QBRTCTypes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.webrtc.ContextUtils.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +66,10 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     //    private List<ContactSuggest> data = new ArrayList<>();
     private List<Contact> contacts = new ArrayList<>();
     private   RecyclerView recyclerView;
+    private User user;
+
+    private QbUsersDbManager dbManager;
+    private PermissionsChecker checker;
     public AllContactFragment() {
         // Required empty public constructor
     }
@@ -59,6 +81,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 
         if(view == null){
             view = inflater.inflate(R.layout.fragment_all_contact, container, false);
+//            dbManager = QbUsersDbManager.getInstance(getContext());
         }
         // Inflate the layout for this fragment
 //        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
@@ -87,13 +110,13 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 
     @Override
     protected void onCreate(Bundle instance, AllContactSuggestViewModel viewModel) {
+        checker = new PermissionsChecker(getContext());
         allContactSuggestViewModel = viewModel;
         allContactSuggestViewModel.getAllContactSuggest().observe(this, contactSuggestRestData -> {
             Log.e("hailpt"," AllContactFragment onCreate ");
             if(contactSuggestRestData != null){
 //                allContactSuggestAdaprer.setData(contactSuggestRestData.data);
             }
-
         });
 
         allContactSuggestViewModel.getAllContact().observe(this, listRestData -> {
@@ -108,10 +131,6 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     private void setupViewTest(){
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-
-        // RecyclerView has some built in animations to it, using the DefaultItemAnimator.
-        // Specifically when you call notifyItemChanged() it does a fade animation for the changing
-        // of the data in the ViewHolder. If you would like to disable this you can use the following:
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator instanceof DefaultItemAnimator) {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
@@ -132,10 +151,73 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         return genres;
     }
 
+
+
     @Override
     public void onViewProfile(View view,int userId) {
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), view, getString(R.string.trans_shared_image));
         ProfileActivity.start(getContext(),userId,options);
     }
+
+    @Override
+    public void onCallVideo(User user) {
+        this.user = user;
+        if(user != null){
+            if (isLoggedInChat()) {
+                startCall(true);
+            }
+
+            if (checker.lacksPermissions(Consts.PERMISSIONS)) {
+                startPermissionsActivity(false);
+            }
+        }
+        Toaster.longToast("Call "+user.getQuickbloxId());
+    }
+
+    private boolean isLoggedInChat() {
+        if (!QBChatService.getInstance().isLoggedIn()) {
+            Toaster.shortToast(R.string.dlg_signal_error);
+            tryReLoginToChat();
+            return false;
+        }
+        return true;
+    }
+
+    private void tryReLoginToChat() {
+        if (sharedPrefsHelper.hasQbUser()) {
+            QBUser qbUser = sharedPrefsHelper.getQbUser();
+            CallService.start(getContext(), qbUser);
+        }
+    }
+
+    private void startPermissionsActivity(boolean checkOnlyAudio) {
+        PermissionsActivity.startActivity(getActivity(), checkOnlyAudio, Consts.PERMISSIONS);
+    }
+
+    private void startCall(boolean isVideoCall) {
+//        if (opponentsAdapter.getSelectedItems().size() > Consts.MAX_OPPONENTS_COUNT) {
+//            Toaster.longToast(String.format(getString(R.string.error_max_opponents_count),
+//                    Consts.MAX_OPPONENTS_COUNT));
+//            return;
+//        }
+
+        ArrayList<Integer> opponentsList = new ArrayList<>();
+        opponentsList.add(user.getQuickbloxId());
+        QBRTCTypes.QBConferenceType conferenceType = isVideoCall
+                ? QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_VIDEO
+                : QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO;
+
+        QBRTCClient qbrtcClient = QBRTCClient.getInstance(getContext());
+
+        QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
+
+        WebRtcSessionManager.getInstance(getContext()).setCurrentSession(newQbRtcSession);
+
+        PushNotificationSender.sendPushMessage(opponentsList, user.getName());
+
+        CallActivity.start(getContext(), false);
+    }
+
+
 }

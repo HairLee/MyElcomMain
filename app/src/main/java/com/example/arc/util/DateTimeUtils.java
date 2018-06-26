@@ -26,6 +26,13 @@ public class DateTimeUtils {
         return  dateFormat.format(Calendar.getInstance().getTime());
     }
 
+    public static String getDayMonthYear(){
+        DateFormat dateFormat = new SimpleDateFormat("dd");
+        return  dateFormat.format(Calendar.getInstance().getTime());
+    }
+
+
+
     public static String getToDayDateTimeFormat(Context context){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return  dateFormat.format(Calendar.getInstance().getTime());

@@ -242,6 +242,27 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
 
         actionButtonsEnabled(false);
         restoreSession();
+
+        toggle_switch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                conversationFragmentCallbackListener.onSwitchCamera(new CameraVideoCapturer.CameraSwitchHandler() {
+                    @Override
+                    public void onCameraSwitchDone(boolean b) {
+                        Log.d(TAG, "camera switched, bool = " + b);
+                        isCurrentCameraFront = b;
+                        toggleCameraInternal();
+                    }
+
+                    @Override
+                    public void onCameraSwitchError(String s) {
+                        Log.d(TAG, "camera switch error " + s);
+                        Toaster.shortToast(getString(R.string.camera_swicth_failed) + s);
+                        cameraToggle.setEnabled(true);
+                    }
+                });
+            }
+        });
     }
 
     private void restoreSession() {

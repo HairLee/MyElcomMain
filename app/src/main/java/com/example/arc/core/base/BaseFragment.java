@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.view.KeyEvent;
 
+import com.example.arc.util.SharedPrefsHelper;
+
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerFragment;
@@ -24,10 +26,11 @@ public abstract class BaseFragment <M extends ViewModel> extends DaggerFragment 
     ViewModelProvider.Factory viewModelFactory;
 
     public ProgressDialog progressDialog;
-
+    public SharedPrefsHelper sharedPrefsHelper;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefsHelper = SharedPrefsHelper.getInstance();
         ViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModel());
         onCreate(savedInstanceState, (M) viewModel);
 

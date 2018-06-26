@@ -14,8 +14,10 @@ import android.widget.TextView;
 import com.example.arc.R;
 import com.example.arc.core.listener.HomeFragmentCalendarListener;
 import com.example.arc.model.api.response.Lunch;
+import com.example.arc.util.DateTimeUtils;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
     private ImageView imvBack;
     private LinearLayout lnRegisLunch;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
+    List<TextView> textViewList = new ArrayList<>();
+
 
     public String firstDayOfWeek(){
      return  tv2.getText().toString();
@@ -69,6 +73,12 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         tv5 = (TextView)view.findViewById(R.id.tv5);
         tv6 = (TextView)view.findViewById(R.id.tv6);
 
+        textViewList.add(tv2);
+        textViewList.add(tv3);
+        textViewList.add(tv4);
+        textViewList.add(tv5);
+        textViewList.add(tv6);
+
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
         tv4.setOnClickListener(this);
@@ -100,6 +110,13 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         if(mDates.size() > 4){
             tv6.setText(dateFormat.format(mDates.get(4)).substring(0,2));
         }
+
+        for (int i = 0; i < textViewList.size(); i++) {
+            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                textViewList.get(i).setTextColor(getResources().getColor(R.color.color_accent));
+            }
+        }
+
     }
 
     @Override

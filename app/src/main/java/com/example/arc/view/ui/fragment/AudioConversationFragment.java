@@ -31,6 +31,7 @@ public class AudioConversationFragment extends BaseConversationFragment implemen
     private TextView alsoOnCallText;
     private TextView firstOpponentNameTextView;
     private TextView otherOpponentsTextView;
+
     private boolean headsetPlugged;
 
     @Override

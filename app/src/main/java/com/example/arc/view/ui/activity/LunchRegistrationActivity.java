@@ -68,7 +68,6 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
         });
 
         viewModel.getLunchMenu().observe(this, listRestData -> {
-            Toaster.longToast(listRestData.message);
             hideProgressDialog();
             lunchList = listRestData.data;
 
@@ -78,8 +77,6 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
                     currentPosDay = i;
                 }
             }
-
-
             binding.lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),20);
         });
 
@@ -127,7 +124,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
             binding.lunchRegistrationContentView.updateMainContent(lunchList.get(position),dayChoosed);
             Log.e("hailpt"," lunchRegistrationContentView "+lunchList.get(position).getDate());
         }
-        Toaster.longToast(position + "Dish");
+//        Toaster.longToast(position + "Dish");
     }
 
     @Override
@@ -141,11 +138,10 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
 
     private void getListCurrentDate(){
         showProgressDialog();
-        Log.e("hailpt", " getListCurrentDate Date == "+DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0)));
+//        Log.e("hailpt", " getListCurrentDate Date == "+DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0)));
         binding.homeFragmentCalendarView.updateData(DateTimeUtils.getListCurrentDate(this));
         String fromTime = DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0));
         String toTime = DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(DateTimeUtils.getListCurrentDate(this).size() -1));
-
 
         TimeKeepReq timeKeepReq = new TimeKeepReq();
         timeKeepReq.setFromTime(fromTime);

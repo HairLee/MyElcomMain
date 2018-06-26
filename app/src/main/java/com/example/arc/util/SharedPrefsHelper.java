@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.arc.AApp;
+import com.example.arc.model.api.response.User;
 import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.users.model.QBUser;
 
@@ -15,6 +16,14 @@ public class SharedPrefsHelper {
     private static final String QB_USER_PASSWORD = "qb_user_password";
     private static final String QB_USER_FULL_NAME = "qb_user_full_name";
     private static final String QB_USER_TAGS = "qb_user_tags";
+
+
+    private static final String USER_ID = "user_id";
+    private static final String USER_TOKEN = "user_login";
+    private static final String USER_AVATAR = "user_password";
+    private static final String USER_FULL_NAME = "user_full_name";
+    private static final String USER_TAGS = "user_tags";
+
 
     private static SharedPrefsHelper instance;
 
@@ -84,6 +93,39 @@ public class SharedPrefsHelper {
         save(QB_USER_TAGS, qbUser.getTags().getItemsAsString());
     }
 
+
+    public void saveUser(User user) {
+        save(USER_ID, user.getId());
+        save(USER_TOKEN, user.getApiToken());
+        save(USER_AVATAR, user.getAvatar());
+        save(USER_FULL_NAME, user.getName());
+    }
+
+    public User getUser() {
+        if (hasQbUser()) {
+            Integer id = get(USER_ID);
+            String token = get(USER_TOKEN);
+            String ava = get(USER_AVATAR);
+            String fullName = get(USER_FULL_NAME);
+
+
+            User user = new User();
+            user.setId(id);
+            user.setName(fullName);
+            user.setAvatar(ava);
+            user.setApiToken(token);
+
+
+            return user;
+        } else {
+            return null;
+        }
+    }
+
+
+
+
+
     public void removeQbUser() {
         delete(QB_USER_ID);
         delete(QB_USER_LOGIN);
@@ -119,6 +161,10 @@ public class SharedPrefsHelper {
 
     public boolean hasQbUser() {
         return has(QB_USER_LOGIN) && has(QB_USER_PASSWORD);
+    }
+
+    public boolean hasUser() {
+        return has(USER_ID) && has(USER_TOKEN);
     }
 
     public void clearAllData(){

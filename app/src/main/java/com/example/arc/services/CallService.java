@@ -38,6 +38,7 @@ public class CallService extends Service {
     private int currentCommand;
     private QBUser currentUser;
 
+
     public static void start(Context context, QBUser qbUser, PendingIntent pendingIntent) {
         Intent intent = new Intent(context, CallService.class);
 

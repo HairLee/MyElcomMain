@@ -28,6 +28,7 @@ public interface Consts {
     int MAX_OPPONENTS_COUNT = 6;
 
     String PREF_CURREN_ROOM_NAME = "current_room_name";
+    String PREF_USER_NAME = "PREF_USER_NAME";
     String PREF_CURRENT_TOKEN = "current_token";
     String PREF_TOKEN_EXPIRATION_DATE = "token_expiration_date";
 

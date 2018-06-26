@@ -57,7 +57,7 @@ public class User  implements Parcelable {
     private Integer isActive;
     @SerializedName("quickblox_id")
     @Expose
-    private Object quickbloxId;
+    private Integer quickbloxId;
     @SerializedName("quickblox_user")
     @Expose
     private Object quickbloxUser;
@@ -89,6 +89,11 @@ public class User  implements Parcelable {
 
     public void setJob_title(String job_title) {
         this.job_title = job_title;
+    }
+
+
+    public User(){
+
     }
 
     protected User(Parcel in) {
@@ -281,11 +286,11 @@ public class User  implements Parcelable {
         this.isActive = isActive;
     }
 
-    public Object getQuickbloxId() {
+    public Integer getQuickbloxId() {
         return quickbloxId;
     }
 
-    public void setQuickbloxId(Object quickbloxId) {
+    public void setQuickbloxId(Integer quickbloxId) {
         this.quickbloxId = quickbloxId;
     }
 

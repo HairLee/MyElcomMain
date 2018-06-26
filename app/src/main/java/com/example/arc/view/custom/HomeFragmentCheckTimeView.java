@@ -30,7 +30,7 @@ import java.util.List;
 
 public class HomeFragmentCheckTimeView extends RelativeLayout implements View.OnClickListener {
 
-    private TextView tvCheckIn,tvCheckOut,tvOnTime,tvLateTime,tvAbsent,tvToday;
+    private TextView tvCheckIn,tvCheckOut,tvOnTime,tvLateTime,tvAbsent,tvToday,tvDate;
     private ImageView imvBack;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private List<TimeKeep> timeKeeps;
@@ -69,6 +69,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         tvLateTime = (TextView)view.findViewById(R.id.tvLateTime);
         tvAbsent = (TextView)view.findViewById(R.id.tvAbsent);
         tvToday = (TextView)view.findViewById(R.id.tvToday);
+        tvDate = (TextView)view.findViewById(R.id.tvDate);
 //
 //        imvBack = view.findViewById(R.id.imvBack);
 //        imvBack.setOnClickListener(this);
@@ -96,7 +97,8 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         tvOnTime.setText(timeKeeps.get(currentLocation).getStatistic().getOnTime().toString());
         tvLateTime.setText(timeKeeps.get(currentLocation).getStatistic().getLate().toString());
         tvAbsent.setText(timeKeeps.get(currentLocation).getStatistic().getAbsent().toString());
-        tvToday.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+
     }
 
     public void updateLayout(int pos){
@@ -118,7 +120,8 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         tvOnTime.setText(timeKeep.getStatistic().getOnTime().toString());
         tvLateTime.setText(timeKeep.getStatistic().getLate().toString());
         tvAbsent.setText(timeKeep.getStatistic().getAbsent().toString());
-        tvToday.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+        tvToday.setText(timeKeep.getDate());
+        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
     }
 
     public void setHomeFragmentCalendarListener(HomeFragmentCalendarListener homeFragmentCalendarListener){

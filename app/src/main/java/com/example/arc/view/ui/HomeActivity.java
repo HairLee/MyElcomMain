@@ -9,9 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.arc.R;
+import com.example.arc.model.api.response.User;
 import com.example.arc.util.Consts;
+import com.example.arc.util.SharedPrefsHelper;
+import com.example.arc.util.WebRtcSessionManager;
 import com.example.arc.view.ui.fragment.AllFriendQuickBloxFragment;
 import com.example.arc.view.ui.fragment.contact.ContactFragment;
 import com.example.arc.view.ui.fragment.HomeFragment;
@@ -26,12 +30,31 @@ public class HomeActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private HomeFragment homeFragment = new HomeFragment();
     private ContactFragment contactFragment = new ContactFragment();
+    private WebRtcSessionManager webRtcSessionManager;
+    private SharedPrefsHelper sharedPrefsHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        sharedPrefsHelper = SharedPrefsHelper.getInstance();
+        initFields();
+
+        if (isRunForCall && webRtcSessionManager.getCurrentSession() != null) {
+            CallActivity.start(HomeActivity.this, true);
+        }
 
         setupView();
+    }
+
+    private void initFields() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            isRunForCall = extras.getBoolean(Consts.EXTRA_IS_STARTED_FOR_CALL);
+        }
+
+        webRtcSessionManager = WebRtcSessionManager.getInstance(getApplicationContext());
+
+        Log.e("hailpt"," HomeActivity initFields ");
     }
 
     public void setupView(){
@@ -58,18 +81,24 @@ public class HomeActivity extends AppCompatActivity {
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frame_layout, homeFragment).commit();
 
+
+       User user =  sharedPrefsHelper.getUser();
+       Log.e("hailpt"," sharedPrefsHelper~~> "+ user.getAvatar() + sharedPrefsHelper.getQbUser().getEmail());
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
+        Log.e("hailpt"," HomeActivity onNewIntent");
+
         if (intent.getExtras() != null) {
-            if(fragment instanceof AllFriendQuickBloxFragment){
+//            if(fragment instanceof AllFriendQuickBloxFragment){
                 isRunForCall = intent.getExtras().getBoolean(Consts.EXTRA_IS_STARTED_FOR_CALL);
                 if (isRunForCall) {
                     CallActivity.start(HomeActivity.this, true);
                 }
-            }
+//            }
         }
     }
 

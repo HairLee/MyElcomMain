@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -49,6 +50,7 @@ public abstract class BaseConversationFragment extends BaseToolBarFragment imple
     protected View outgoingOpponentsRelativeLayout;
     protected TextView allOpponentsTextView;
     protected TextView ringingTextView;
+    protected ImageView toggle_switch;
     protected QBUser currentUser;
 
     public static BaseConversationFragment newInstance(BaseConversationFragment baseConversationFragment, boolean isIncomingCall) {
@@ -164,6 +166,8 @@ public abstract class BaseConversationFragment extends BaseToolBarFragment imple
         outgoingOpponentsRelativeLayout = view.findViewById(R.id.layout_background_outgoing_screen);
         allOpponentsTextView = (TextView) view.findViewById(R.id.text_outgoing_opponents_names);
         ringingTextView = (TextView) view.findViewById(R.id.text_ringing);
+        toggle_switch = view.findViewById(R.id.toggle_switch);
+
 
         if (isIncomingCall) {
             hideOutgoingScreen();

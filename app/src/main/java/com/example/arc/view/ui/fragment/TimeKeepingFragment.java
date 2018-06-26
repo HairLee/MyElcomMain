@@ -30,6 +30,7 @@ import com.example.arc.model.api.request.TimeKeepReq;
 import com.example.arc.model.data.TimeKeep;
 import com.example.arc.util.ConstantsApp;
 import com.example.arc.util.DateTimeUtils;
+import com.example.arc.util.Toaster;
 import com.example.arc.view.custom.HomeFragmentCalendarView;
 import com.example.arc.view.custom.HomeFragmentCheckTimeView;
 import com.example.arc.view.ui.activity.TimeKeepingActivity;
@@ -136,6 +137,9 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
 
 
                         homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
+
+
+                        Toaster.longToast(listRestData.data.get(0).getDate());
 
 
 //                        for (int i = 0; i < listRestData.data.size(); i++) {

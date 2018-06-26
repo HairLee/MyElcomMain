@@ -24,7 +24,7 @@ public class ArtistViewHolder extends ChildViewHolder {
     imageView3 = (ImageView) itemView.findViewById(R.id.imageView3);
     imvAva = (ImageView) itemView.findViewById(R.id.imageView2);
 
-    imageView3.setOnClickListener(v -> Log.e("hailpt"," ~~~~~Call~~~~~"));
+    imageView3.setOnClickListener(v -> allContactFragmentListener.onCallVideo(user));
 
     childTextView.setOnClickListener(new View.OnClickListener() {
       @Override

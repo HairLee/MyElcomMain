@@ -12,6 +12,7 @@ import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
 import com.example.arc.databinding.ActivityLoginBinding;
 import com.example.arc.model.api.request.LoginReq;
+import com.example.arc.model.api.response.User;
 import com.example.arc.model.data.Article;
 import com.example.arc.services.CallService;
 import com.example.arc.util.ConstantsApp;
@@ -63,8 +64,9 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 hideProgressDialog();
                 PreferUtils.setToken(this,data.data.getApiToken());
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
-//                tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
-                startOpponentsActivity(); // For test Fast
+                saveUser(data.data);
+                tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
+//                startOpponentsActivity(); // For test Fast
             }
         });
     }
@@ -108,6 +110,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         SharedPrefsHelper sharedPrefsHelper = SharedPrefsHelper.getInstance();
         sharedPrefsHelper.save(Consts.PREF_CURREN_ROOM_NAME, qbUser.getTags().get(0));
         sharedPrefsHelper.saveQbUser(qbUser);
+    }
+
+    private void saveUser(User user) {
+        SharedPrefsHelper sharedPrefsHelper = SharedPrefsHelper.getInstance();
+        sharedPrefsHelper.save(Consts.PREF_USER_NAME, user.getId().toString());
+        sharedPrefsHelper.saveUser(user);
     }
 
     @Override

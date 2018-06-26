@@ -41,36 +41,13 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".view.ui.MainActivity" />
-        <activity android:name=".view.ui.HomeActivity" />
+        <activity android:name=".view.ui.HomeActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".services.CallService" />
 
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.quickblox.sample.groupchatwebrtc" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".services.gcm.GcmPushListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name="com.quickblox.messages.services.gcm.QBGcmPushInstanceIDService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
 
         <meta-data
             android:name="com.quickblox.messages.TYPE"
@@ -93,10 +70,13 @@
         <activity android:name=".view.ui.activity.TimeKeepingActivity" />
         <activity
             android:name=".view.ui.activity.OpponentsActivity"
-            android:theme="@style/AppTheme2" />
+            android:theme="@style/AppTheme2"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.ui.activity.LunchRegistrationActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".view.ui.activity.ProfileActivity" />
         <activity android:name=".view.ui.activity.SettingActivity" />
         <activity android:name=".view.ui.activity.SettingChangePwActivity" />

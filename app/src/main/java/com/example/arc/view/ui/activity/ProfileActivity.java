@@ -38,7 +38,7 @@ public class ProfileActivity extends BaseActivity<ProfileViewModel,ActivityProfi
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_profile;
+        return R.layout.activity_profile_favourite;
     }
 
     private void init(ProfileViewModel viewModel){

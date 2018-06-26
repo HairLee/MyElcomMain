@@ -71,6 +71,7 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
         }
 
         setupViewPager(mParts);
+        binding.imvBack.setOnClickListener(view -> onBackPressed());
     }
 
     @Override
