@@ -55,6 +55,8 @@ abstract class ActivityBuilder {
     abstract SettingActivity bindSettingActivity();
 
 
+
+
     // Fragment
     @ContributesAndroidInjector
     abstract TimeKeepingFragment bindTimeKeepingFragment();

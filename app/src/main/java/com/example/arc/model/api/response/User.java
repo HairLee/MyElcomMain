@@ -3,6 +3,7 @@ package com.example.arc.model.api.response;
 /**
  * Created by Hailpt on 6/8/2018.
  */
+import android.arch.persistence.room.PrimaryKey;
 import android.databinding.BindingAdapter;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
@@ -16,6 +17,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class User  implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     @Expose
     private Integer id;

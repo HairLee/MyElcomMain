@@ -32,10 +32,17 @@ public class DateTimeUtils {
     }
 
 
-
     public static String getToDayDateTimeFormat(Context context){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return  dateFormat.format(Calendar.getInstance().getTime());
+    }
+
+    public static String convertLongToTime(String TimeinMilliSeccond){
+        if (TimeinMilliSeccond.equals("")){
+            return "";
+        }
+        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(Long.parseLong(TimeinMilliSeccond)));
+        return dateString;
     }
 
     public static  List<List<Date>> getBigListCurrentDate(Context context){

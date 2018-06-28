@@ -102,12 +102,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     }
 
     public void updateLayout(int pos){
-      ;
         updateLayout(timeKeeps.get(pos));
-
-
-
-
     }
 
     public void updateLayout(TimeKeep timeKeep){

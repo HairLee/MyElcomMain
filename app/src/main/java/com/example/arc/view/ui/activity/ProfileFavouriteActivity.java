@@ -11,20 +11,21 @@ import com.bumptech.glide.Glide;
 import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
 import com.example.arc.databinding.ActivityProfileBinding;
+import com.example.arc.databinding.ActivityProfileFavouriteBinding;
 import com.example.arc.util.Consts;
 import com.example.arc.viewmodel.ProfileViewModel;
 
-public class ProfileFavouriteActivity extends BaseActivity<ProfileViewModel,ActivityProfileBinding> {
+public class ProfileFavouriteActivity extends BaseActivity<ProfileViewModel,ActivityProfileFavouriteBinding> {
 
     private int userId = 0;
-    private  ActivityProfileBinding binding;
+    private ActivityProfileFavouriteBinding binding;
     @Override
     protected Class<ProfileViewModel> getViewModel() {
         return ProfileViewModel.class;
     }
 
     @Override
-    protected void onCreate(Bundle instance, ProfileViewModel viewModel, ActivityProfileBinding binding) {
+    protected void onCreate(Bundle instance, ProfileViewModel viewModel, ActivityProfileFavouriteBinding binding) {
         this.binding = binding;
         Intent intent = getIntent();
         if (intent.hasExtra(Consts.EXTRA_IS_USER_ID)){

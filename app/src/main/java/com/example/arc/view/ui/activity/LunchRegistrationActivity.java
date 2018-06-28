@@ -1,31 +1,22 @@
 package com.example.arc.view.ui.activity;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
 import com.example.arc.core.listener.HomeFragmentCalendarListener;
 import com.example.arc.databinding.ActivityLunchRegistrationBinding;
-import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.request.LunchCancelReq;
 import com.example.arc.model.api.request.LunchLikeReq;
 import com.example.arc.model.api.request.TimeKeepReq;
 import com.example.arc.model.api.response.Lunch;
 import com.example.arc.util.DateTimeUtils;
 import com.example.arc.util.Toaster;
-import com.example.arc.view.custom.HomeFragmentCalendarView;
-import com.example.arc.view.custom.LunchRegistrationContentView;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
-import com.google.gson.JsonElement;
 
-import java.util.Date;
 import java.util.List;
 
 public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationViewModel, ActivityLunchRegistrationBinding> implements HomeFragmentCalendarListener {
@@ -47,11 +38,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
         init(viewModel);
 
         getListCurrentDate();
-
-
         Log.e("hailpt"," currentDay ==== "+ DateTimeUtils.currentDay());
-
-
     }
 
     private void init(LunchRegistrationViewModel viewModel){
@@ -85,6 +72,8 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
             hideProgressDialog();
             getListCurrentDate();
         });
+
+        binding.imvBack.setOnClickListener(v -> onBackPressed());
     }
 
     @Override
