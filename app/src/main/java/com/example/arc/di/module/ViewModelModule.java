@@ -11,6 +11,7 @@ import com.example.arc.viewmodel.LoginViewModel;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
 import com.example.arc.viewmodel.MainViewModel;
 import com.example.arc.viewmodel.NotificationViewModel;
+import com.example.arc.viewmodel.ProfileFavouriteViewModel;
 import com.example.arc.viewmodel.ProfileViewModel;
 import com.example.arc.viewmodel.SettingChangePasswordViewModel;
 import com.example.arc.viewmodel.SettingViewModel;
@@ -76,6 +77,13 @@ public abstract class ViewModelModule {
     @ViewModelKey(ProfileViewModel.class)
     abstract ViewModel bindsProfileViewModel(ProfileViewModel profileViewModel);
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileFavouriteViewModel.class)
+    abstract ViewModel bindsProfileFavouriteViewModel(ProfileFavouriteViewModel profileViewModel);
+
+
     @Binds
     @IntoMap
     @ViewModelKey(SettingChangePasswordViewModel.class)
@@ -90,6 +98,10 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingViewModel.class)
     abstract ViewModel bindsSettingViewModel(SettingViewModel settingViewModel);
+
+
+
+
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory viewModelFactory);

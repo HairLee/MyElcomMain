@@ -1,6 +1,8 @@
 package com.example.arc.viewmodel;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.example.arc.model.api.RestData;
@@ -18,6 +20,8 @@ import javax.inject.Inject;
 
 public class AllContactSuggestViewModel extends ViewModel {
 
+    private final MutableLiveData<Integer> AllContactrequest = new MutableLiveData<>();
+
     private final LiveData<RestData<List<ContactSuggest>>> timeKeepListResult;
     private final LiveData<RestData<List<Contact>>> contactResult;
     private final AllContactSuggestRepository repository;
@@ -26,7 +30,10 @@ public class AllContactSuggestViewModel extends ViewModel {
     AllContactSuggestViewModel(AllContactSuggestRepository repository) {
         this.repository = repository;
         timeKeepListResult = repository.getAllContactSuggest();
-        contactResult = repository.getAllContact();
+
+        contactResult = Transformations.switchMap(AllContactrequest,
+                param -> repository.getAllContact());
+
     }
 
     public LiveData<RestData<List<ContactSuggest>>> getAllContactSuggest() {
@@ -35,6 +42,10 @@ public class AllContactSuggestViewModel extends ViewModel {
 
     public LiveData<RestData<List<Contact>>> getAllContact() {
         return contactResult;
+    }
+
+    public void setAllContactrequest(){
+        AllContactrequest.setValue(1);
     }
 
 

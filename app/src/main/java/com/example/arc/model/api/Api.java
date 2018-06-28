@@ -6,6 +6,7 @@ import com.example.arc.model.api.request.ChangePwRq;
 import com.example.arc.model.api.request.LoginReq;
 import com.example.arc.model.api.request.LunchCancelReq;
 import com.example.arc.model.api.request.LunchLikeReq;
+import com.example.arc.model.api.request.MarkUserReq;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.ContactSuggest;
 import com.example.arc.model.api.response.Lunch;
@@ -19,10 +20,13 @@ import com.google.gson.JsonElement;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -70,6 +74,10 @@ public interface Api {
     @GET("user/{userId}")
     Observable<RestData<User>> getUserProfile(@Path("userId")  int userId, @Header("Authorization") String s);
 
+    @POST("mark-user")
+    Observable<RestData<JsonElement>> markFriend(@Body MarkUserReq markUserReq, @Header("Authorization") String s);
+
+
      /*Setting*/
      @POST("change-pwd")
      Observable<RestData<JsonElement>> changePassword(@Body ChangePwRq changePwRq, @Header("Authorization") String s);
@@ -79,5 +87,10 @@ public interface Api {
 
     @GET("auth/logout/{token}")
     Observable<RestData<JsonElement>> logout(@Path("token")  String token);
+
+    @Multipart
+    @POST("upload-avatar")
+    Observable<RestData<JsonElement>> uploadAvatar(@Part MultipartBody.Part  avatarPart, @Header("Authorization") String s);
+
 
 }

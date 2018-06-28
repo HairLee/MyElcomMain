@@ -11,6 +11,9 @@ public class ConstantsApp {
     public static String BEAR = "Bearer ";
 
 
+    public static String BROARD_CHANGE_AVATAR = "BROARD_CHANGE_AVATAR ";
+
+
 
 
 }

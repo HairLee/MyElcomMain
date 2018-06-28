@@ -63,6 +63,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
             if(data != null){
                 hideProgressDialog();
                 PreferUtils.setToken(this,data.data.getApiToken());
+                PreferUtils.setUserId(this,data.data.getId());
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
                 saveUser(data.data);
                 tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");

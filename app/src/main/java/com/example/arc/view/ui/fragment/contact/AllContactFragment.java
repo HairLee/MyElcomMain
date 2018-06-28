@@ -2,10 +2,15 @@ package com.example.arc.view.ui.fragment.contact;
 
 
 import android.arch.lifecycle.Observer;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -26,6 +31,7 @@ import com.example.arc.model.api.response.User;
 import com.example.arc.model.db.QbUsersDbManager;
 import com.example.arc.services.CallService;
 import com.example.arc.util.CollectionsUtils;
+import com.example.arc.util.ConstantsApp;
 import com.example.arc.util.Consts;
 import com.example.arc.util.PermissionsChecker;
 import com.example.arc.util.PushNotificationSender;
@@ -40,6 +46,7 @@ import com.example.arc.view.ui.CallActivity;
 import com.example.arc.view.ui.DetailActivity;
 import com.example.arc.view.ui.PermissionsActivity;
 import com.example.arc.view.ui.activity.ProfileActivity;
+import com.example.arc.view.ui.activity.ProfileFavouriteActivity;
 import com.example.arc.viewmodel.AllContactSuggestViewModel;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.users.model.QBUser;
@@ -100,6 +107,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 //        showProgressDialog(R.string.dlg_loading1);
         recyclerView = view.findViewById(R.id.recyclerViewBottom);
         setupViewTest();
+        registerChangeAvatarReceiver();
         return view;
     }
 
@@ -125,6 +133,8 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
             contacts = listRestData.data;
             setupViewTest();
         });
+
+        allContactSuggestViewModel.setAllContactrequest();
     }
 
 
@@ -157,7 +167,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     public void onViewProfile(View view,int userId) {
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), view, getString(R.string.trans_shared_image));
-        ProfileActivity.start(getContext(),userId,options);
+        ProfileFavouriteActivity.start(getContext(),userId,options);
     }
 
     @Override
@@ -217,6 +227,22 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         PushNotificationSender.sendPushMessage(opponentsList, user.getName());
 
         CallActivity.start(getContext(), false);
+    }
+
+
+    private void registerChangeAvatarReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        ChangeAvatarReceiver changeAvatarReceiver = new ChangeAvatarReceiver();
+        intentFilter.addAction(ConstantsApp.BROARD_CHANGE_AVATAR);
+        getActivity().registerReceiver(changeAvatarReceiver, intentFilter);
+    }
+
+    public class ChangeAvatarReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            allContactSuggestViewModel.setAllContactrequest();
+        }
     }
 
 

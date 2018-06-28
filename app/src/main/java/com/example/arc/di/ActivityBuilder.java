@@ -7,6 +7,7 @@ import com.example.arc.view.ui.SourcesActivity;
 import com.example.arc.view.ui.activity.LunchRegistrationActivity;
 import com.example.arc.view.ui.activity.NotificationActivity;
 import com.example.arc.view.ui.activity.ProfileActivity;
+import com.example.arc.view.ui.activity.ProfileFavouriteActivity;
 import com.example.arc.view.ui.activity.SettingActivity;
 import com.example.arc.view.ui.activity.SettingChangePwActivity;
 import com.example.arc.view.ui.activity.TimeKeepingActivity;
@@ -44,6 +45,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract ProfileActivity bindProfileActivity();
+
+    @ContributesAndroidInjector
+    abstract ProfileFavouriteActivity bindProfileFavouriteActivity();
 
     @ContributesAndroidInjector
     abstract SettingChangePwActivity bindSettingChangePwActivity();
