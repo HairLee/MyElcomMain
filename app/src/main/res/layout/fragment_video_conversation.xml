@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentOpponents"
     style="@style/MatchParent"
-    android:background="@color/background_fragment_conversation">
+    android:background="@color/transparent">
 
 
     <com.quickblox.videochat.webrtc.view.QBRTCSurfaceView
@@ -18,21 +19,11 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/action_bar_height"
-        android:layout_marginLeft="@dimen/margin_small"
          />
 
     <include layout="@layout/view_outgoing_screen" />
 
-    <TextView
-        android:id="@+id/connectionStatusLocal"
-        style="@style/MatchWidth"
-        android:layout_marginBottom="@dimen/margin_very_small"
-        android:gravity="center_horizontal"
-        android:maxLength="13"
-        android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
-        android:textStyle="normal|italic" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/grid_opponents"

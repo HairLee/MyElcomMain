@@ -4,6 +4,7 @@ import com.example.arc.view.ui.DetailActivity;
 import com.example.arc.view.ui.LoginActivity;
 import com.example.arc.view.ui.MainActivity;
 import com.example.arc.view.ui.SourcesActivity;
+import com.example.arc.view.ui.activity.ForgetPasswordActivity;
 import com.example.arc.view.ui.activity.LunchRegistrationActivity;
 import com.example.arc.view.ui.activity.NotificationActivity;
 import com.example.arc.view.ui.activity.ProfileActivity;
@@ -58,6 +59,8 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector
     abstract SettingActivity bindSettingActivity();
 
+    @ContributesAndroidInjector
+    abstract ForgetPasswordActivity bindForgetPasswordActivity();
 
 
 

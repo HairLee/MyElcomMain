@@ -3,8 +3,11 @@ package com.example.arc.util;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.arc.view.ui.activity.OpponentsActivity;
 import com.quickblox.videochat.webrtc.QBRTCSession;
 import com.quickblox.videochat.webrtc.callbacks.QBRTCClientSessionCallbacksImpl;
+
+import java.util.Map;
 
 /**
  * Created by tereha on 16.05.16.
@@ -40,10 +43,18 @@ public class WebRtcSessionManager extends QBRTCClientSessionCallbacksImpl {
     @Override
     public void onReceiveNewSession(QBRTCSession session) {
         Log.d(TAG, "onReceiveNewSession to WebRtcSessionManager");
+        Map<String,String> userInfo = session.getUserInfo();
+
+        if(userInfo != null){
+            PreferUtils.setEmailOpponent(context,userInfo.get("name"));
+            PreferUtils.setAvatarOpponent(context,userInfo.get("avatar"));
+        }
+
+        Log.e("hailpt"," WebRtcSessionManager onReceiveNewSession "+userInfo.get("name"));
 
         if (currentSession == null){
             setCurrentSession(session);
-//            OpponentsActivity.start(context, true);
+            OpponentsActivity.start(context, true);
         }
     }
 

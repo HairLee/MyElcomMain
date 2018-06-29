@@ -102,13 +102,15 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     }
 
     public void updateLayout(int pos){
-        updateLayout(timeKeeps.get(pos));
+        if (timeKeeps != null && timeKeeps.size() > 0){
+            updateLayout(timeKeeps.get(pos));
+        }
     }
 
     public void updateLayout(TimeKeep timeKeep){
         Gson gson = new Gson();
         String json = gson.toJson(timeKeep);
-        Log.e("hailpt"," HomeFragmentCheckTimeView updateLayout json "+json);
+        Log.e("hailpt"," TimeKeepingRepository HomeFragmentCheckTimeView "+json);
 
         tvCheckIn.setText(timeKeep.getCheckIn());
         tvCheckOut.setText(timeKeep.getCheckOut());

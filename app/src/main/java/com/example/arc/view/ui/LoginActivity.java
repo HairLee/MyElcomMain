@@ -20,6 +20,7 @@ import com.example.arc.util.Consts;
 import com.example.arc.util.PreferUtils;
 import com.example.arc.util.SharedPrefsHelper;
 import com.example.arc.view.ui.activity.AllFriendQuickBloxActivity;
+import com.example.arc.view.ui.activity.ForgetPasswordActivity;
 import com.example.arc.view.ui.activity.OpponentsActivity;
 import com.example.arc.viewmodel.LoginViewModel;
 import com.example.arc.viewmodel.MainViewModel;
@@ -51,6 +52,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
             loginReq.setPassword(binding.edtPw.getText().toString());
             viewModel.setLoginParam(loginReq);
         });
+
+        binding.tvForgetPw.setOnClickListener(view-> {
+            ForgetPasswordActivity.start(this);
+        });
     }
 
     @Override
@@ -64,6 +69,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 hideProgressDialog();
                 PreferUtils.setToken(this,data.data.getApiToken());
                 PreferUtils.setUserId(this,data.data.getId());
+                PreferUtils.setAvatar(this,data.data.getAvatar());
+                PreferUtils.setEmail(this,data.data.getEmail());
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
                 saveUser(data.data);
                 tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");

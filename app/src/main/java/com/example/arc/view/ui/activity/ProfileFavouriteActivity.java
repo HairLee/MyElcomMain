@@ -26,27 +26,47 @@ import com.example.arc.core.base.BaseActivity;
 import com.example.arc.databinding.ActivityProfileFavouriteBinding;
 import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.request.MarkUserReq;
+import com.example.arc.model.api.response.User;
+import com.example.arc.services.CallService;
 import com.example.arc.util.ConstantsApp;
 import com.example.arc.util.Consts;
+import com.example.arc.util.PermissionsChecker;
 import com.example.arc.util.PreferUtils;
+import com.example.arc.util.PushNotificationSender;
+import com.example.arc.util.Toaster;
+import com.example.arc.util.WebRtcSessionManager;
+import com.example.arc.view.ui.CallActivity;
+import com.example.arc.view.ui.PermissionsActivity;
 import com.example.arc.viewmodel.ProfileFavouriteViewModel;
 import com.google.gson.JsonElement;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.users.model.QBUser;
+import com.quickblox.videochat.webrtc.QBRTCClient;
+import com.quickblox.videochat.webrtc.QBRTCSession;
+import com.quickblox.videochat.webrtc.QBRTCTypes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewModel,ActivityProfileFavouriteBinding> {
+import static org.webrtc.ContextUtils.getApplicationContext;
+
+public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewModel,ActivityProfileFavouriteBinding> implements View.OnClickListener {
 
     private int userId = 0;
     private ActivityProfileFavouriteBinding binding;
     private ProfileFavouriteViewModel viewModel;
+    private PermissionsChecker checker;
+    private User user;
     @Override
     protected Class<ProfileFavouriteViewModel> getViewModel() {
         return ProfileFavouriteViewModel.class;
@@ -55,9 +75,14 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
     @Override
     protected void onCreate(Bundle instance, ProfileFavouriteViewModel viewModel, ActivityProfileFavouriteBinding binding) {
         this.binding = binding;
+        binding.imageView12.setOnClickListener(this);
+        binding.imageView13.setOnClickListener(this);
+        binding.imageView14.setOnClickListener(this);
+        checker = new PermissionsChecker(this);
         Intent intent = getIntent();
         if (intent.hasExtra(Consts.EXTRA_IS_USER_ID)){
             userId = intent.getIntExtra(Consts.EXTRA_IS_USER_ID,0);
+            hideCallLayoutWithMySelfAccount();
         }
 
         init(viewModel);
@@ -74,11 +99,15 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         viewModel.getUserProfile().observe(this, userRestData -> {
             if(userRestData != null){
                 hideProgressDialog();
-                binding.setUser(userRestData.data);
+                user = userRestData.data;
+
+                binding.setUser(user);
                 if(userRestData.data.getAvatar() != null){
                     Glide.with(this).load(userRestData.data.getAvatar())
                             .thumbnail(0.5f)
                             .into(binding.profileImage);
+                } else {
+                    binding.profileImage.setImageDrawable(getResources().getDrawable(R.drawable.defaul_ava));
                 }
             }
         });
@@ -95,9 +124,10 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         showProgressDialog();
         viewModel.setRequest(userId);
 
-        viewModel.uploadAvatar().observe(this, jsonElementRestData -> {
-            if (jsonElementRestData != null){
+        viewModel.uploadAvatar().observe(this, user -> {
+            if (user != null){
                 hideProgressDialog();
+                PreferUtils.setAvatar(this,user.data.getAvatar());
                 sendImageBroadcast();
             }
         });
@@ -118,6 +148,16 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                 }
             }
         });
+    }
+
+    private void hideCallLayoutWithMySelfAccount(){
+        if (userId == PreferUtils.getUserId(this)){
+            binding.imageView12.setVisibility(View.GONE);
+            binding.imageView13.setVisibility(View.GONE);
+            binding.imageView14.setVisibility(View.GONE);
+            binding.view4.setVisibility(View.GONE);
+        }
+
     }
 
     private static final String IMAGE_DIRECTORY = "/demonuts";
@@ -240,12 +280,61 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
 
             }
         }
+    }
 
+    private void startPermissionsActivity(boolean checkOnlyAudio) {
+        PermissionsActivity.startActivity(this, checkOnlyAudio, Consts.PERMISSIONS);
+    }
+
+    private boolean isLoggedInChat( QBUser item) {
+        if (!QBChatService.getInstance().isLoggedIn()) {
+            Toaster.shortToast(R.string.dlg_signal_error);
+            tryReLoginToChat(item);
+            return false;
+        }
+        return true;
+    }
+
+    private void tryReLoginToChat( QBUser item) {
+        CallService.start(this, item);
+    }
+
+    private void startCall(boolean isVideoCall, QBUser qbUser) {
+//        if (allFriendQuickBloxAdapter.getSelectedItems().size() > Consts.MAX_OPPONENTS_COUNT) {
+//            Toaster.longToast(String.format(getString(R.string.error_max_opponents_count),
+//                    Consts.MAX_OPPONENTS_COUNT));
+//            return;
+//        }
+
+
+        ArrayList<Integer> opponentsList = new ArrayList<>();
+        opponentsList.add(qbUser.getId());
+        QBRTCTypes.QBConferenceType conferenceType = isVideoCall
+                ? QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_VIDEO
+                : QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO;
+
+        QBRTCClient qbrtcClient = QBRTCClient.getInstance(getApplicationContext());
+
+        QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
+
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put("name", PreferUtils.getEmail(this));
+        userInfo.put("avatar", PreferUtils.getAvatar(this));
+
+
+        newQbRtcSession.startCall(userInfo);
+
+        WebRtcSessionManager.getInstance(this).setCurrentSession(newQbRtcSession);
+
+        PushNotificationSender.sendPushMessage(opponentsList, qbUser.getFullName());
+
+        CallActivity.start(this, false);
 
     }
 
     private void sendImageBroadcast() {
         Intent intent = new  Intent(ConstantsApp.BROARD_CHANGE_AVATAR);
+        intent.putExtra(ConstantsApp.BROARD_CHANGE_AVATAR, avatar); // not user
         sendBroadcast(intent);
     }
 
@@ -255,4 +344,48 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         context.startActivity(starter, options.toBundle());
     }
 
+    private void callVideoOrAutio(boolean isCallVideo){
+
+        if(user == null || (user.getQuickbloxId().equals("") || user.getQuickbloxId() == null)){
+            Toaster.shortToast("Need the QuickBlox Id");
+            return;
+        }
+        Toaster.shortToast(user.getQuickbloxId().toString());
+        QBUser qbUser = new QBUser();
+        qbUser.setId(user.getQuickbloxId());
+        qbUser.setEmail(user.getEmail());
+        qbUser.setLogin(user.getId().toString());
+
+        if (isLoggedInChat(qbUser)) {
+            startCall(isCallVideo, qbUser);
+        }
+
+        if (checker.lacksPermissions(Consts.PERMISSIONS)) {
+            startPermissionsActivity(!isCallVideo);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.imageView13: {
+                // call audio
+                callVideoOrAutio(false);
+                break;
+            }
+
+            case R.id.imageView14: {
+                // call video
+                callVideoOrAutio(true);
+                break;
+            }
+
+            case R.id.imageView12: {
+                // chat
+
+
+                break;
+            }
+        }
+    }
 }

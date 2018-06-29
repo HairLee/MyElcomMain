@@ -26,7 +26,7 @@ public class ProfileFavouriteViewModel extends ViewModel {
 
     private final LiveData<RestData<User>> userResult;
     private final LiveData<RestData<JsonElement>> markUserResponse;
-    private final LiveData<RestData<JsonElement>> avatarResponse;
+    private final LiveData<RestData<User>> avatarResponse;
     private final ProfileRepository repository;
 
     @Inject
@@ -50,7 +50,7 @@ public class ProfileFavouriteViewModel extends ViewModel {
         return markUserResponse;
     }
 
-    public LiveData<RestData<JsonElement>> uploadAvatar() {
+    public LiveData<RestData<User>> uploadAvatar() {
         return avatarResponse;
     }
 

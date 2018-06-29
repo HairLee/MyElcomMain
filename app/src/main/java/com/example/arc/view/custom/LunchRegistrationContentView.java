@@ -2,9 +2,12 @@ package com.example.arc.view.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,10 +32,11 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private TextView tvMainDish1,tvMainDish2,tvMainDish3,tvMainDish4,tvMainDish5,tvLunchRegister;
     private TextView tvSideDish1,tvSideDish2,tvSideDish3,tvSideDish4,tvSideDish5;
-    private TextView tvLike, tvDislike,txtRegisterLunch;
+    private TextView tvLike, tvDislike,txtRegisterLunch,tvNumberOfMessage;
     private List<TextView> mMainDishLish = new ArrayList<>();
     private List<TextView> mSideDishLish = new ArrayList<>();
-    private ImageView imvLunch,imvLikeIc;
+    private ImageView imvLunch,imvLikeIc,imvSendFeedBack;
+    private EditText edtFeedback;
     private boolean isLunchRegister = false;
     private enum TimerStatus {
         STARTED,
@@ -82,6 +86,12 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         tvSideDish4 = view.findViewById(R.id.tvSideDish4);
         tvSideDish5 = view.findViewById(R.id.tvSideDish5);
 
+        tvNumberOfMessage = view.findViewById(R.id.tvNumberOfMessage);
+
+
+        edtFeedback = view.findViewById(R.id.edtFeedback);
+        imvSendFeedBack = view.findViewById(R.id.imvSendFeedBack);
+
 
         tvLunchRegister = view.findViewById(R.id.tvLunchRegister);
         imvLunch = view.findViewById(R.id.imvLunch);
@@ -102,6 +112,29 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         mSideDishLish.add(tvSideDish3);
         mSideDishLish.add(tvSideDish4);
         mSideDishLish.add(tvSideDish5);
+
+        edtFeedback.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() <= 200){
+                    tvNumberOfMessage.setText(s.length()+"/200");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        imvSendFeedBack.setOnClickListener(v -> {
+            mHomeFragmentCalendarListener.onSendFeedBack(edtFeedback.getText().toString());
+        });
     }
 
     @Override

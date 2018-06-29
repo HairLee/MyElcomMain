@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.request.LunchCancelReq;
+import com.example.arc.model.api.request.LunchFeedBackReq;
 import com.example.arc.model.api.request.LunchLikeReq;
 import com.example.arc.model.api.request.TimeKeepReq;
 import com.example.arc.model.api.response.Contact;
@@ -29,8 +30,10 @@ public class LunchRegistrationViewModel extends ViewModel {
     private final MutableLiveData<LunchCancelReq> requestRegisterLunch = new MutableLiveData<>();
     private final MutableLiveData<TimeKeepReq> timeReq = new MutableLiveData<>();
     private final MutableLiveData<LunchLikeReq> likeLunchRequest = new MutableLiveData<>();
+    private final MutableLiveData<LunchFeedBackReq> feedBackLunchRequest = new MutableLiveData<>();
 
     private final LiveData<RestData<JsonElement>> timeKeepListResult;
+    private final LiveData<RestData<JsonElement>> feedBackLunchListResult;
     private final LiveData<RestData<JsonElement>> registerLunchResult;
     private final LiveData<RestData<JsonElement>> likeLunchResult;
     private final LiveData<RestData<List<Lunch>>> lunchListResult;
@@ -52,6 +55,9 @@ public class LunchRegistrationViewModel extends ViewModel {
 
         likeLunchResult = Transformations.switchMap(likeLunchRequest,
                 param -> repository.likeLunch(likeLunchRequest.getValue()));
+
+        feedBackLunchListResult = Transformations.switchMap(feedBackLunchRequest,
+                param -> repository.sendLunchFeedBack(feedBackLunchRequest.getValue()));
     }
 
     public LiveData<RestData<JsonElement>> cancelLunch() {
@@ -70,6 +76,10 @@ public class LunchRegistrationViewModel extends ViewModel {
         return likeLunchResult;
     }
 
+    public LiveData<RestData<JsonElement>> sendFeedBackLunch() {
+        return feedBackLunchListResult;
+    }
+
     public void setRequest(LunchCancelReq lunchCancelReq){
         request.setValue(lunchCancelReq);
     }
@@ -80,6 +90,10 @@ public class LunchRegistrationViewModel extends ViewModel {
 
     public void setLikeLunchRequest(LunchLikeReq lunchLikeReq){
         likeLunchRequest.setValue(lunchLikeReq);
+    }
+
+    public void setFeedBackunchRequest(LunchFeedBackReq feedBackunchRequest){
+        feedBackLunchRequest.setValue(feedBackunchRequest);
     }
 
     public void setTimeRequest(TimeKeepReq timeRequest){

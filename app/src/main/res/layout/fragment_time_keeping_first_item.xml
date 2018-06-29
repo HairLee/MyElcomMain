@@ -90,12 +90,13 @@
                 android:layout_height="match_parent">
                 <TextView
                     style="@style/BlackColor"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/title_size"
                     android:text="T2"
                     />
                 <TextView
+                    android:textSize="@dimen/title_size"
                     android:textColor="@color/white"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv2"
@@ -116,12 +117,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
-                    android:textSize="16sp"
+                    android:textSize="@dimen/title_size"
                     android:text="T3"
                     style="@style/BlackColor" />
                 <TextView
+                    android:textSize="@dimen/title_size"
                     android:textColor="@color/white"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv3"
@@ -142,12 +144,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
-                    android:textSize="16sp"
+                    android:textSize="@dimen/title_size"
                     android:text="T4"
                     style="@style/BlackColor" />
                 <TextView
+                    android:textSize="@dimen/title_size"
                     android:textColor="@color/white"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv4"
@@ -168,12 +171,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
-                    android:textSize="16sp"
+                    android:textSize="@dimen/title_size"
                     android:text="T5"
                     style="@style/BlackColor" />
                 <TextView
+                    android:textSize="@dimen/title_size"
                     android:textColor="@color/white"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv5"
@@ -193,12 +197,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
-                    android:textSize="16sp"
+                    android:textSize="@dimen/title_size"
                     android:text="T6"
                     style="@style/BlackColor" />
                 <TextView
+                    android:textSize="@dimen/title_size"
                     android:textColor="@color/white"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv6"
@@ -212,6 +217,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lnKeepTime"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:weightSum="3"

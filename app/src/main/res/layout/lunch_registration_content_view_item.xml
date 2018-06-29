@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -15,6 +15,8 @@
             android:layout_height="wrap_content" />
 
        <TextView
+           android:textSize="15sp"
+           android:layout_marginLeft="10dp"
            android:text="Hôm nay ăn gì?"
            android:layout_centerVertical="true"
            android:layout_toRightOf="@+id/imvLunchIc"
@@ -36,11 +38,11 @@
 
            <TextView
                android:textColor="#3B71BC"
-               android:textSize="16sp"
+               android:textSize="15sp"
                android:layout_centerVertical="true"
                android:id="@+id/tvLunchRegister"
                android:layout_alignParentRight="true"
-               android:text="Đã đăng ký"
+
                android:layout_width="wrap_content"
                android:layout_height="wrap_content" />
 
@@ -82,7 +84,7 @@
         android:layout_marginTop="10dp"
         android:fadeScrollbars="false"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:paddingBottom="5dp"
@@ -269,15 +271,39 @@
         
     </LinearLayout>
 
+
+     <RelativeLayout
+         android:layout_marginLeft="1dp"
+         android:layout_marginTop="10dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+         <TextView
+             android:text="Phản hồi"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+
+         <TextView
+
+             android:id="@+id/tvNumberOfMessage"
+             android:layout_alignParentRight="true"
+             android:text="0/200"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+
+     </RelativeLayout>
+
     <RelativeLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
+            android:maxLength="200"
+            android:id="@+id/edtFeedback"
+            android:textSize="15sp"
             android:textColorHint="#A8A8AE"
             android:textColor="#A8A8AE"
-            android:paddingRight="20dp"
+            android:paddingRight="40dp"
             android:paddingLeft="5dp"
             android:hint="Cảm nhận về bữa trưa của bạn"
             android:background="@drawable/radius_gray_bg_strong_gray_srtoke_layout"
@@ -285,6 +311,7 @@
             android:layout_height="42dp" />
 
         <ImageView
+            android:id="@+id/imvSendFeedBack"
            android:padding="10dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

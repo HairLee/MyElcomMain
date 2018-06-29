@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import com.example.arc.model.api.request.ChangePwRq;
 import com.example.arc.model.api.request.LoginReq;
 import com.example.arc.model.api.request.LunchCancelReq;
+import com.example.arc.model.api.request.LunchFeedBackReq;
 import com.example.arc.model.api.request.LunchLikeReq;
 import com.example.arc.model.api.request.MarkUserReq;
 import com.example.arc.model.api.response.Contact;
@@ -68,6 +69,9 @@ public interface Api {
     @POST("lunch-like")
     Observable<RestData<JsonElement>> likeLunch(@Body LunchLikeReq lunchCancelReq, @Header("Authorization") String s);
 
+    @POST("lunch-feedback")
+    Observable<RestData<JsonElement>> sendLunchFeedBack(@Body LunchFeedBackReq lunchFeedBackReq , @Header("Authorization") String s);
+
     @POST("lunch-dislike")
     Observable<RestData<JsonElement>> dislikeLunch(@Body LunchLikeReq lunchCancelReq,@Header("Authorization") String s);
 
@@ -90,7 +94,7 @@ public interface Api {
 
     @Multipart
     @POST("upload-avatar")
-    Observable<RestData<JsonElement>> uploadAvatar(@Part MultipartBody.Part  avatarPart, @Header("Authorization") String s);
+    Observable<RestData<User>> uploadAvatar(@Part MultipartBody.Part  avatarPart, @Header("Authorization") String s);
 
 
 }

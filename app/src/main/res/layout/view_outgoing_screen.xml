@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_background_outgoing_screen"
     style="@style/MatchParent"
+    android:background="#1B304E"
     android:orientation="vertical">
 
     <View
@@ -18,6 +19,18 @@
         android:textSize="@dimen/text_size_call"
         android:textStyle="normal"
         tools:text="John, Bob, Merlin" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/connectionStatusLocal"
+        style="@style/MatchWidth"
+        android:layout_marginBottom="@dimen/margin_very_small"
+        android:gravity="center_horizontal"
+        android:maxLength="13"
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white"
+        android:textStyle="normal|italic" />
 
     <TextView
         android:id="@+id/text_ringing"

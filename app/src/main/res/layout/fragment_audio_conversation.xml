@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentIncomeCall"
+    android:background="#1B304E"
     style="@style/MatchParent">
 
     <LinearLayout
@@ -13,16 +14,19 @@
         android:paddingLeft="@dimen/also_in_call_text_left_right_padding"
         android:paddingRight="@dimen/also_in_call_text_left_right_padding">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@drawable/defaul_ava"
             android:id="@+id/image_caller_avatar"
-            style="@style/CallerAvatar" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
         <TextView
+            android:layout_marginTop="5dp"
+            android:text="1111"
             android:id="@+id/text_caller_name"
             style="@style/WrapContent"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingTop="@dimen/padding_top_large"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/caller_name_text_size" />
 
@@ -54,8 +58,10 @@
 
     </LinearLayout>
 
-    <include layout="@layout/view_outgoing_screen" />
+    <include
+        android:visibility="gone"
+        layout="@layout/view_outgoing_screen" />
 
-    <include layout="@layout/view_action_buttons_conversation_fragment" />
+    <include layout="@layout/view_action_buttons_audio_conversation_fragment" />
 
 </RelativeLayout>

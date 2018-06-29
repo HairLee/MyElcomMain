@@ -210,7 +210,7 @@
 
     <string name="opponents">and %s other</string>
     <string name="opponent">and %s </string>
-    <string name="ringing">Ringing</string>
+    <string name="ringing">Calling...</string>
     <string name="stop_share">Stop</string>
     <string name="camera_swicth_failed">\"Failed switch camera\"</string>
 

@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
@@ -24,6 +25,7 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
 
 
     private  SettingViewModel viewModel;
+    private TextView tvEmail;
     @Override
     protected Class<SettingViewModel> getViewModel() {
         return SettingViewModel.class;
@@ -36,7 +38,8 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
         findViewById(R.id.rlPassword).setOnClickListener(this);
         findViewById(R.id.tvLogout).setOnClickListener(this);
         findViewById(R.id.imvBack).setOnClickListener(this);
-
+        tvEmail = findViewById(R.id.tvEmail);
+        tvEmail.setText(PreferUtils.getEmail(this));
         viewModel.logout().observe(this, jsonElementRestData ->
                 {
                     if (jsonElementRestData.status_code == 200){

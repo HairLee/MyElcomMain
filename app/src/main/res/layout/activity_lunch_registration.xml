@@ -37,6 +37,12 @@
             android:layout_height="wrap_content">
         </com.example.arc.view.custom.HomeFragmentCalendarView>
 
+        <View
+            android:layout_marginTop="20dp"
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+
         <com.example.arc.view.custom.LunchRegistrationContentView
             android:id="@+id/lunchRegistrationContentView"
             android:layout_width="wrap_content"
@@ -44,11 +50,5 @@
 
         </com.example.arc.view.custom.LunchRegistrationContentView>
 
-        <EditText
-            android:id="@+id/btnEdt"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
-
-    </LinearLayout>
+       </LinearLayout>
 </layout>

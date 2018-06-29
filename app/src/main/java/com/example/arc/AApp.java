@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.arc.di.DaggerAppComponent;
 import com.example.arc.model.data.QbConfigs;
+import com.example.arc.util.FontsOverride;
 import com.example.arc.util.QBResRequestExecutor;
 import com.example.arc.util.configs.CoreConfigUtils;
 import com.quickblox.auth.session.QBSession;
@@ -37,11 +38,18 @@ public class AApp extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        setupFont();
         initApplication();
         initQBSessionManager();
         initQbConfigs();
         initCredentials();
+    }
 
+    private void setupFont(){
+        FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/RobotoLight.ttf");
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/RobotoLight.ttf");
+        FontsOverride.setDefaultFont(this, "SERIF", "fonts/RobotoLight.ttf");
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/RobotoLight.ttf");
     }
 
     private void initApplication(){

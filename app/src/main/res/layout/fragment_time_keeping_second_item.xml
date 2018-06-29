@@ -61,7 +61,7 @@
                     android:id="@+id/tvCheckIn"
 
                     android:layout_alignParentRight="true"
-                    android:text="--/--"
+                    android:text=""
                     style="@style/BlackColor" />
 
             </RelativeLayout>
@@ -78,7 +78,7 @@
                 <TextView
                     android:id="@+id/tvCheckOut"
                     android:layout_alignParentRight="true"
-                    android:text="--/--"
+                    android:text=""
                     style="@style/BlackColor" />
 
             </RelativeLayout>
@@ -266,7 +266,7 @@
         <TextView
             android:id="@+id/tvOnTime"
             android:gravity="center_horizontal"
-            android:text="15 ngày"
+            android:text="10"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
@@ -274,7 +274,7 @@
         <TextView
             android:id="@+id/tvLateTime"
             android:gravity="center_horizontal"
-            android:text="15 ngày"
+            android:text="0"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
@@ -282,7 +282,7 @@
         <TextView
             android:id="@+id/tvAbsent"
             android:gravity="center_horizontal"
-            android:text="15 ngày"
+            android:text="0"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />

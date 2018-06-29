@@ -16,10 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.arc.R;
 import com.example.arc.core.listener.IncomeCallFragmentCallbackListener;
 import com.example.arc.model.db.QbUsersDbManager;
 import com.example.arc.util.CollectionsUtils;
+import com.example.arc.util.PreferUtils;
 import com.example.arc.util.RingtonePlayer;
 import com.example.arc.util.UiUtils;
 import com.example.arc.util.UsersUtils;
@@ -43,8 +45,8 @@ public class IncomeCallFragment extends Fragment implements Serializable, View.O
     private static final String TAG = IncomeCallFragment.class.getSimpleName();
     private static final long CLICK_DELAY = TimeUnit.SECONDS.toMillis(2);
     private TextView callTypeTextView;
-    private ImageButton rejectButton;
-    private ImageButton takeButton;
+    private ImageView rejectButton;
+    private ImageView takeButton;
 
     private List<Integer> opponentsIds;
     private Vibrator vibrator;
@@ -124,12 +126,13 @@ public class IncomeCallFragment extends Fragment implements Serializable, View.O
         callTypeTextView = (TextView) view.findViewById(R.id.call_type);
 
         ImageView callerAvatarImageView = (ImageView) view.findViewById(R.id.image_caller_avatar);
-        callerAvatarImageView.setBackgroundDrawable(getBackgroundForCallerAvatar(currentSession.getCallerID()));
+        Glide.with(this).load(PreferUtils.getAvatarOpponent(getContext())).into(callerAvatarImageView);
 
         TextView callerNameTextView = (TextView) view.findViewById(R.id.text_caller_name);
+        callerNameTextView.setText(PreferUtils.getEmailOpponent(getContext()));
 
-        QBUser callerUser = qbUserDbManager.getUserById(currentSession.getCallerID());
-        callerNameTextView.setText(UsersUtils.getUserNameOrId(callerUser, currentSession.getCallerID()));
+//        QBUser callerUser = qbUserDbManager.getUserById(currentSession.getCallerID());
+//        callerNameTextView.setText(UsersUtils.getUserNameOrId(callerUser, currentSession.getCallerID()));
 
         TextView otherIncUsersTextView = (TextView) view.findViewById(R.id.text_other_inc_users);
         otherIncUsersTextView.setText(getOtherIncUsersNames());
@@ -137,8 +140,8 @@ public class IncomeCallFragment extends Fragment implements Serializable, View.O
         alsoOnCallText = (TextView) view.findViewById(R.id.text_also_on_call);
         setVisibilityAlsoOnCallTextView();
 
-        rejectButton = (ImageButton) view.findViewById(R.id.image_button_reject_call);
-        takeButton = (ImageButton) view.findViewById(R.id.image_button_accept_call);
+        rejectButton = (ImageView) view.findViewById(R.id.image_button_reject_call);
+        takeButton = (ImageView) view.findViewById(R.id.image_button_accept_call);
     }
 
     private void setVisibilityAlsoOnCallTextView() {
@@ -191,7 +194,7 @@ public class IncomeCallFragment extends Fragment implements Serializable, View.O
         boolean isVideoCall = conferenceType == QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_VIDEO;
 
         callTypeTextView.setText(isVideoCall ? R.string.text_incoming_video_call : R.string.text_incoming_audio_call);
-        takeButton.setImageResource(isVideoCall ? R.drawable.ic_video_white : R.drawable.ic_call);
+        takeButton.setImageResource(isVideoCall ? R.drawable.call_video_camera__ic : R.drawable.incoming_accept);
     }
 
     @Override

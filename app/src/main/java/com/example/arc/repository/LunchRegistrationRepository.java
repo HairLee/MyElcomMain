@@ -8,6 +8,7 @@ import com.example.arc.core.BaseViewModel;
 import com.example.arc.model.api.Api;
 import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.request.LunchCancelReq;
+import com.example.arc.model.api.request.LunchFeedBackReq;
 import com.example.arc.model.api.request.LunchLikeReq;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.ContactSuggest;
@@ -39,6 +40,7 @@ public class LunchRegistrationRepository implements BaseViewModel {
     private final Api api;
     private final MutableLiveData<RestData<JsonElement>> articleMutableLiveData;
     private final MutableLiveData<RestData<JsonElement>> registerLunchMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> feedBackLunchMutableLiveData;
     private final MutableLiveData<RestData<List<Lunch>>> lunchMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
@@ -54,6 +56,7 @@ public class LunchRegistrationRepository implements BaseViewModel {
         articleMutableLiveData = new MutableLiveData<>();
         lunchMutableLiveData = new MutableLiveData<>();
         registerLunchMutableLiveData = new MutableLiveData<>();
+        feedBackLunchMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<JsonElement>> cancelLunch(LunchCancelReq lunchCancelReq) {
@@ -108,6 +111,34 @@ public class LunchRegistrationRepository implements BaseViewModel {
                     }
                 });
         return registerLunchMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<JsonElement>> sendLunchFeedBack(LunchFeedBackReq lunchFeedBackReq) {
+        api.sendLunchFeedBack(lunchFeedBackReq, ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        feedBackLunchMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return feedBackLunchMutableLiveData;
     }
 
     public MutableLiveData<RestData<List<Lunch>>> getLunchMenu(String fromTime, String toTime) {

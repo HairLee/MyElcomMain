@@ -53,7 +53,7 @@ public class User  implements Parcelable {
     private Integer status;
     @SerializedName("avatar")
     @Expose
-    private Object avatar;
+    private String avatar;
     @SerializedName("is_active")
     @Expose
     private Integer isActive;
@@ -272,11 +272,11 @@ public class User  implements Parcelable {
         this.status = status;
     }
 
-    public Object getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Object avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

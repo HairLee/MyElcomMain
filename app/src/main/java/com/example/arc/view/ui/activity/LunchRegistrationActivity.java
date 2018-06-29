@@ -1,21 +1,27 @@
 package com.example.arc.view.ui.activity;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
 import com.example.arc.core.listener.HomeFragmentCalendarListener;
 import com.example.arc.databinding.ActivityLunchRegistrationBinding;
+import com.example.arc.model.api.RestData;
 import com.example.arc.model.api.request.LunchCancelReq;
+import com.example.arc.model.api.request.LunchFeedBackReq;
 import com.example.arc.model.api.request.LunchLikeReq;
 import com.example.arc.model.api.request.TimeKeepReq;
 import com.example.arc.model.api.response.Lunch;
 import com.example.arc.util.DateTimeUtils;
+import com.example.arc.util.KeyBoardUtils;
 import com.example.arc.util.Toaster;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -25,6 +31,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
     private ActivityLunchRegistrationBinding binding;
     private List<Lunch> lunchList;
     private int currentLocation = 0;
+    private  LunchRegistrationViewModel viewModel;
     @Override
     protected Class<LunchRegistrationViewModel> getViewModel() {
         return LunchRegistrationViewModel.class;
@@ -33,6 +40,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
     @Override
     protected void onCreate(Bundle instance, LunchRegistrationViewModel viewModel, ActivityLunchRegistrationBinding binding) {
         this.binding = binding;
+        this.viewModel = viewModel;
         binding.homeFragmentCalendarView.setHomeFragmentCalendarListener(this);
         binding.lunchRegistrationContentView.setHomeFragmentCalendarListener(this);
         init(viewModel);
@@ -42,6 +50,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
     }
 
     private void init(LunchRegistrationViewModel viewModel){
+        binding.homeFragmentCalendarView.hideLnKeepTime();
         lunchRegistrationViewModel = viewModel;
         viewModel.registerLunch().observe(this, jsonElementRestData -> {
             Toaster.longToast(jsonElementRestData.message);
@@ -71,6 +80,13 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
             Toaster.longToast(jsonElementRestData.message);
             hideProgressDialog();
             getListCurrentDate();
+        });
+
+        viewModel.sendFeedBackLunch().observe(this, data -> {
+            hideProgressDialog();
+            if (data != null){
+                Log.e("hailpt"," sendFeedBackLunch OK");
+            }
         });
 
         binding.imvBack.setOnClickListener(v -> onBackPressed());
@@ -123,6 +139,16 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
         lunchLikeReq.setData(DateTimeUtils.getToDayDateTime(this));
         lunchLikeReq.setLike(isLike);
         lunchRegistrationViewModel.setLikeLunchRequest(lunchLikeReq);
+    }
+
+    @Override
+    public void onSendFeedBack(String content) {
+        showProgressDialog();
+        KeyBoardUtils.hideKeyboard(this);
+        LunchFeedBackReq lunchFeedBackReq = new LunchFeedBackReq();
+        lunchFeedBackReq.setDate(DateTimeUtils.getToDayDateTime(this));
+        lunchFeedBackReq.setFeedback_content(content);
+        viewModel.setFeedBackunchRequest(lunchFeedBackReq);
     }
 
     private void getListCurrentDate(){

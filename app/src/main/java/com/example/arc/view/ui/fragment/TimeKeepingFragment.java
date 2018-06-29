@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,6 +118,11 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     }
 
     @Override
+    public void onSendFeedBack(String content) {
+
+    }
+
+    @Override
     protected Class getViewModel() {
         return TimeKeepingViewModel.class;
     }
@@ -125,7 +131,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel) {
         timeKeepingViewModel = viewModel;
         Log.e("hailpt"," pushData onCreate");
-        init();
+
     }
 
     private int mCount = 0;
@@ -135,11 +141,9 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
             mCount = mCount + 1;
             timeKeepingViewModel.getTimeKeepingList().observe(this, listRestData ->{
 
-
                         homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
 
-
-                        Toaster.longToast(listRestData.data.get(0).getDate());
+                        Toaster.longToast("Data = "+listRestData.data.get(0).getDate());
 
 
 //                        for (int i = 0; i < listRestData.data.size(); i++) {
@@ -167,10 +171,18 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     public void pushData(String fromDay, String toDay) {
         Log.e("hailpt"," pushData fromDay"+fromDay + " toDay "+toDay);
 //        showProgressDialog(R.string.text_push_notification_message);
-
+        init();
         TimeKeepReq timeKeepReq = new TimeKeepReq();
         timeKeepReq.setFromTime(fromDay);
         timeKeepReq.setToTime(toDay);
         timeKeepingViewModel.setLoginParam(timeKeepReq);
+
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("hailpt", "setUserVisibleHint: " + isVisibleToUser);
     }
 }

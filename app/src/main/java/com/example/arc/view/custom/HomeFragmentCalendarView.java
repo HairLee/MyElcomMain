@@ -30,7 +30,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
 
     private TextView tv2,tv3,tv4,tv5,tv6;
     private ImageView imvBack;
-    private LinearLayout lnRegisLunch;
+    private LinearLayout lnRegisLunch,lnKeepTime;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     List<TextView> textViewList = new ArrayList<>();
 
@@ -66,12 +66,12 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
 
     private void init(final Context context) {
         View view = inflate(context, R.layout.fragment_time_keeping_first_item, this);
-        TextView tvNumber = (TextView)view.findViewById(R.id.tvNumber);
         tv2 = (TextView)view.findViewById(R.id.tv2);
         tv3 = (TextView)view.findViewById(R.id.tv3);
         tv4 = (TextView)view.findViewById(R.id.tv4);
         tv5 = (TextView)view.findViewById(R.id.tv5);
         tv6 = (TextView)view.findViewById(R.id.tv6);
+        lnKeepTime = (LinearLayout) view.findViewById(R.id.lnKeepTime);
 
         textViewList.add(tv2);
         textViewList.add(tv3);
@@ -87,6 +87,10 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
 
         imvBack = view.findViewById(R.id.imvBack);
         imvBack.setOnClickListener(this);
+    }
+
+    public void hideLnKeepTime(){
+        lnKeepTime.setVisibility(GONE);
     }
 
     public void updateData(List<Date> mDates){

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentIncomeCall"
+    android:background="#1B304E"
     style="@style/MatchParent">
 
     <LinearLayout
@@ -13,9 +14,11 @@
         android:paddingLeft="@dimen/also_in_call_text_left_right_padding"
         android:paddingRight="@dimen/also_in_call_text_left_right_padding">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/image_caller_avatar"
-            style="@style/CallerAvatar" />
+            android:src="@drawable/defaul_ava" />
 
         <TextView
             android:id="@+id/text_caller_name"
@@ -24,9 +27,9 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingTop="20dp"
-            android:textColor="@color/text_color_caller_name"
+            android:textColor="@color/white"
             android:textSize="@dimen/caller_name_text_size"
-            tools:text="Very long opponent's User Name" />
+            tools:text="Ambition" />
 
         <TextView
             android:id="@+id/call_type"
@@ -39,7 +42,7 @@
         <TextView
             android:id="@+id/text_also_on_call"
             style="@style/WrapContent"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="20dp"
             android:text="@string/also_on_call"
             android:textColor="@color/text_color_also_on_call"
             android:textSize="@dimen/also_on_call_text_size" />
@@ -62,16 +65,20 @@
         android:layout_marginBottom="@dimen/padding_bottom"
         android:gravity="center">
 
-        <ImageButton
+        <ImageView
+            android:src="@drawable/incoming_reject"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:id="@+id/image_button_reject_call"
-            style="@style/EndCallImageButton" />
+            />
 
-        <ImageButton
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:id="@+id/image_button_accept_call"
-            style="@style/TakeCallImageButton"
             android:layout_marginStart="@dimen/income_call_buttons_margin"
             android:layout_toEndOf="@id/image_button_reject_call"
-            android:src="@drawable/ic_call"
+            android:src="@drawable/incoming_accept"
             tools:ignore="RtlCompat" />
 
     </RelativeLayout>

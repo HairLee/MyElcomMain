@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
 import com.example.arc.R;
 import com.example.arc.util.CollectionsUtils;
+import com.example.arc.util.PreferUtils;
 import com.example.arc.util.UiUtils;
 import com.example.arc.view.ui.CallActivity;
 
@@ -60,7 +62,7 @@ public class AudioConversationFragment extends BaseConversationFragment implemen
 
     @Override
     protected void configureToolbar() {
-        toolbar.setVisibility(View.VISIBLE);
+        toolbar.setVisibility(View.GONE);
         toolbar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.toolbar_title_color));
         toolbar.setSubtitleTextColor(ContextCompat.getColor(getActivity(), R.color.toolbar_subtitle_color));
@@ -78,13 +80,15 @@ public class AudioConversationFragment extends BaseConversationFragment implemen
         timerChronometer = (Chronometer) view.findViewById(R.id.chronometer_timer_audio_call);
 
         ImageView firstOpponentAvatarImageView = (ImageView) view.findViewById(R.id.image_caller_avatar);
-        firstOpponentAvatarImageView.setBackgroundDrawable(UiUtils.getColorCircleDrawable(opponents.get(0).getId()));
+
+        Glide.with(this).load(PreferUtils.getAvatarOpponent(getContext())).into(firstOpponentAvatarImageView);
+
 
         alsoOnCallText = (TextView) view.findViewById(R.id.text_also_on_call);
         setVisibilityAlsoOnCallTextView();
 
         firstOpponentNameTextView = (TextView) view.findViewById(R.id.text_caller_name);
-        firstOpponentNameTextView.setText(opponents.get(0).getFullName());
+        firstOpponentNameTextView.setText(PreferUtils.getEmailOpponent(getContext()));
 
         otherOpponentsTextView = (TextView) view.findViewById(R.id.text_other_inc_users);
         otherOpponentsTextView.setText(getOtherOpponentsNames());

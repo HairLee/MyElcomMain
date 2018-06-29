@@ -123,7 +123,7 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
 
     @Override
     protected void configureToolbar() {
-        toolbar.setVisibility(View.VISIBLE);
+        toolbar.setVisibility(View.GONE);
         toolbar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.black_transparent_50));
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
         toolbar.setSubtitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));

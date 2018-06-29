@@ -37,7 +37,7 @@ public class ProfileRepository implements BaseViewModel {
     private final Api api;
     private final MutableLiveData<RestData<User>> userMutableLiveData;
     private final MutableLiveData<RestData<JsonElement>> markFriendMutableLiveData;
-    private final MutableLiveData<RestData<JsonElement>> avatarMutableLiveData;
+    private final MutableLiveData<RestData<User>> avatarMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
     private final ArticleDao articleDao;
@@ -108,19 +108,19 @@ public class ProfileRepository implements BaseViewModel {
         return markFriendMutableLiveData;
     }
 
-    public MutableLiveData<RestData<JsonElement>> uploadAvatar(MultipartBody.Part avatarPart) {
+    public MutableLiveData<RestData<User>> uploadAvatar(MultipartBody.Part avatarPart) {
         api.uploadAvatar(avatarPart,ConstantsApp.BASE64_HEADER)
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .map(data -> data)
-                .subscribe(new Observer<RestData<JsonElement>>() {
+                .subscribe(new Observer<RestData<User>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         disposables.add(d);
                     }
 
                     @Override
-                    public void onNext(RestData<JsonElement> sources) {
+                    public void onNext(RestData<User> sources) {
                         avatarMutableLiveData.postValue(sources);
                     }
 

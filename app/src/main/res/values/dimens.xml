@@ -13,8 +13,10 @@
     <dimen name="item_height">136dp</dimen>
     <dimen name="action_bar_height">80dp</dimen>
 
+    <dimen name="title_size">14sp</dimen>
+
     <dimen name="toggle_button_params">60dp</dimen>
-    <dimen name="element_fragment_margin">30dp</dimen>
+    <dimen name="element_fragment_margin">20dp</dimen>
     <dimen name="element_fragment_margin_small">8dp</dimen>
 
     <dimen name="margin_common">16dp</dimen>
@@ -64,7 +66,7 @@
     <dimen name="income_call_buttons_margin">88dp</dimen>
     <dimen name="also_in_call_text_left_right_padding">64dp</dimen>
 
-    <dimen name="call_avatar_diameter">78dp</dimen>
+    <dimen name="call_avatar_diameter">200dp</dimen>
     <dimen name="call_margin_top">50dp</dimen>
     <dimen name="call_name_size">25sp</dimen>
     <dimen name="call_end_button_width">200dp</dimen>

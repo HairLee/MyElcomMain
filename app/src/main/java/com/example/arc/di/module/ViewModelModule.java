@@ -7,6 +7,7 @@ import com.example.arc.di.ViewModelKey;
 import com.example.arc.viewmodel.AllContactSuggestViewModel;
 import com.example.arc.viewmodel.ContactFavouriteViewModel;
 import com.example.arc.viewmodel.DetailViewModel;
+import com.example.arc.viewmodel.ForgetPasswordViewModel;
 import com.example.arc.viewmodel.LoginViewModel;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
 import com.example.arc.viewmodel.MainViewModel;
@@ -100,7 +101,10 @@ public abstract class ViewModelModule {
     abstract ViewModel bindsSettingViewModel(SettingViewModel settingViewModel);
 
 
-
+    @Binds
+    @IntoMap
+    @ViewModelKey(ForgetPasswordViewModel.class)
+    abstract ViewModel bindsForgetPasswordViewModel(ForgetPasswordViewModel forgetPasswordViewModel);
 
 
     @Binds

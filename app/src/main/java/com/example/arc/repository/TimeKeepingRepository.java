@@ -53,6 +53,9 @@ public class TimeKeepingRepository implements BaseViewModel {
     }
 
     public MutableLiveData<RestData<List<TimeKeep>>> getTimeKeeping(String fromTime,String toTime) {
+
+        Log.e("hailpt"," TimeKeepingRepository "+fromTime + " "+ toTime);
+
         api.getTimeKeeping(fromTime,toTime,ConstantsApp.BASE64_HEADER)
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
@@ -65,18 +68,18 @@ public class TimeKeepingRepository implements BaseViewModel {
 
                     @Override
                     public void onNext(RestData<List<TimeKeep>> sources) {
-                        Log.e("hailpt"," getTimeKeeping onNext ");
                         articleMutableLiveData.postValue(sources);
+
+                        Log.e("hailpt"," TimeKeepingRepository data = "+ sources.data.size());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("hailpt"," getTimeKeeping onError "+e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("hailpt"," getTimeKeeping onComplete");
+
                     }
                 });
         return articleMutableLiveData;

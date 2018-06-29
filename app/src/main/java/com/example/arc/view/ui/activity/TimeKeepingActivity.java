@@ -107,16 +107,17 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
 
     private void setupViewPager(List<List<Date>> pDates){
 
-        TimeKeepingPagerAdapter mDemoCollectionPagerAdapter = new TimeKeepingPagerAdapter(getSupportFragmentManager(),pDates);
+        TimeKeepingPagerAdapter mDemoCollectionPagerAdapter = new TimeKeepingPagerAdapter(getSupportFragmentManager(),pDates,currentPosOfDay);
 
 //        CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(this);
         ViewPager mViewPager = findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+
+
         mViewPager.postDelayed(() -> mViewPager.setCurrentItem(currentPosOfDay,false), 50);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -126,7 +127,6 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
     }

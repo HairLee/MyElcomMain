@@ -1,6 +1,10 @@
 package com.example.arc.view.ui.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,19 +12,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.arc.R;
+import com.example.arc.util.ConstantsApp;
+import com.example.arc.util.PreferUtils;
 import com.example.arc.view.ui.activity.LunchRegistrationActivity;
 import com.example.arc.view.ui.activity.NotificationActivity;
 import com.example.arc.view.ui.activity.SettingActivity;
 import com.example.arc.view.ui.activity.TimeKeepingActivity;
+import com.example.arc.view.ui.fragment.contact.AllContactFragment;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
+
+    private ImageView imvAva;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -43,6 +57,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.rlLunch).setOnClickListener(this);
         view.findViewById(R.id.rlSetting).setOnClickListener(this);
         view.findViewById(R.id.imvNotification).setOnClickListener(this);
+        imvAva = view.findViewById(R.id.imvAva);
+        updateAvatar();
     }
 
 
@@ -62,6 +78,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 NotificationActivity.start(getContext());
                 break;
 
+        }
+    }
+
+
+    private void updateAvatar(){
+        if(!PreferUtils.getAvatar(getContext()).equals("")){
+            Glide.with(this).load(PreferUtils.getAvatar(getContext()))
+                    .thumbnail(0.5f)
+                    .into(imvAva);
         }
     }
 }
