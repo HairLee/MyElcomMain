@@ -98,7 +98,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         this.viewModel = viewModel;
         viewModel.getUserProfile().observe(this, userRestData -> {
             if(userRestData != null){
-                hideProgressDialog();
+//                hideProgressDialog();
                 user = userRestData.data;
 
                 binding.setUser(user);
@@ -131,9 +131,8 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
             }
         });
 
-        showProgressDialog();
+//        showProgressDialog();
         viewModel.setRequest(userId);
-
         viewModel.uploadAvatar().observe(this, user -> {
             if (user != null){
                 hideProgressDialog();

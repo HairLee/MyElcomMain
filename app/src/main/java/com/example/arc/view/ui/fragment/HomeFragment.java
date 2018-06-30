@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.example.arc.util.ConstantsApp;
 import com.example.arc.util.PreferUtils;
 import com.example.arc.view.ui.activity.LunchRegistrationActivity;
 import com.example.arc.view.ui.activity.NotificationActivity;
+import com.example.arc.view.ui.activity.ProfileFavouriteActivity;
 import com.example.arc.view.ui.activity.SettingActivity;
 import com.example.arc.view.ui.activity.TimeKeepingActivity;
 import com.example.arc.view.ui.fragment.contact.AllContactFragment;
@@ -58,6 +60,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.rlSetting).setOnClickListener(this);
         view.findViewById(R.id.imvNotification).setOnClickListener(this);
         imvAva = view.findViewById(R.id.imvAva);
+        imvAva.setOnClickListener(this);
         updateAvatar();
     }
 
@@ -74,11 +77,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.rlSetting:
                 SettingActivity.start(getContext());
                 break;
-                case R.id.imvNotification:
+            case R.id.imvNotification:
                 NotificationActivity.start(getContext());
+                break;
+            case R.id.imvAva:
+                goToMyProfile();
                 break;
 
         }
+    }
+
+    private void goToMyProfile(){
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), imvAva, getString(R.string.trans_shared_image));
+        ProfileFavouriteActivity.start(getContext(),PreferUtils.getUserId(getContext()),options);
     }
 
 

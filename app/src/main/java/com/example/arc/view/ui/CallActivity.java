@@ -606,7 +606,7 @@ public class CallActivity extends AppCompatActivity implements QBRTCClientSessio
             QBUser participant = dbManager.getUserById(userID);
             final String participantName = participant != null ? participant.getFullName() : String.valueOf(userID);
 
-            showToast("User " + participantName + " " + getString(R.string.text_status_hang_up) + " conversation");
+            Log.e("hailpt","User " + participantName + " " + getString(R.string.text_status_hang_up) + " conversation");
         }
     }
 

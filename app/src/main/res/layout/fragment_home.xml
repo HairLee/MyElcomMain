@@ -14,7 +14,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imvAva"
             android:layout_marginLeft="15dp"
-            android:src="@color/color_blue_qb"
+            android:src="@drawable/defaul_ava"
             android:layout_centerVertical="true"
             android:layout_width="32dp"
             android:layout_height="32dp" />
