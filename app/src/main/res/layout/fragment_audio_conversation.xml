@@ -13,22 +13,37 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/also_in_call_text_left_right_padding"
         android:paddingRight="@dimen/also_in_call_text_left_right_padding">
+        <TextView
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:src="@drawable/defaul_ava"
-            android:id="@+id/image_caller_avatar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:id="@+id/call_type"
+            style="@style/WrapContent"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_incoming_audio_call"
+            android:textColor="@color/text_color_call_type"
+            android:textSize="22sp" />
+        <RelativeLayout
+            android:background="@drawable/avatar_call_bg"
+            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_centerInParent="true"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:id="@+id/image_caller_avatar"
+                android:src="@drawable/defaul_ava" />
+        </RelativeLayout>
 
         <TextView
-            android:layout_marginTop="5dp"
-            android:text="1111"
+            android:layout_marginTop="12dp"
             android:id="@+id/text_caller_name"
             style="@style/WrapContent"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/caller_name_text_size" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/caller_name_text_size"
+            tools:text="Ambition" />
 
         <Chronometer
             android:id="@+id/chronometer_timer_audio_call"
@@ -42,9 +57,9 @@
         <TextView
             android:id="@+id/text_also_on_call"
             style="@style/WrapContent"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:text="@string/also_on_call"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color_also_on_call"
             android:textSize="@dimen/also_on_call_text_size" />
 
         <TextView

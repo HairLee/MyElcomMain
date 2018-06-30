@@ -50,8 +50,6 @@ public class WebRtcSessionManager extends QBRTCClientSessionCallbacksImpl {
             PreferUtils.setAvatarOpponent(context,userInfo.get("avatar"));
         }
 
-        Log.e("hailpt"," WebRtcSessionManager onReceiveNewSession "+userInfo.get("name"));
-
         if (currentSession == null){
             setCurrentSession(session);
             OpponentsActivity.start(context, true);

@@ -26,6 +26,18 @@ public class User  implements Parcelable {
     @Expose
     private String name;
 
+    public Integer getStatus_mark() {
+        return status_mark;
+    }
+
+    public void setStatus_mark(Integer status_mark) {
+        this.status_mark = status_mark;
+    }
+
+    @SerializedName("status_mark")
+    @Expose
+    private Integer status_mark;
+
     @SerializedName("job_title")
     @Expose
     private String job_title;

@@ -18,8 +18,8 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.arc"
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion 17
+        targetSdkVersion 25
         versionCode buildVersionCode
         versionName buildVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

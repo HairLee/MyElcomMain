@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             LoginActivity.start(this);
             finish();
         } else {
-            tryToLoginQuickServer("hailt@elcom.com.vn","1234567890");
+            tryToLoginQuickServer(PreferUtils.getEmail(this),"1234567890");
             ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + token;
             HomeActivity.start(this, false);
 //            finish();

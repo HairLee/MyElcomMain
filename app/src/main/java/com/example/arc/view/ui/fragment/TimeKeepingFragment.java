@@ -143,7 +143,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
 
                         homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
 
-                        Toaster.longToast("Data = "+listRestData.data.get(0).getDate());
+//                        Toaster.longToast("Data = "+listRestData.data.get(0).getDate());
 
 
 //                        for (int i = 0; i < listRestData.data.size(); i++) {

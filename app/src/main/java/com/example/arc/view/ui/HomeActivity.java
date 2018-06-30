@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
        User user =  sharedPrefsHelper.getUser();
-       Log.e("hailpt"," sharedPrefsHelper~~> "+ user.getAvatar() + sharedPrefsHelper.getQbUser().getEmail());
+//       Log.e("hailpt"," sharedPrefsHelper~~> "+ user.getAvatar() + sharedPrefsHelper.getQbUser().getEmail());
     }
 
     @Override

@@ -8,7 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyCallThemes" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:typeface">monospace</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">#1B304E</item>
+        <item name="colorPrimaryDark">#1B304E</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:typeface">monospace</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>

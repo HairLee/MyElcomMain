@@ -109,6 +109,16 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                 } else {
                     binding.profileImage.setImageDrawable(getResources().getDrawable(R.drawable.defaul_ava));
                 }
+
+                if(userRestData.data.getStatus_mark() == 1){
+                    binding.imageView11.setImageResource(R.drawable.favor_ic);
+                } else {
+                    binding.imageView11.setImageResource(R.drawable.favor_not_ic);
+                }
+
+                if (userRestData.data.getStatus() != 1){
+                    binding.textView11.setText("Không hoạt động");
+                }
             }
         });
 
@@ -350,7 +360,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
             Toaster.shortToast("Need the QuickBlox Id");
             return;
         }
-        Toaster.shortToast(user.getQuickbloxId().toString());
+//        Toaster.shortToast(user.getQuickbloxId().toString());
         QBUser qbUser = new QBUser();
         qbUser.setId(user.getQuickbloxId());
         qbUser.setEmail(user.getEmail());

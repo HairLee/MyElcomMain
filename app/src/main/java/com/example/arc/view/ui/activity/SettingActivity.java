@@ -20,6 +20,9 @@ import com.example.arc.util.Toaster;
 import com.example.arc.view.ui.LoginActivity;
 import com.example.arc.viewmodel.SettingViewModel;
 import com.google.gson.JsonElement;
+import com.quickblox.core.QBEntityCallback;
+import com.quickblox.core.exception.QBResponseException;
+import com.quickblox.users.QBUsers;
 
 public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySettingBinding> implements View.OnClickListener {
 
@@ -42,9 +45,12 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
         tvEmail.setText(PreferUtils.getEmail(this));
         viewModel.logout().observe(this, jsonElementRestData ->
                 {
+                    hideProgressDialog();
                     if (jsonElementRestData.status_code == 200){
-                        LoginActivity.start(this);
-                        finish();
+                        PreferUtils.setToken(this,"");
+                        Intent intent = new Intent(SettingActivity.this,LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     } else {
                         Toaster.longToast(jsonElementRestData.message);
                     }
@@ -62,6 +68,21 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
         context.startActivity(starter);
     }
 
+    private void logout(){
+        showProgressDialog();
+        QBUsers.signOut().performAsync(new QBEntityCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid, Bundle bundle) {
+                viewModel.setRequest(PreferUtils.getToken(SettingActivity.this));
+            }
+
+            @Override
+            public void onError(QBResponseException e) {
+                showProgressDialog();
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -69,7 +90,7 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
                 SettingChangePwActivity.start(this);
                 break;
             case R.id.tvLogout:
-                viewModel.setRequest(PreferUtils.getToken(this));
+                logout();
                 break;
             case R.id.imvBack:
                 onBackPressed();

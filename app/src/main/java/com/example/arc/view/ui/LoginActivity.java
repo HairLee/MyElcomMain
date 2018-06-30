@@ -7,6 +7,11 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
@@ -46,7 +51,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         this.binding = binding;
         init(viewModel);
         binding.btnLogin.setOnClickListener(view -> {
-            showProgressDialog();
+            binding.btnLogin.setEnabled(false);
+            binding.rlLoading.setVisibility(View.VISIBLE);
+            binding.lnWrongPw.setVisibility(View.GONE);
+            makeDialogProgress();
             LoginReq loginReq = new LoginReq();
             loginReq.setEmail(binding.edtUsername.getText().toString());
             loginReq.setPassword(binding.edtPw.getText().toString());
@@ -65,8 +73,15 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
 
     private void init(LoginViewModel viewModel) {
         viewModel.getLoginResult().observe(this, data -> {
-            if(data != null){
-                hideProgressDialog();
+            binding.btnLogin.setEnabled(true);
+            if (data != null &&  data.status_code != 200){
+                binding.lnWrongPw.setVisibility(View.VISIBLE);
+                binding.rlLoading.setVisibility(View.GONE);
+                return;
+            }
+
+            if(data != null && data.data != null){
+
                 PreferUtils.setToken(this,data.data.getApiToken());
                 PreferUtils.setUserId(this,data.data.getId());
                 PreferUtils.setAvatar(this,data.data.getAvatar());
@@ -74,13 +89,27 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
                 saveUser(data.data);
                 tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
-//                startOpponentsActivity(); // For test Fast
+            }
+        });
+
+        binding.edtUsername.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                binding.edtUsername.setBackground(getResources().getDrawable(R.drawable.radius_edittext_white_bg_blue_srtoke_layout));
+            } else {
+                binding.edtUsername.setBackground(getResources().getDrawable(R.drawable.radius_edittext_white_bg_gray_srtoke_layout));
+            }
+        });
+
+        binding.edtPw.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus){
+                binding.edtPw.setBackground(getResources().getDrawable(R.drawable.radius_edittext_white_bg_blue_srtoke_layout));
+            } else {
+                binding.edtPw.setBackground(getResources().getDrawable(R.drawable.radius_edittext_white_bg_gray_srtoke_layout));
             }
         });
     }
 
     public void tryToLoginQuickServer(String username, String pv){
-        showProgressDialog();
         QBUser user = new QBUser(username, pv);
         QBUsers.signIn(user).performAsync(new QBEntityCallback<QBUser>() {
             @Override
@@ -91,7 +120,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
 
             @Override
             public void onError(QBResponseException e) {
-                hideProgressDialog();
                 Log.e("hailpt"," login onError "+e.getErrors());
             }
         });
@@ -130,7 +158,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Consts.EXTRA_LOGIN_RESULT_CODE) {
-            hideProgressDialog();
+            binding.rlLoading.setVisibility(View.GONE);
             boolean isLoginSuccess = data.getBooleanExtra(Consts.EXTRA_LOGIN_RESULT, false);
             String errorMessage = data.getStringExtra(Consts.EXTRA_LOGIN_ERROR_MESSAGE);
             if (isLoginSuccess) {
@@ -138,6 +166,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 startOpponentsActivity();
             }
         }
+    }
+
+    private void makeDialogProgress(){
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_rotation);
+        rotation.setRepeatCount(Animation.INFINITE);
+        binding.imvLoading.startAnimation(rotation);
     }
 
     public static void start(Context context) {

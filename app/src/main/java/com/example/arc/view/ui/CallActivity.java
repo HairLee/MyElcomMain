@@ -159,8 +159,6 @@ public class CallActivity extends AppCompatActivity implements QBRTCClientSessio
 
     private void startAudioManager() {
         audioManager.start((selectedAudioDevice, availableAudioDevices) -> {
-            Toaster.shortToast("Audio device switched to  " + selectedAudioDevice);
-
             if (onChangeAudioDeviceCallback != null) {
                 onChangeAudioDeviceCallback.audioDeviceChanged(selectedAudioDevice);
             }

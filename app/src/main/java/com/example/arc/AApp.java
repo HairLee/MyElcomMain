@@ -46,6 +46,7 @@ public class AApp extends DaggerApplication {
     }
 
     private void setupFont(){
+        Log.e("hailpt", " Go to setupFont");
         FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/RobotoLight.ttf");
         FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/RobotoLight.ttf");
         FontsOverride.setDefaultFont(this, "SERIF", "fonts/RobotoLight.ttf");

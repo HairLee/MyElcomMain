@@ -68,6 +68,7 @@ public class OpponentsActivity extends AppCompatActivity {
 
         if (isRunForCall && webRtcSessionManager.getCurrentSession() != null) {
             CallActivity.start(OpponentsActivity.this, true);
+//            overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
             finish();
         }
 
@@ -86,6 +87,7 @@ public class OpponentsActivity extends AppCompatActivity {
             isRunForCall = intent.getExtras().getBoolean(Consts.EXTRA_IS_STARTED_FOR_CALL);
             if (isRunForCall && webRtcSessionManager.getCurrentSession() != null) {
                 CallActivity.start(OpponentsActivity.this, true);
+//                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                 finish();
             }
         }
