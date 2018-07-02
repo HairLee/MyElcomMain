@@ -20,6 +20,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseFragment;
@@ -73,6 +76,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     //    private List<ContactSuggest> data = new ArrayList<>();
     private List<Contact> contacts = new ArrayList<>();
     private   RecyclerView recyclerView;
+    private ImageView imvLoading;
     private User user;
 
     private QbUsersDbManager dbManager;
@@ -88,7 +92,8 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 
         if(view == null){
             view = inflater.inflate(R.layout.fragment_all_contact, container, false);
-//            dbManager = QbUsersDbManager.getInstance(getContext());
+            imvLoading = view.findViewById(R.id.imvLoading);
+            makeDialogProgress();
         }
         // Inflate the layout for this fragment
 //        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
@@ -106,7 +111,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 //        Log.e("hailpt"," AllContactFragment onCreateView ");
 //        showProgressDialog(R.string.dlg_loading1);
         recyclerView = view.findViewById(R.id.recyclerViewBottom);
-        setupViewTest();
+
         registerChangeAvatarReceiver();
         return view;
     }
@@ -131,8 +136,11 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 //            allContactAdaprer.setData(listRestData.data);
 //            hideProgressDialog();
             contacts = listRestData.data;
+            rotation.cancel();
+            imvLoading.setVisibility(View.GONE);
             setupViewTest();
         });
+
 
         allContactSuggestViewModel.setAllContactrequest();
     }
@@ -235,6 +243,13 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         ChangeAvatarReceiver changeAvatarReceiver = new ChangeAvatarReceiver();
         intentFilter.addAction(ConstantsApp.BROARD_CHANGE_AVATAR);
         getActivity().registerReceiver(changeAvatarReceiver, intentFilter);
+    }
+
+    Animation rotation;
+    private void makeDialogProgress(){
+        rotation = AnimationUtils.loadAnimation(getContext(), R.anim.clockwise_rotation);
+        rotation.setRepeatCount(Animation.INFINITE);
+        imvLoading.startAnimation(rotation);
     }
 
     public class ChangeAvatarReceiver extends BroadcastReceiver {

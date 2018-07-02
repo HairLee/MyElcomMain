@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.arc.BR;
 import com.example.arc.R;
+import com.example.arc.core.listener.ChatAndCallListener;
 import com.example.arc.model.api.response.Contact;
 import com.example.arc.model.api.response.User;
 import com.example.arc.model.data.Article;
@@ -24,6 +26,7 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
 
     private List<User> data;
     private ItemSelectedListener listener;
+    private ChatAndCallListener chatAndCallListener;
 
     public ContactFavouriteAdapter(List<User> data) {
         this.data = data;
@@ -47,6 +50,9 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewDataBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()), R.layout.contact_favourite_item_layout, parent, false);
+
+
+
         return new ViewHolder(binding, listener);
     }
 
@@ -68,6 +74,11 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
         this.listener = listener;
     }
 
+    public void setChatAndCallListener(ChatAndCallListener chatAndCallListener) {
+        this.chatAndCallListener = chatAndCallListener;
+    }
+
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ViewDataBinding binding;
@@ -78,11 +89,18 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
             this.binding = binding;
             this.listener = listener;
             binding.getRoot().setOnClickListener(this);
+
         }
 
         void bind(User data) {
             binding.setVariable(BR.user, data);
             binding.executePendingBindings();
+
+            ImageView imvCall =  binding.getRoot().findViewById(R.id.imageView3);
+            imvCall.setOnClickListener(v -> chatAndCallListener.doCall(data));
+
+            ImageView imvChat =  binding.getRoot().findViewById(R.id.imageView4);
+            imvChat.setOnClickListener(v -> chatAndCallListener.doChat(data));
         }
 
         @Override
