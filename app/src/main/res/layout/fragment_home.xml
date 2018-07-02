@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F4F5FB"
-    tools:context="com.example.arc.view.ui.fragment.HomeFragment">
+    tools:context="com.elcom.hailpt.view.ui.fragment.HomeFragment">
 
     <RelativeLayout
         android:background="#F4F5FB"

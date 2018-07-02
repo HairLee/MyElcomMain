@@ -11,18 +11,18 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <com.example.arc.view.custom.HomeFragmentCalendarView
+            <com.elcom.hailpt.view.custom.HomeFragmentCalendarView
                 android:id="@+id/homeFragmentCalendarView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            </com.example.arc.view.custom.HomeFragmentCalendarView>
+            </com.elcom.hailpt.view.custom.HomeFragmentCalendarView>
 
-            <com.example.arc.view.custom.HomeFragmentCheckTimeView
+            <com.elcom.hailpt.view.custom.HomeFragmentCheckTimeView
                 android:layout_below="@+id/homeFragmentCalendarView"
                 android:id="@+id/homeFragmentCheckTimeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            </com.example.arc.view.custom.HomeFragmentCheckTimeView>
+            </com.elcom.hailpt.view.custom.HomeFragmentCheckTimeView>
 
         </LinearLayout>
     </ScrollView>

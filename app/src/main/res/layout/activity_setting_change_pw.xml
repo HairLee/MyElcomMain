@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.arc.view.ui.activity.SettingChangePwActivity">
+    tools:context="com.elcom.hailpt.view.ui.activity.SettingChangePwActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

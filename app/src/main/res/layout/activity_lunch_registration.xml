@@ -31,11 +31,11 @@
 
         </RelativeLayout>
 
-        <com.example.arc.view.custom.HomeFragmentCalendarView
+        <com.elcom.hailpt.view.custom.HomeFragmentCalendarView
             android:id="@+id/homeFragmentCalendarView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </com.example.arc.view.custom.HomeFragmentCalendarView>
+        </com.elcom.hailpt.view.custom.HomeFragmentCalendarView>
 
         <View
             android:layout_marginTop="20dp"
@@ -43,12 +43,12 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
 
-        <com.example.arc.view.custom.LunchRegistrationContentView
+        <com.elcom.hailpt.view.custom.LunchRegistrationContentView
             android:id="@+id/lunchRegistrationContentView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        </com.example.arc.view.custom.LunchRegistrationContentView>
+        </com.elcom.hailpt.view.custom.LunchRegistrationContentView>
 
        </LinearLayout>
 </layout>

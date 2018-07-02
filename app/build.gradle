@@ -17,7 +17,7 @@ buildscript {
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.example.arc"
+        applicationId "com.elcom.hailpt"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode buildVersionCode

@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="user"
-            type="com.example.arc.model.api.response.User" />
+            type="com.elcom.hailpt.model.api.response.User" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textView12"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
-        tools:context="com.example.arc.view.ui.activity.ProfileActivity">
+        tools:context="com.elcom.hailpt.view.ui.activity.ProfileActivity">
 
         <ImageView
             android:id="@+id/imageView8"
