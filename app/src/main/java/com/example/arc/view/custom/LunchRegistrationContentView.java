@@ -224,6 +224,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                 // have not order
                 isLunchRegister = false;
                 lnRegisLunch.setVisibility(VISIBLE);
+                imvLunch.setVisibility(INVISIBLE);
                 lnRegisLunch.setBackgroundResource(R.drawable.radius_blue_bg_blue_srtoke_layout);
                 txtRegisterLunch.setText("ĐĂNG KÝ");
             } else {
@@ -233,6 +234,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                 txtRegisterLunch.setText("HỦY ĐĂNG KÝ");
             }
         } else {
+            imvLunch.setVisibility(VISIBLE);
             lnRegisLunch.setVisibility(INVISIBLE);
             switch (statusLunch){
 

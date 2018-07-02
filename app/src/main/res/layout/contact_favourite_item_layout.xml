@@ -15,7 +15,8 @@
     android:layout_height="56dp">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:src="@drawable/defaul_ava"
         android:id="@+id/imageView2"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -25,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        />
 
     <TextView
         android:id="@+id/list_item_artist_name"

@@ -175,14 +175,14 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         this.user = user;
         if(user != null){
             if (isLoggedInChat()) {
-                startCall(true);
+                startCall(false);
             }
 
             if (checker.lacksPermissions(Consts.PERMISSIONS)) {
-                startPermissionsActivity(false);
+                startPermissionsActivity(true);
             }
         }
-        Toaster.longToast("Call "+user.getQuickbloxId());
+//        Toaster.longToast("Call "+user.getQuickbloxId());
     }
 
     private boolean isLoggedInChat() {

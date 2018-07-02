@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.arc.R;
 import com.example.arc.core.base.BaseActivity;
+import com.example.arc.core.listener.DialogYesNoListener;
 import com.example.arc.core.listener.HomeFragmentCalendarListener;
 import com.example.arc.databinding.ActivityLunchRegistrationBinding;
 import com.example.arc.model.api.RestData;
@@ -20,6 +21,7 @@ import com.example.arc.model.api.response.Lunch;
 import com.example.arc.util.DateTimeUtils;
 import com.example.arc.util.KeyBoardUtils;
 import com.example.arc.util.Toaster;
+import com.example.arc.view.dialog.LunchRegisDialog;
 import com.example.arc.viewmodel.LunchRegistrationViewModel;
 import com.google.gson.JsonElement;
 
@@ -109,18 +111,26 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
 
     @Override
     public void onCancelLunchRegister() {
-        showProgressDialog();
-        LunchCancelReq lunchCancelReq = new LunchCancelReq();
-        lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(this));
-        lunchRegistrationViewModel.setRequest(lunchCancelReq);
+
+        LunchRegisDialog lunchRegisDialog = new LunchRegisDialog(this, true, () -> {
+            showProgressDialog();
+            LunchCancelReq lunchCancelReq = new LunchCancelReq();
+            lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(getApplicationContext()));
+            lunchRegistrationViewModel.setRequest(lunchCancelReq);
+
+        });
+        lunchRegisDialog.show();
     }
 
     @Override
     public void onDoLunchRegister() {
-        showProgressDialog();
-        LunchCancelReq lunchCancelReq = new LunchCancelReq();
-        lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(this));
-        lunchRegistrationViewModel.setRegisterLunchRequest(lunchCancelReq);
+        LunchRegisDialog lunchRegisDialog = new LunchRegisDialog(this, false, () -> {
+            showProgressDialog();
+            LunchCancelReq lunchCancelReq = new LunchCancelReq();
+            lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(getApplicationContext()));
+            lunchRegistrationViewModel.setRegisterLunchRequest(lunchCancelReq);
+        });
+        lunchRegisDialog.show();
     }
 
     @Override

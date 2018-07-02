@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/white"
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="262dp"
+    android:orientation="vertical"
+    android:layout_height="268dp">
+
+    <ImageView
+        android:id="@+id/imvDescription"
+        android:src="@drawable/lunch_regis_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tvTitle"
+        android:gravity="center"
+        android:text="Bạn có chắc muốn hủy đăng ký cơm trưa ?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Hủy trước 9:00 AM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnNo"
+            android:textColor="#3B71BC"
+            android:text="THOÁT"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/radius_edittext_white_bg_blue_srtoke_layout"
+            android:layout_width="100dp"
+            android:layout_height="36dp" />
+
+        <Button
+            android:id="@+id/btnOK"
+            android:textColor="#FB676C"
+            android:text="XÁC NHẬN"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/radius_edittext_white_bg_blue_srtoke_layout"
+            android:layout_width="100dp"
+            android:layout_height="36dp" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
