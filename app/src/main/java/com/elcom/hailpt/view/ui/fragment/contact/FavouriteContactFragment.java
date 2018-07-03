@@ -34,6 +34,9 @@ import com.quickblox.videochat.webrtc.QBRTCSession;
 import com.quickblox.videochat.webrtc.QBRTCTypes;
 
 import android.support.v7.widget.OrientationHelper;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
     ContactFavouriteAdapter contactFavouriteAdapter;
     private User user;
     private PermissionsChecker checker;
+    private ImageView imvLoading;
     public FavouriteContactFragment() {
         // Required empty public constructor
     }
@@ -63,7 +67,8 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         contactFavouriteAdapter.setChatAndCallListener(this);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(contactFavouriteAdapter);
-
+        imvLoading = view.findViewById(R.id.imvLoading);
+        makeDialogProgress();
         init();
 
         return view;
@@ -86,6 +91,8 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
             public void onChanged(@Nullable RestData<List<User>> listRestData) {
                 if(listRestData != null){
                     contactFavouriteAdapter.setData(listRestData.data);
+                    rotation.cancel();
+                    imvLoading.setVisibility(View.GONE);
                 }
             }
         });
@@ -152,5 +159,12 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         PushNotificationSender.sendPushMessage(opponentsList, user.getName());
 
         CallActivity.start(getContext(), false);
+    }
+
+    Animation rotation;
+    private void makeDialogProgress(){
+        rotation = AnimationUtils.loadAnimation(getContext(), R.anim.clockwise_rotation);
+        rotation.setRepeatCount(Animation.INFINITE);
+        imvLoading.startAnimation(rotation);
     }
 }

@@ -57,6 +57,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     TimeKeepingViewModel timeKeepingViewModel;
     private List<Date> mDates = new ArrayList<>();
     private HomeFragmentCheckTimeView homeFragmentCheckTimeView;
+    private HomeFragmentCalendarView homeFragmentCalendarView;
     private List<TimeKeep> timeKeeps = new ArrayList<>();
     public TimeKeepingFragment() {
         // Required empty public constructor
@@ -76,7 +77,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
         TimeKeepingActivity mTimeKeepingActivity = (TimeKeepingActivity) getActivity();
         mTimeKeepingActivity.setTimeKeepingUpdateDataListener(this);
 
-        HomeFragmentCalendarView homeFragmentCalendarView = view.findViewById(R.id.homeFragmentCalendarView);
+        homeFragmentCalendarView = view.findViewById(R.id.homeFragmentCalendarView);
         homeFragmentCheckTimeView = view.findViewById(R.id.homeFragmentCheckTimeView);
 
         homeFragmentCalendarView.setHomeFragmentCalendarListener(this);
@@ -142,7 +143,6 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
             timeKeepingViewModel.getTimeKeepingList().observe(this, listRestData ->{
 
                         homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
-
 //                        Toaster.longToast("Data = "+listRestData.data.get(0).getDate());
 
 
@@ -162,6 +162,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
 
                         timeKeeps = listRestData.data;
                         homeFragmentCheckTimeView.setDataForView(timeKeeps);
+                        homeFragmentCalendarView.setDataForView(timeKeeps);
                     }
             );
         }

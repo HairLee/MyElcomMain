@@ -75,7 +75,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
                     currentPosDay = i;
                 }
             }
-            binding.lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),20);
+            binding.lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),DateTimeUtils.currentDay());
         });
 
         viewModel.getLikeLunch().observe(this, jsonElementRestData -> {

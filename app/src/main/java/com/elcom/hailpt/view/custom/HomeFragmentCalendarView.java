@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.listener.HomeFragmentCalendarListener;
 import com.elcom.hailpt.model.api.response.Lunch;
+import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.DateTimeUtils;
+import com.google.gson.Gson;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
     private ImageView imvBack;
     private LinearLayout lnRegisLunch,lnKeepTime;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
+    private List<TimeKeep> timeKeeps;
     List<TextView> textViewList = new ArrayList<>();
 
 
@@ -117,11 +120,27 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
 
         for (int i = 0; i < textViewList.size(); i++) {
             if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
-                textViewList.get(i).setTextColor(getResources().getColor(R.color.color_accent));
+                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
+            }
+        }
+    }
+
+    public void setDataForView(List<TimeKeep> timeKeeps){
+        this.timeKeeps = timeKeeps;
+        Gson gson = new Gson();
+        String json = gson.toJson(timeKeeps.get(0));
+        Log.e("hailpt"," HomeFragmentCalendarView "+json);
+
+        for (int i = 0; i < timeKeeps.size(); i++) {
+            if(timeKeeps.get(i).getCheckIn().equals("")){
+                textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
             }
         }
 
+
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -134,21 +153,46 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                 break;
             case R.id.tv2:
                 mHomeFragmentCalendarListener.onChooseDate(0,Integer.parseInt(tv2.getText().toString()));
+                setSelectedBackgroundIcon(0);
                 break;
             case R.id.tv3:
                 mHomeFragmentCalendarListener.onChooseDate(1,Integer.parseInt(tv3.getText().toString()));
+                setSelectedBackgroundIcon(1);
                 break;
             case R.id.tv4:
                 mHomeFragmentCalendarListener.onChooseDate(2,Integer.parseInt(tv4.getText().toString()));
+                setSelectedBackgroundIcon(2);
                 break;
             case R.id.tv5:
                 mHomeFragmentCalendarListener.onChooseDate(3,Integer.parseInt(tv5.getText().toString()));
+                setSelectedBackgroundIcon(3);
                 break;
             case R.id.tv6:
                 mHomeFragmentCalendarListener.onChooseDate(4,Integer.parseInt(tv6.getText().toString()));
+                setSelectedBackgroundIcon(4);
                 break;
         }
 
+    }
+
+    private void setSelectedBackgroundIcon(int currentPos){
+        for (int i = 0; i < textViewList.size(); i++) {
+            if (i == currentPos){
+                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
+            } else  {
+                textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
+            }
+        }
+
+        for (int i = 0; i < timeKeeps.size(); i++) {
+            if(timeKeeps.get(i).getCheckIn().equals("")){
+                if (i == currentPos){
+                    textViewList.get(i).setBackgroundResource(R.drawable.today_late_choosed_ic);
+                } else {
+                    textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+                }
+            }
+        }
     }
 
     public void setHomeFragmentCalendarListener(HomeFragmentCalendarListener homeFragmentCalendarListener){

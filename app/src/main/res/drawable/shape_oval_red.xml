@@ -7,7 +7,7 @@
                 android:width="56dp"
                 android:height="56dp" />
             <solid
-                android:color="@color/random_color_8"/>
+                android:color="#FB676C"/>
         </shape>
     </item>
 

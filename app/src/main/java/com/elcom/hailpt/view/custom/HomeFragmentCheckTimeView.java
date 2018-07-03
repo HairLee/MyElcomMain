@@ -112,6 +112,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         String json = gson.toJson(timeKeep);
         Log.e("hailpt"," TimeKeepingRepository HomeFragmentCheckTimeView "+json);
 
+
         tvCheckIn.setText(timeKeep.getCheckIn());
         tvCheckOut.setText(timeKeep.getCheckOut());
         tvOnTime.setText(timeKeep.getStatistic().getOnTime().toString());
