@@ -184,12 +184,14 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
             }
         }
 
-        for (int i = 0; i < timeKeeps.size(); i++) {
-            if(timeKeeps.get(i).getCheckIn().equals("")){
-                if (i == currentPos){
-                    textViewList.get(i).setBackgroundResource(R.drawable.today_late_choosed_ic);
-                } else {
-                    textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+        if(timeKeeps != null){
+            for (int i = 0; i < timeKeeps.size(); i++) {
+                if(timeKeeps.get(i).getCheckIn().equals("")){
+                    if (i == currentPos){
+                        textViewList.get(i).setBackgroundResource(R.drawable.today_late_choosed_ic);
+                    } else {
+                        textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+                    }
                 }
             }
         }

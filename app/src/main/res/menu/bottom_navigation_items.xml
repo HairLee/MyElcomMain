@@ -15,7 +15,7 @@
     <item
         app:showAsAction="ifRoom"
         android:id="@+id/action_item3"
-        android:icon="@drawable/ic_assignment_ind_black_24dp"
+        android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
         android:title="Liên Lạc"/>
 
 

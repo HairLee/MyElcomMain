@@ -41,6 +41,8 @@ public class ArtistViewHolder extends ChildViewHolder {
       Glide.with(context).load(user.getAvatar())
               .thumbnail(0.5f)
               .into(imvAva);
+    } else {
+      imvAva.setImageResource(R.drawable.defaul_ava);
     }
   }
 
