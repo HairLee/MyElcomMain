@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/menu_bike_ic"
+                android:src="@drawable/car_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

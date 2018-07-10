@@ -2,8 +2,10 @@ package com.elcom.hailpt.view.ui.activity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.elcom.hailpt.R;
@@ -20,6 +22,8 @@ import com.quickblox.core.helper.StringifyArrayList;
 import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 
+import java.util.Date;
+
 public class SplashActivity extends AppCompatActivity {
     SharedPrefsHelper sharedPrefsHelper;
     private QBUser userForSave;
@@ -30,15 +34,19 @@ public class SplashActivity extends AppCompatActivity {
         sharedPrefsHelper = SharedPrefsHelper.getInstance();
         String token = PreferUtils.getToken(this);
 
-        if (token.equals("")){
-            LoginActivity.start(this);
-            finish();
-        } else {
-            tryToLoginQuickServer(PreferUtils.getEmail(this),"1234567890");
-            ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + token;
-            HomeActivity.start(this, false);
-//            finish();
-        }
+
+        new Handler().postDelayed(() -> {
+            if (token.equals("")){
+                LoginActivity.start(SplashActivity.this);
+                finish();
+            } else {
+                tryToLoginQuickServer(PreferUtils.getEmail(SplashActivity.this),"1234567890");
+                ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + token;
+                HomeActivity.start(SplashActivity.this, false);
+                finish();
+            }
+        }, 1000);
+
     }
 
     public void tryToLoginQuickServer(String username, String pv){

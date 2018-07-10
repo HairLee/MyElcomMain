@@ -31,18 +31,16 @@ public class TimeKeepingPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Log.e("hailpt", " TimeKeepingPagerAdapter "+position + " mCureentPos "+mCureentPos);
+        Log.e("hailpt", " CHECKADAPTER "+position + " mCureentPos "+mCureentPos);
 
-//        if ( position == 25){
+
             TimeKeepingFragment newsFragment = new TimeKeepingFragment();
             Bundle args = new Bundle();
             args.putInt("position", position);
             newsFragment.setData(mDates.get(position));
             newsFragment.setArguments(args);
             return newsFragment;
-//        } else {
-//            return new BlankFragment();
-//        }
+
 
     }
 

@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.internal.Util;
+
 
 /**
  * Created by admin on 3/5/2018.
@@ -31,9 +34,11 @@ import java.util.List;
 public class HomeFragmentCheckTimeView extends RelativeLayout implements View.OnClickListener {
 
     private TextView tvCheckIn,tvCheckOut,tvOnTime,tvLateTime,tvAbsent,tvToday,tvDate;
-    private ImageView imvBack;
+    private RelativeLayout rlLate;
+    private ImageView imvBack,imvSendFeedBack;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private List<TimeKeep> timeKeeps;
+    private EditText edtLate;
     private    ViewDataBinding binding;
 
     private enum TimerStatus {
@@ -70,6 +75,13 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         tvAbsent = (TextView)view.findViewById(R.id.tvAbsent);
         tvToday = (TextView)view.findViewById(R.id.tvToday);
         tvDate = (TextView)view.findViewById(R.id.tvDate);
+        rlLate = view.findViewById(R.id.rlLate);
+        imvSendFeedBack = view.findViewById(R.id.imvSendFeedBack);
+        edtLate = view.findViewById(R.id.edtLate);
+
+        imvSendFeedBack.setOnClickListener(v -> {
+            mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString());
+        });
 //
 //        imvBack = view.findViewById(R.id.imvBack);
 //        imvBack.setOnClickListener(this);
@@ -87,7 +99,6 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
 
     public void setDataForView(List<TimeKeep> timeKeeps){
         this.timeKeeps = timeKeeps;
-        updateLayout(timeKeeps.get(0));
     }
 
     public void updatelayout(List<TimeKeep> timeKeeps, int currentLocation){
@@ -111,15 +122,45 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         Gson gson = new Gson();
         String json = gson.toJson(timeKeep);
         Log.e("hailpt"," TimeKeepingRepository HomeFragmentCheckTimeView "+json);
+        rlLate.setVisibility(GONE);
+        if(!timeKeep.getCheckIn().equals("")){
+            tvCheckIn.setText(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeep.getCheckIn())*1000)+""));
 
 
-        tvCheckIn.setText(timeKeep.getCheckIn());
-        tvCheckOut.setText(timeKeep.getCheckOut());
+            int timeCheckIn = Integer.parseInt(tvCheckIn.getText().subSequence(0,1).toString());
+
+            if(timeCheckIn < 8){
+                tvToday.setText("Đúng giờ");
+                tvToday.setTextColor(getResources().getColor(R.color.onTime));
+            } else {
+                tvToday.setText("Đi muộn");
+                rlLate.setVisibility(VISIBLE);
+                tvToday.setTextColor(getResources().getColor(R.color.late));
+            }
+
+
+
+        } else {
+            tvToday.setText("Vắng mặt");
+            tvToday.setTextColor(getResources().getColor(R.color.lost));
+            tvCheckIn.setText("Không có dữ liệu");
+        }
+
+        if(!timeKeep.getCheckOut().equals("")){
+            tvCheckOut.setText(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeep.getCheckOut())*1000)+""));
+        } else {
+            tvCheckOut.setText("Không có dữ liệu");
+        }
+
         tvOnTime.setText(timeKeep.getStatistic().getOnTime().toString());
         tvLateTime.setText(timeKeep.getStatistic().getLate().toString());
         tvAbsent.setText(timeKeep.getStatistic().getAbsent().toString());
-        tvToday.setText(timeKeep.getDate());
-        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+
+
+
+//        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+
+        tvDate.setText(timeKeep.getDate());
     }
 
     public void setHomeFragmentCalendarListener(HomeFragmentCalendarListener homeFragmentCalendarListener){

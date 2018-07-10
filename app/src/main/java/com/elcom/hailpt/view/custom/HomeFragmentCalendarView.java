@@ -118,11 +118,14 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
             tv6.setText(dateFormat.format(mDates.get(4)).substring(0,2));
         }
 
+
+        // Set icon for today ( Current day )
         for (int i = 0; i < textViewList.size(); i++) {
             if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
                 textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
             }
         }
+
     }
 
     public void setDataForView(List<TimeKeep> timeKeeps){
@@ -134,6 +137,23 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         for (int i = 0; i < timeKeeps.size(); i++) {
             if(timeKeeps.get(i).getCheckIn().equals("")){
                 textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+            } else {
+
+                int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(0,1).toString());
+
+                if(timeCheckIn < 8){
+                    textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
+                } else {
+                    textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);
+                }
+            }
+        }
+
+
+        // Set icon for today ( Current day )
+        for (int i = 0; i < textViewList.size(); i++) {
+            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
             }
         }
 
@@ -192,6 +212,8 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                     } else {
                         textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
                     }
+                } else {
+//                    textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);
                 }
             }
         }

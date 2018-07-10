@@ -5,6 +5,10 @@
     <color name="colorAccent">#e4e4e4</color>
     <color name="colorLine">#EAEAF0</color>
 
+    <color name="lost">#FB676C</color>
+    <color name="onTime">#699CE2</color>
+    <color name="late">#F9A932</color>
+
     <color name="black">#000000</color>
     <color name="color_grey">#d3d3d3</color>
     <color name="white">#ffffff</color>

@@ -59,6 +59,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     private HomeFragmentCheckTimeView homeFragmentCheckTimeView;
     private HomeFragmentCalendarView homeFragmentCalendarView;
     private List<TimeKeep> timeKeeps = new ArrayList<>();
+
     public TimeKeepingFragment() {
         // Required empty public constructor
     }
@@ -120,6 +121,8 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
 
     @Override
     public void onSendFeedBack(String content) {
+        // Result why you are late.
+        Log.e("hailpt"," TimeKeepingFragment onSendFeedBackonSendFeedBack");
 
     }
 
@@ -131,7 +134,16 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     @Override
     protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel) {
         timeKeepingViewModel = viewModel;
-        Log.e("hailpt"," pushData onCreate");
+        Log.e("hailpt"," TimeKeepingFragment onCreate");
+
+        String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(0));
+        String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
+
+        init();
+        TimeKeepReq timeKeepReq = new TimeKeepReq();
+        timeKeepReq.setFromTime(fromTime);
+        timeKeepReq.setToTime(toTime);
+        timeKeepingViewModel.setLoginParam(timeKeepReq);
 
     }
 
@@ -142,26 +154,16 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
             mCount = mCount + 1;
             timeKeepingViewModel.getTimeKeepingList().observe(this, listRestData ->{
 
-                        homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
-//                        Toaster.longToast("Data = "+listRestData.data.get(0).getDate());
-
-
-//                        for (int i = 0; i < listRestData.data.size(); i++) {
-//                            if(listRestData.data.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat(getContext()))){
-//                                currentPosDay = i;
-//                            }
-//                        }
-//
-//                        if(currentPosDay != 0){
-//                            homeFragmentCheckTimeView.updateLayout(listRestData.data.get(currentPosDay));
-//                        } else {
-//                            homeFragmentCheckTimeView.updateLayout(listRestData.data.get(0));
-//                        }
-
-                        Log.e("hailpt"," TimeKeepingppFragment init "+currentPosDay);
+                        for (int i = 0; i < listRestData.data.size(); i++) {
+                            if(listRestData.data.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat(getContext()))){
+                                currentPosDay = i;
+                            }
+                        }
 
                         timeKeeps = listRestData.data;
                         homeFragmentCheckTimeView.setDataForView(timeKeeps);
+                        homeFragmentCheckTimeView.updateLayout(currentPosDay);
+
                         homeFragmentCalendarView.setDataForView(timeKeeps);
                     }
             );
@@ -170,20 +172,12 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
 
     @Override
     public void pushData(String fromDay, String toDay) {
-        Log.e("hailpt"," pushData fromDay"+fromDay + " toDay "+toDay);
-//        showProgressDialog(R.string.text_push_notification_message);
-        init();
-        TimeKeepReq timeKeepReq = new TimeKeepReq();
-        timeKeepReq.setFromTime(fromDay);
-        timeKeepReq.setToTime(toDay);
-        timeKeepingViewModel.setLoginParam(timeKeepReq);
-
-
+        Log.e("hailpt"," TimeKeepingFragment fromDay"+fromDay + " toDay "+toDay);
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.e("hailpt", "setUserVisibleHint: " + isVisibleToUser);
+
     }
 }

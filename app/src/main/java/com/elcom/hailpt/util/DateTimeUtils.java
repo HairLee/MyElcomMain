@@ -1,9 +1,12 @@
 package com.elcom.hailpt.util;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -195,6 +198,17 @@ public class DateTimeUtils {
         DateFormat dateFormat = new SimpleDateFormat("d");
         int curentTime = Integer.parseInt(dateFormat.format(Calendar.getInstance().getTime()));
         return curentTime;
+    }
+
+    public static String convertLongToTimeDate(String longV){
+
+        if (longV.equals("")){
+            return "Không có dữ liệu";
+        }
+
+        long millisecond = Long.parseLong(longV);
+        String dateString = android.text.format.DateFormat.format("h:mm", new Date(millisecond)).toString();
+        return  dateString;
     }
 
 }
