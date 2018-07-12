@@ -14,9 +14,7 @@ public class ChangePwRq {
     @SerializedName("new_password")
     @Expose
     private String newPassword;
-    @SerializedName("confirm_password")
-    @Expose
-    private String confirmPassword;
+
 
     public String getOldPassword() {
         return oldPassword;
@@ -34,12 +32,6 @@ public class ChangePwRq {
         this.newPassword = newPassword;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
 
 }

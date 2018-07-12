@@ -1,18 +1,14 @@
 package com.elcom.hailpt.view.ui.activity;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
-import com.elcom.hailpt.core.listener.DialogYesNoListener;
 import com.elcom.hailpt.core.listener.HomeFragmentCalendarListener;
 import com.elcom.hailpt.databinding.ActivityLunchRegistrationBinding;
-import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.LunchCancelReq;
 import com.elcom.hailpt.model.api.request.LunchFeedBackReq;
 import com.elcom.hailpt.model.api.request.LunchLikeReq;
@@ -23,7 +19,6 @@ import com.elcom.hailpt.util.KeyBoardUtils;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.dialog.LunchRegisDialog;
 import com.elcom.hailpt.viewmodel.LunchRegistrationViewModel;
-import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -159,6 +154,11 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
         lunchFeedBackReq.setDate(DateTimeUtils.getToDayDateTime(this));
         lunchFeedBackReq.setFeedback_content(content);
         viewModel.setFeedBackunchRequest(lunchFeedBackReq);
+    }
+
+    @Override
+    public void onGetMonthInformation(String month) {
+
     }
 
     private void getListCurrentDate(){

@@ -51,7 +51,7 @@ public class NetworkModule {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("http://192.168.86.49:8000/api/")
+                .baseUrl("http://myelcom.elcom.com.vn:8000/api/")
                 .client(client)
                 .build();
     }

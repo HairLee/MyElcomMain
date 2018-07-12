@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +16,14 @@ import android.widget.TextView;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.listener.HomeFragmentCalendarListener;
+import com.elcom.hailpt.model.data.Statistic;
 import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.DateTimeUtils;
 import com.google.gson.Gson;
 
 import java.sql.Time;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +42,9 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private List<TimeKeep> timeKeeps;
     private EditText edtLate;
+    private TextView month1,month2,month3,month4,month5,month6,month7,month8,month9,month10,month11,month12;
+
+    private List<TextView> monthList;
     private    ViewDataBinding binding;
 
     private enum TimerStatus {
@@ -76,8 +82,49 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         tvToday = (TextView)view.findViewById(R.id.tvToday);
         tvDate = (TextView)view.findViewById(R.id.tvDate);
         rlLate = view.findViewById(R.id.rlLate);
+
         imvSendFeedBack = view.findViewById(R.id.imvSendFeedBack);
         edtLate = view.findViewById(R.id.edtLate);
+
+        month1 = view.findViewById(R.id.month1);
+        month2 = view.findViewById(R.id.month2);
+        month3 = view.findViewById(R.id.month3);
+        month4 = view.findViewById(R.id.month4);
+        month5 = view.findViewById(R.id.month5);
+        month6 = view.findViewById(R.id.month6);
+        month7 = view.findViewById(R.id.month7);
+        month8 = view.findViewById(R.id.month8);
+        month9 = view.findViewById(R.id.month9);
+        month10 = view.findViewById(R.id.month10);
+        month11 = view.findViewById(R.id.month11);
+        month12 = view.findViewById(R.id.month12);
+
+        monthList = new ArrayList<>();
+        monthList.add(month1);
+        monthList.add(month2);
+        monthList.add(month3);
+        monthList.add(month4);
+        monthList.add(month5);
+        monthList.add(month6);
+        monthList.add(month7);
+        monthList.add(month8);
+        monthList.add(month9);
+        monthList.add(month10);
+        monthList.add(month11);
+        monthList.add(month12);
+
+        month1.setOnClickListener(this);
+        month2.setOnClickListener(this);
+        month3.setOnClickListener(this);
+        month4.setOnClickListener(this);
+        month5.setOnClickListener(this);
+        month6.setOnClickListener(this);
+        month7.setOnClickListener(this);
+        month8.setOnClickListener(this);
+        month9.setOnClickListener(this);
+        month10.setOnClickListener(this);
+        month11.setOnClickListener(this);
+        month12.setOnClickListener(this);
 
         imvSendFeedBack.setOnClickListener(v -> {
             mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString());
@@ -90,11 +137,68 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-//            case R.id.imvBack:
-//                mHomeFragmentCalendarListener.onBack();
-//                break;
+            case R.id.month1:
+                mHomeFragmentCalendarListener.onGetMonthInformation("1");
+                changeColorOfMonth("T1");
+                break;
+            case R.id.month2:
+                mHomeFragmentCalendarListener.onGetMonthInformation("2");
+                changeColorOfMonth("T2");
+                break;
+            case R.id.month3:
+                mHomeFragmentCalendarListener.onGetMonthInformation("3");
+                changeColorOfMonth("T3");
+                break;
+            case R.id.month4:
+                mHomeFragmentCalendarListener.onGetMonthInformation("4");
+                changeColorOfMonth("T4");
+                break;
+            case R.id.month5:
+                mHomeFragmentCalendarListener.onGetMonthInformation("5");
+                changeColorOfMonth("T5");
+                break;
+            case R.id.month6:
+                mHomeFragmentCalendarListener.onGetMonthInformation("6");
+                changeColorOfMonth("T6");
+                break;
+            case R.id.month7:
+                mHomeFragmentCalendarListener.onGetMonthInformation("7");
+                changeColorOfMonth("T7");
+                break;
+            case R.id.month8:
+                mHomeFragmentCalendarListener.onGetMonthInformation("8");
+                changeColorOfMonth("T8");
+                break;
+            case R.id.month9:
+                mHomeFragmentCalendarListener.onGetMonthInformation("9");
+                changeColorOfMonth("T9");
+                break;
+            case R.id.month10:
+                mHomeFragmentCalendarListener.onGetMonthInformation("10");
+                changeColorOfMonth("T10");
+                break;
+            case R.id.month11:
+                mHomeFragmentCalendarListener.onGetMonthInformation("11");
+                changeColorOfMonth("T11");
+                break;
+            case R.id.month12:
+                mHomeFragmentCalendarListener.onGetMonthInformation("12");
+                changeColorOfMonth("T12");
+                break;
         }
 
+    }
+
+    private void changeColorOfMonth(String month){
+
+        for (int i = 0; i < monthList.size(); i++) {
+           if (monthList.get(i).getText().equals(month)){
+               monthList.get(i).setTextColor(getResources().getColor(R.color.color_blue_qb));
+//               monthList.get(i).setTypeface(null, Typeface.BOLD);
+           } else {
+               monthList.get(i).setTextColor(getResources().getColor(R.color.color_monthText));
+           }
+        }
     }
 
     public void setDataForView(List<TimeKeep> timeKeeps){
@@ -116,6 +220,12 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         if (timeKeeps != null && timeKeeps.size() > 0){
             updateLayout(timeKeeps.get(pos));
         }
+    }
+
+    public void updateMonthInformation(Statistic statistic){
+        tvOnTime.setText(statistic.getOnTime().toString());
+        tvLateTime.setText(statistic.getLate().toString());
+        tvAbsent.setText(statistic.getAbsent().toString());
     }
 
     public void updateLayout(TimeKeep timeKeep){

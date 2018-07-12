@@ -15,6 +15,7 @@ import com.elcom.hailpt.model.api.response.Notification;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.model.data.Articles;
 import com.elcom.hailpt.model.data.Sources;
+import com.elcom.hailpt.model.data.Statistic;
 import com.elcom.hailpt.model.data.TimeKeep;
 import com.google.gson.JsonElement;
 
@@ -47,6 +48,10 @@ public interface Api {
 
     @GET("check-in-history?")
     Observable<RestData<List<TimeKeep>>> getTimeKeeping(@Query("from_date") String from_date, @Query("to_date") String to_date, @Header("Authorization") String s);
+
+    @GET("check-in-history/statistic?")
+    Observable<RestData<Statistic>> getMonthInformation(@Query("y") String year, @Query("m") String month, @Header("Authorization") String s);
+
 
     @GET("suggest")
     Observable<RestData<List<ContactSuggest>>> getAllContactSuggest(@Header("Authorization") String s);

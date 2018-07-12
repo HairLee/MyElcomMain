@@ -14,6 +14,7 @@ import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.model.data.Articles;
 import com.elcom.hailpt.model.data.Source;
 import com.elcom.hailpt.model.data.Sources;
+import com.elcom.hailpt.model.data.Statistic;
 import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.model.db.AppDatabase;
 import com.elcom.hailpt.model.db.ArticleDao;
@@ -38,6 +39,7 @@ public class TimeKeepingRepository implements BaseViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
     private final Api api;
     private final MutableLiveData<RestData<List<TimeKeep>>> articleMutableLiveData;
+    private final MutableLiveData<RestData<Statistic>> statisticMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
     private final ArticleDao articleDao;
@@ -50,6 +52,7 @@ public class TimeKeepingRepository implements BaseViewModel {
         articleDao = database.articleDao();
         sourceList = sourceDao.getAllList();
         articleMutableLiveData = new MutableLiveData<>();
+        statisticMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<List<TimeKeep>>> getTimeKeeping(String fromTime,String toTime) {
@@ -83,6 +86,37 @@ public class TimeKeepingRepository implements BaseViewModel {
                     }
                 });
         return articleMutableLiveData;
+    }
+
+
+
+    public MutableLiveData<RestData<Statistic>> getMonthInformation(String year,String month) {
+
+        api.getMonthInformation(year,month,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<Statistic>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<Statistic> sources) {
+                        statisticMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        return statisticMutableLiveData;
     }
 
     @Override

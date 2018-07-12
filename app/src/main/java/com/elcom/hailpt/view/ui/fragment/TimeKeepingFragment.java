@@ -27,7 +27,9 @@ import com.elcom.hailpt.core.listener.HomeFragmentCalendarListener;
 import com.elcom.hailpt.core.listener.TimeKeepingUpdateDataListener;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.MonthReq;
 import com.elcom.hailpt.model.api.request.TimeKeepReq;
+import com.elcom.hailpt.model.data.Statistic;
 import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.DateTimeUtils;
@@ -127,6 +129,14 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     }
 
     @Override
+    public void onGetMonthInformation(String month) {
+        MonthReq monthReq = new MonthReq();
+        monthReq.setMonth(month);
+        monthReq.setYear("2018");
+        timeKeepingViewModel.setMonthReq(monthReq);
+    }
+
+    @Override
     protected Class getViewModel() {
         return TimeKeepingViewModel.class;
     }
@@ -167,6 +177,12 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
                         homeFragmentCalendarView.setDataForView(timeKeeps);
                     }
             );
+
+            timeKeepingViewModel.getMonthInformation().observe(this, statisticRestData -> {
+               if (statisticRestData != null && statisticRestData.status_code == 200){
+                   homeFragmentCheckTimeView.updateMonthInformation(statisticRestData.data);
+               }
+            });
         }
     }
 

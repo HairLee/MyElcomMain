@@ -7,6 +7,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
@@ -18,7 +19,7 @@ public class NotificationActivity extends BaseActivity<NotificationViewModel,Act
 
 
     private NotificationAdapter notificationAdapter;
-
+    private TextView tvTitle;
     @Override
     protected Class<NotificationViewModel> getViewModel() {
         return NotificationViewModel.class;
@@ -29,7 +30,9 @@ public class NotificationActivity extends BaseActivity<NotificationViewModel,Act
         notificationAdapter = new NotificationAdapter();
         binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         binding.recyclerView.setAdapter(notificationAdapter);
+        tvTitle = findViewById(R.id.tvTitle);
         findViewById(R.id.imvBack).setOnClickListener(v -> onBackPressed());
+        tvTitle.setText("Thông báo");
         init(viewModel);
     }
 
@@ -44,6 +47,8 @@ public class NotificationActivity extends BaseActivity<NotificationViewModel,Act
                 notificationAdapter.setData(listRestData.data);
             }
         });
+
+
     }
 
     public static void start(Context context) {

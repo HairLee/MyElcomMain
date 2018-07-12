@@ -21,6 +21,7 @@ public class PreferUtils {
     private  static final String PRE_OPPONENT_AVATAR = "PRE_OPPONENT_AVATAR";
     private  static final String PRE_USER_AVATAR = "PRE_USER_AVATAR";
     private  static final String PRE_USER_EMAIL = "PRE_USER_EMAIL";
+    private  static final String PRE_USER_PW = "PRE_USER_PW";
 
     private  static final String PRE_OPPONENT_EMAIL = "PRE_OPPONENT_EMAIL";
     private  static final String PREFER_GCM_TOKEN = "gcm_token";
@@ -38,6 +39,21 @@ public class PreferUtils {
         SharedPreferences preferences = context.getSharedPreferences(PREFER_NAME, Context.MODE_PRIVATE);
         return preferences.getString(PREFER_GCM_TOKEN, "");
     }
+
+
+    public static void setPassword(Context context,  String token) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(PREFER_NAME, Context.MODE_PRIVATE).edit();
+        editor.putString(PRE_USER_PW, token);
+        editor.commit();
+    }
+
+    public static String getPassword(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(PREFER_NAME, Context.MODE_PRIVATE);
+        return preferences.getString(PRE_USER_PW, "");
+    }
+
+
+
 
 
     public static void setUserId(Context context,  int token) {

@@ -18,4 +18,7 @@ public interface HomeFragmentCalendarListener {
     void onSendFeedBack(String content);
 
 
+    void onGetMonthInformation(String month);
+
+
 }

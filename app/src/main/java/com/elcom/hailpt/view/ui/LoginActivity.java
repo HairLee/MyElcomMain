@@ -83,6 +83,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
             if(data != null && data.data != null){
 
                 PreferUtils.setToken(this,data.data.getApiToken());
+                PreferUtils.setPassword(this,binding.edtPw.getText().toString());
                 PreferUtils.setUserId(this,data.data.getId());
                 PreferUtils.setAvatar(this,data.data.getAvatar());
                 PreferUtils.setEmail(this,data.data.getEmail());

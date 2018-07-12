@@ -134,6 +134,13 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         String json = gson.toJson(timeKeeps.get(0));
         Log.e("hailpt"," HomeFragmentCalendarView "+json);
 
+        // Set icon for today ( Current day )
+        for (int i = 0; i < textViewList.size(); i++) {
+            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
+            }
+        }
+
         for (int i = 0; i < timeKeeps.size(); i++) {
             if(timeKeeps.get(i).getCheckIn().equals("")){
                 textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
@@ -142,7 +149,12 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                 int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(0,1).toString());
 
                 if(timeCheckIn < 8){
-                    textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
+                    if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                        textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
+                    } else {
+                        textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
+                    }
+
                 } else {
                     textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);
                 }
@@ -150,12 +162,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         }
 
 
-        // Set icon for today ( Current day )
-        for (int i = 0; i < textViewList.size(); i++) {
-            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
-                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
-            }
-        }
+
 
 
     }
