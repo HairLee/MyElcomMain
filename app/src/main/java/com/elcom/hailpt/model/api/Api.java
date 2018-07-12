@@ -3,6 +3,7 @@ package com.elcom.hailpt.model.api;
 import android.arch.lifecycle.LiveData;
 
 import com.elcom.hailpt.model.api.request.ChangePwRq;
+import com.elcom.hailpt.model.api.request.ForgetPwReq;
 import com.elcom.hailpt.model.api.request.LoginReq;
 import com.elcom.hailpt.model.api.request.LunchCancelReq;
 import com.elcom.hailpt.model.api.request.LunchFeedBackReq;
@@ -55,6 +56,10 @@ public interface Api {
 
     @GET("suggest")
     Observable<RestData<List<ContactSuggest>>> getAllContactSuggest(@Header("Authorization") String s);
+
+    @POST("auth/forgot")
+    Observable<RestData<JsonElement>> forgetPassword(@Body ForgetPwReq forgetPwReq);
+
 
     @GET("user-group")
     Observable<RestData<List<Contact>>> getAllContact(@Header("Authorization") String s);

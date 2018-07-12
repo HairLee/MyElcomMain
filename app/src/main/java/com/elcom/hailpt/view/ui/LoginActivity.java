@@ -24,6 +24,7 @@ import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.SharedPrefsHelper;
+import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.ui.activity.AllFriendQuickBloxActivity;
 import com.elcom.hailpt.view.ui.activity.ForgetPasswordActivity;
 import com.elcom.hailpt.view.ui.activity.OpponentsActivity;
@@ -51,6 +52,17 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         this.binding = binding;
         init(viewModel);
         binding.btnLogin.setOnClickListener(view -> {
+
+            if (binding.edtUsername.getText().toString().equals("")){
+                Toaster.shortToast("Vui lòng nhập email");
+                return;
+            }
+
+            if (binding.edtPw.getText().toString().equals("")){
+                Toaster.shortToast("Vui lòng nhập mật khẩu");
+                return;
+            }
+
             binding.btnLogin.setEnabled(false);
             binding.rlLoading.setVisibility(View.VISIBLE);
             binding.lnWrongPw.setVisibility(View.GONE);

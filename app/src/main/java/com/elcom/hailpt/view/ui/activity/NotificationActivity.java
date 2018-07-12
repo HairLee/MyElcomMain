@@ -12,14 +12,21 @@ import android.widget.TextView;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityNotificationBinding;
+import com.elcom.hailpt.model.api.response.Notification;
 import com.elcom.hailpt.view.adapter.NotificationAdapter;
+import com.elcom.hailpt.view.adapter.NotifyAdapter;
 import com.elcom.hailpt.viewmodel.NotificationViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationActivity extends BaseActivity<NotificationViewModel,ActivityNotificationBinding> {
 
 
-    private NotificationAdapter notificationAdapter;
+    private NotifyAdapter notificationAdapter;
     private TextView tvTitle;
+    List<Notification> data  = new ArrayList<>();
+    private ActivityNotificationBinding binding;
     @Override
     protected Class<NotificationViewModel> getViewModel() {
         return NotificationViewModel.class;
@@ -27,7 +34,8 @@ public class NotificationActivity extends BaseActivity<NotificationViewModel,Act
 
     @Override
     protected void onCreate(Bundle instance, NotificationViewModel viewModel, ActivityNotificationBinding binding) {
-        notificationAdapter = new NotificationAdapter();
+        this.binding = binding;
+        notificationAdapter = new NotifyAdapter(data);
         binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         binding.recyclerView.setAdapter(notificationAdapter);
         tvTitle = findViewById(R.id.tvTitle);
@@ -44,7 +52,10 @@ public class NotificationActivity extends BaseActivity<NotificationViewModel,Act
     private void init(NotificationViewModel viewModel){
         viewModel.getAllNotification().observe(this, listRestData -> {
             if(listRestData != null && listRestData.data != null){
-                notificationAdapter.setData(listRestData.data);
+                data = listRestData.data;
+                notificationAdapter = new NotifyAdapter(data);
+                binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
+                binding.recyclerView.setAdapter(notificationAdapter);
             }
         });
 

@@ -6,9 +6,12 @@ import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.ForgetPwReq;
 import com.elcom.hailpt.model.api.request.LoginReq;
 import com.elcom.hailpt.model.api.response.User;
+import com.elcom.hailpt.repository.ForgetPasswordRepository;
 import com.elcom.hailpt.repository.LoginRepository;
+import com.google.gson.JsonElement;
 
 import javax.inject.Inject;
 
@@ -18,22 +21,22 @@ import javax.inject.Inject;
 
 public class ForgetPasswordViewModel extends ViewModel {
 
-    private final MutableLiveData<LoginReq> loginParam = new MutableLiveData<>();
-    private final LiveData<RestData<User>> loginResult;
-    private LoginRepository repository;
+    private final MutableLiveData<ForgetPwReq> forgetPwReq = new MutableLiveData<>();
+    private final LiveData<RestData<JsonElement>> forgetPwRes;
+    private ForgetPasswordRepository repository;
     @Inject
-    public ForgetPasswordViewModel(final LoginRepository repository) {
+    public ForgetPasswordViewModel(final ForgetPasswordRepository repository) {
         this.repository = repository;
-        loginResult = Transformations.switchMap(loginParam,
-                param -> repository.login2(loginParam.getValue()));
+        forgetPwRes = Transformations.switchMap(forgetPwReq,
+                param -> repository.forgetPassword(forgetPwReq.getValue()));
     }
 
-    public void setLoginParam(LoginReq loginReq) {
-        loginParam.setValue(loginReq);
+    public void setForgetPwReq(ForgetPwReq pForgetPwReq) {
+        forgetPwReq.setValue(pForgetPwReq);
     }
 
-    public LiveData<RestData<User>> getLoginResult() {
-        return loginResult;
+    public LiveData<RestData<JsonElement>> getForgetPw() {
+        return forgetPwRes;
     }
 
     @Override

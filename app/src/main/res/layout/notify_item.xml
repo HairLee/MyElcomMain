@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="72dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:id="@+id/imvAva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout"
+            app:srcCompat="@drawable/plate_ic" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imvAva"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:textSize="16sp"
+                android:id="@+id/tvNotiName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="222" />
+
+            <TextView
+
+                android:textSize="13sp"
+                android:id="@+id/tvNoTiDes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="111" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/colorLine"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView10" />
+
+    </android.support.constraint.ConstraintLayout>
+
