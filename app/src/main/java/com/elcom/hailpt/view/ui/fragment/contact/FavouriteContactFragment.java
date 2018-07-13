@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.services.CallService;
 import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.util.PermissionsChecker;
+import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.PushNotificationSender;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.util.WebRtcSessionManager;
@@ -39,7 +41,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -53,6 +57,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
     private User user;
     private PermissionsChecker checker;
     private ImageView imvLoading;
+    private SwipeRefreshLayout swipeRefreshLayout;
     public FavouriteContactFragment() {
         // Required empty public constructor
     }
@@ -68,6 +73,12 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(contactFavouriteAdapter);
         imvLoading = view.findViewById(R.id.imvLoading);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_blue_accent));
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            contactFavouriteViewModel.setAllContactrequest();
+        });
+
         makeDialogProgress();
         init();
 
@@ -83,6 +94,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
     protected void onCreate(Bundle instance, ContactFavouriteViewModel viewModel) {
         contactFavouriteViewModel = viewModel;
         checker = new PermissionsChecker(getContext());
+        contactFavouriteViewModel.setAllContactrequest();
     }
 
     private void init(){
@@ -93,6 +105,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
                     contactFavouriteAdapter.setData(listRestData.data);
                     rotation.cancel();
                     imvLoading.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -153,6 +166,18 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         QBRTCClient qbrtcClient = QBRTCClient.getInstance(getContext());
 
         QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
+
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put("userID", PreferUtils.getUserId(getContext())+"");
+        userInfo.put("quickID", user.getQuickbloxId()+"");
+        userInfo.put("name", PreferUtils.getName(getContext()));
+        userInfo.put("image", PreferUtils.getAvatar(getContext()));
+
+        PreferUtils.setEmailOpponent(getContext(),user.getName());
+        PreferUtils.setAvatarOpponent(getContext(),user.getAvatar());
+
+        newQbRtcSession.startCall(userInfo);
+
 
         WebRtcSessionManager.getInstance(getContext()).setCurrentSession(newQbRtcSession);
 

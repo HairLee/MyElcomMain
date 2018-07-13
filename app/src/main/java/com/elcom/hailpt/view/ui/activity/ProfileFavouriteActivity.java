@@ -326,10 +326,19 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
 
         QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
 
-        Map<String, String> userInfo = new HashMap<>();
-        userInfo.put("name", PreferUtils.getEmail(this));
-        userInfo.put("avatar", PreferUtils.getAvatar(this));
+//        "userID":String(Util.shared.currentUser.id),
+//                "quickID": self.userCall.quickbloxId,
+//                "image":(Util.shared.currentUser.avatar) ,
+//                "name":Util.shared.currentUser.name]
 
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put("userID", PreferUtils.getUserId(this)+"");
+        userInfo.put("quickID", qbUser.getId()+"");
+        userInfo.put("name", PreferUtils.getName(this));
+        userInfo.put("image", PreferUtils.getAvatar(this));
+
+        PreferUtils.setEmailOpponent(this,user.getName());
+        PreferUtils.setAvatarOpponent(this,user.getAvatar());
 
         newQbRtcSession.startCall(userInfo);
 

@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.PreferUtils;
+import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.ui.activity.LunchRegistrationActivity;
 import com.elcom.hailpt.view.ui.activity.NotificationActivity;
 import com.elcom.hailpt.view.ui.activity.ProfileFavouriteActivity;
@@ -59,6 +60,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.rlLunch).setOnClickListener(this);
         view.findViewById(R.id.rlSetting).setOnClickListener(this);
         view.findViewById(R.id.imvNotification).setOnClickListener(this);
+        view.findViewById(R.id.rlCar).setOnClickListener(this);
+        view.findViewById(R.id.rlLibrary).setOnClickListener(this);
+        view.findViewById(R.id.rlTool).setOnClickListener(this);
         imvAva = view.findViewById(R.id.imvAva);
         imvAva.setOnClickListener(this);
         updateAvatar();
@@ -82,6 +86,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.imvAva:
                 goToMyProfile();
+                break;
+
+            case R.id.rlCar:
+                Toaster.shortToast("Đang phát triển");
+                break;
+
+            case R.id.rlLibrary:
+                Toaster.shortToast("Đang phát triển");
+                break;
+
+            case R.id.rlTool:
+                Toaster.shortToast("Đang phát triển");
                 break;
 
         }

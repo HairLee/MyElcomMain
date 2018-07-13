@@ -99,6 +99,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 PreferUtils.setUserId(this,data.data.getId());
                 PreferUtils.setAvatar(this,data.data.getAvatar());
                 PreferUtils.setEmail(this,data.data.getEmail());
+                PreferUtils.setName(this,data.data.getName());
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
                 saveUser(data.data);
                 tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");

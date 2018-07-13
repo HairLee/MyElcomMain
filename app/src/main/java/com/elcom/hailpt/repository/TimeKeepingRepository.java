@@ -9,6 +9,7 @@ import com.elcom.hailpt.core.base.ArticleUtils;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.LoginReq;
+import com.elcom.hailpt.model.api.request.ReasonLate;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.model.data.Articles;
@@ -20,6 +21,7 @@ import com.elcom.hailpt.model.db.AppDatabase;
 import com.elcom.hailpt.model.db.ArticleDao;
 import com.elcom.hailpt.model.db.SourceDao;
 import com.elcom.hailpt.util.ConstantsApp;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class TimeKeepingRepository implements BaseViewModel {
     private final Api api;
     private final MutableLiveData<RestData<List<TimeKeep>>> articleMutableLiveData;
     private final MutableLiveData<RestData<Statistic>> statisticMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> reasonLateMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
     private final ArticleDao articleDao;
@@ -53,6 +56,7 @@ public class TimeKeepingRepository implements BaseViewModel {
         sourceList = sourceDao.getAllList();
         articleMutableLiveData = new MutableLiveData<>();
         statisticMutableLiveData = new MutableLiveData<>();
+        reasonLateMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<List<TimeKeep>>> getTimeKeeping(String fromTime,String toTime) {
@@ -117,6 +121,36 @@ public class TimeKeepingRepository implements BaseViewModel {
                     }
                 });
         return statisticMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<JsonElement>> reasonLate(ReasonLate reasonLate) {
+
+        api.reasonLate(reasonLate,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        reasonLateMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+        return reasonLateMutableLiveData;
     }
 
     @Override

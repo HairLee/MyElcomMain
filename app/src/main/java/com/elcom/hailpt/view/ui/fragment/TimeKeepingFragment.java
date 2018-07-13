@@ -1,6 +1,7 @@
 package com.elcom.hailpt.view.ui.fragment;
 
 
+import android.app.Activity;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 
@@ -28,6 +30,7 @@ import com.elcom.hailpt.core.listener.TimeKeepingUpdateDataListener;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.MonthReq;
+import com.elcom.hailpt.model.api.request.ReasonLate;
 import com.elcom.hailpt.model.api.request.TimeKeepReq;
 import com.elcom.hailpt.model.data.Statistic;
 import com.elcom.hailpt.model.data.TimeKeep;
@@ -39,11 +42,13 @@ import com.elcom.hailpt.view.custom.HomeFragmentCalendarView;
 import com.elcom.hailpt.view.custom.HomeFragmentCheckTimeView;
 import com.elcom.hailpt.view.ui.activity.TimeKeepingActivity;
 import com.elcom.hailpt.viewmodel.TimeKeepingViewModel;
+import com.google.gson.JsonElement;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -125,8 +130,12 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     @Override
     public void onSendFeedBack(String content) {
         // Result why you are late.
-        Log.e("hailpt"," TimeKeepingFragment onSendFeedBackonSendFeedBack");
-
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
+        ReasonLate reasonLate = new ReasonLate();
+        reasonLate.setReason("Em bị mệt");
+        reasonLate.setDate("2018-09-01");
+        timeKeepingViewModel.setReasonLateReq(reasonLate);
     }
 
     @Override
@@ -186,6 +195,12 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
                if (statisticRestData != null && statisticRestData.status_code == 200){
                    homeFragmentCheckTimeView.updateMonthInformation(statisticRestData.data);
                }
+            });
+
+            timeKeepingViewModel.getReasonLate().observe(this, jsonElementRestData -> {
+                if (jsonElementRestData != null && jsonElementRestData.status_code == 200){
+                    Toaster.shortToast("Gửi thành công");
+                }
             });
         }
     }

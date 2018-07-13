@@ -47,7 +47,7 @@ public class WebRtcSessionManager extends QBRTCClientSessionCallbacksImpl {
 
         if(userInfo != null){
             PreferUtils.setEmailOpponent(context,userInfo.get("name"));
-            PreferUtils.setAvatarOpponent(context,userInfo.get("avatar"));
+            PreferUtils.setAvatarOpponent(context,userInfo.get("image"));
         }
 
         if (currentSession == null){

@@ -37,8 +37,9 @@
 
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/tvMonth"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
                 android:textColor="#54586B"
                 android:textSize="17sp"
                 android:gravity="center"

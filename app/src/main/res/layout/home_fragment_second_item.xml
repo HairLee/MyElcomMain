@@ -9,6 +9,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/rlCar"
         android:background="@drawable/radius_white_bg_white_srtoke_layout"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -34,6 +35,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rlTool"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/radius_white_bg_white_srtoke_layout"
@@ -61,6 +63,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rlLibrary"
         android:background="@drawable/radius_white_bg_white_srtoke_layout"
         android:layout_weight="1"
         android:layout_width="0dp"

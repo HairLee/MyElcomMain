@@ -9,6 +9,7 @@ import com.elcom.hailpt.model.api.request.LunchCancelReq;
 import com.elcom.hailpt.model.api.request.LunchFeedBackReq;
 import com.elcom.hailpt.model.api.request.LunchLikeReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
+import com.elcom.hailpt.model.api.request.ReasonLate;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
 import com.elcom.hailpt.model.api.response.Lunch;
@@ -53,6 +54,9 @@ public interface Api {
     @GET("check-in-history/statistic?")
     Observable<RestData<Statistic>> getMonthInformation(@Query("y") String year, @Query("m") String month, @Header("Authorization") String s);
 
+
+    @POST("reason-late")
+    Observable<RestData<JsonElement>> reasonLate(@Body ReasonLate reasonLate, @Header("Authorization") String s);
 
     @GET("suggest")
     Observable<RestData<List<ContactSuggest>>> getAllContactSuggest(@Header("Authorization") String s);

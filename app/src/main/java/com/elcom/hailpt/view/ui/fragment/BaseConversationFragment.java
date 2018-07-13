@@ -20,6 +20,7 @@ import com.elcom.hailpt.core.listener.ConversationFragmentCallbackListener;
 import com.elcom.hailpt.model.db.QbUsersDbManager;
 import com.elcom.hailpt.util.CollectionsUtils;
 import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.UsersUtils;
 import com.elcom.hailpt.util.WebRtcSessionManager;
 import com.elcom.hailpt.view.ui.CallActivity;
@@ -103,7 +104,7 @@ public abstract class BaseConversationFragment extends BaseToolBarFragment imple
 
     private void prepareAndShowOutgoingScreen() {
         configureOutgoingScreen();
-        allOpponentsTextView.setText(CollectionsUtils.makeStringFromUsersFullNames(opponents));
+        allOpponentsTextView.setText(PreferUtils.getEmailOpponent(getContext()));
     }
 
     protected abstract void configureOutgoingScreen();
