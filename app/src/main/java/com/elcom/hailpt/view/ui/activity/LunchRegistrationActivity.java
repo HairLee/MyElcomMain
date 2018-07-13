@@ -56,7 +56,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
 
 
         viewModel.cancelLunch().observe(this, jsonElementRestData -> {
-            Toaster.longToast(jsonElementRestData.message);
+            Toaster.longToast("Hủy cơm thành công");
             hideProgressDialog();
         });
 

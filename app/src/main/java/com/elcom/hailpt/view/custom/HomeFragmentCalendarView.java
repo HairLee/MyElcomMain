@@ -19,6 +19,7 @@ import com.elcom.hailpt.util.DateTimeUtils;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class HomeFragmentCalendarView extends RelativeLayout implements View.OnClickListener {
 
-    private TextView tv2,tv3,tv4,tv5,tv6;
+    private TextView tv2,tv3,tv4,tv5,tv6,tvMonth;
     private ImageView imvBack;
     private LinearLayout lnRegisLunch,lnKeepTime;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
@@ -74,6 +75,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         tv4 = (TextView)view.findViewById(R.id.tv4);
         tv5 = (TextView)view.findViewById(R.id.tv5);
         tv6 = (TextView)view.findViewById(R.id.tv6);
+        tvMonth = (TextView)view.findViewById(R.id.tvMonth);
         lnKeepTime = (LinearLayout) view.findViewById(R.id.lnKeepTime);
 
         textViewList.add(tv2);
@@ -96,8 +98,16 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         lnKeepTime.setVisibility(GONE);
     }
 
+    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
     public void updateData(List<Date> mDates){
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+//        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+        String month = dateFormat.format(mDates.get(0)).substring(3,5);
+        if(month.startsWith("0")){
+            tvMonth.setText("Tháng " + dateFormat.format(mDates.get(0)).substring(4,5));
+        } else {
+            tvMonth.setText("Tháng " + dateFormat.format(mDates.get(0)).substring(3,5));
+        }
+
         if(mDates.size() > 0){
             tv2.setText(dateFormat.format(mDates.get(0)).substring(0,2));
         }

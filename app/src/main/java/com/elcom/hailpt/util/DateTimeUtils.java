@@ -24,6 +24,11 @@ public class DateTimeUtils {
         return  inputFormat.format(date);
     }
 
+    public static String getDayMonthYearFromDateStyle2(Context context, Date date){
+        DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        return  inputFormat.format(date);
+    }
+
     public static String getToDayDateTime(Context context){
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         return  dateFormat.format(Calendar.getInstance().getTime());

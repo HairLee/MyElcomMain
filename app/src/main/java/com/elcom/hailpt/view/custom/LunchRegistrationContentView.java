@@ -239,20 +239,25 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
             switch (statusLunch){
 
                 case 0:
+                    imvLunch.setVisibility(VISIBLE);
                     setTextForLunchRegister("Không ăn");
                     imvLunch.setBackgroundResource(R.drawable.lunch_not_eat);
                     break;
                 case 1:
+                    imvLunch.setVisibility(VISIBLE);
                     setTextForLunchRegister("Đã ăn");
                     imvLunch.setBackgroundResource(R.drawable.lunch_eat_ic);
                     break;
                 case 2:
+                    imvLunch.setVisibility(GONE);
                     setTextForLunchRegister("Đăng ký không ăn");
                     break;
                 case 3:
+                    imvLunch.setVisibility(GONE);
                     setTextForLunchRegister("Ngày mai");
                     break;
                 case 4:
+                    imvLunch.setVisibility(GONE);
                     setTextForLunchRegister("Hủy ăn trưa");
                     break;
             }

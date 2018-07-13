@@ -33,6 +33,7 @@ import com.elcom.hailpt.model.data.Statistic;
 import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.DateTimeUtils;
+import com.elcom.hailpt.util.ProgressDialogUtils;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.custom.HomeFragmentCalendarView;
 import com.elcom.hailpt.view.custom.HomeFragmentCheckTimeView;
@@ -130,6 +131,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
 
     @Override
     public void onGetMonthInformation(String month) {
+        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         MonthReq monthReq = new MonthReq();
         monthReq.setMonth(month);
         monthReq.setYear("2018");
@@ -150,6 +152,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
         String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
 
         init();
+//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         TimeKeepReq timeKeepReq = new TimeKeepReq();
         timeKeepReq.setFromTime(fromTime);
         timeKeepReq.setToTime(toTime);
@@ -163,7 +166,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
         if (mCount == 0 ){
             mCount = mCount + 1;
             timeKeepingViewModel.getTimeKeepingList().observe(this, listRestData ->{
-
+//                        ProgressDialogUtils.dismissProgressDialog();
                         for (int i = 0; i < listRestData.data.size(); i++) {
                             if(listRestData.data.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat(getContext()))){
                                 currentPosDay = i;
@@ -179,6 +182,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
             );
 
             timeKeepingViewModel.getMonthInformation().observe(this, statisticRestData -> {
+                ProgressDialogUtils.dismissProgressDialog();
                if (statisticRestData != null && statisticRestData.status_code == 200){
                    homeFragmentCheckTimeView.updateMonthInformation(statisticRestData.data);
                }
