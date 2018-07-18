@@ -262,10 +262,11 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
             tvCheckOut.setText("Không có dữ liệu");
         }
 
-        tvOnTime.setText(timeKeep.getStatistic().getOnTime().toString());
-        tvLateTime.setText(timeKeep.getStatistic().getLate().toString());
-        tvAbsent.setText(timeKeep.getStatistic().getAbsent().toString());
-
+        if(timeKeep.getStatistic() != null){
+            tvOnTime.setText(timeKeep.getStatistic().getOnTime().toString());
+            tvLateTime.setText(timeKeep.getStatistic().getLate().toString());
+            tvAbsent.setText(timeKeep.getStatistic().getAbsent().toString());
+        }
 
 
 //        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
