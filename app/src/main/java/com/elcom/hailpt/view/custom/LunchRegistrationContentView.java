@@ -35,7 +35,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private TextView tvMainDish1,tvMainDish2,tvMainDish3,tvMainDish4,tvMainDish5,tvLunchRegister;
     private TextView tvSideDish1,tvSideDish2,tvSideDish3,tvSideDish4,tvSideDish5;
-    private TextView tvLike, tvDislike,txtRegisterLunch,tvNumberOfMessage,tvFeedback;
+    private TextView tvLike, tvDislike,txtRegisterLunch,tvNumberOfMessage,tvFeedback,tvFeedbackTitle;
     private List<TextView> mMainDishLish = new ArrayList<>();
     private List<TextView> mSideDishLish = new ArrayList<>();
     private ImageView imvLunch,imvLikeIc,imvUnlikeIc,imvSendFeedBack;
@@ -93,6 +93,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         tvSideDish5 = view.findViewById(R.id.tvSideDish5);
 
         tvNumberOfMessage = view.findViewById(R.id.tvNumberOfMessage);
+        tvFeedbackTitle = view.findViewById(R.id.tvFeedbackTitle);
 
 
         edtFeedback = view.findViewById(R.id.edtFeedback);
@@ -273,24 +274,34 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                     imvLunch.setVisibility(VISIBLE);
                     setTextForLunchRegister("Không ăn");
                     imvLunch.setBackgroundResource(R.drawable.lunch_not_eat);
+                    hideFeedbackView();
                     break;
                 case 1:
                     imvLunch.setVisibility(VISIBLE);
                     isHaveLunchOrNot = true;
                     setTextForLunchRegister("Đã ăn");
                     imvLunch.setBackgroundResource(R.drawable.lunch_eat_ic);
+
+                    tvFeedbackTitle.setVisibility(VISIBLE);
+                    tvFeedback.setVisibility(GONE);
+                    rlFeedback.setVisibility(VISIBLE);
+                    tvNumberOfMessage.setVisibility(VISIBLE);
+
                     break;
                 case 2:
                     imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
                     setTextForLunchRegister("Đăng ký không ăn");
+                    hideFeedbackView();
                     break;
                 case 3:
                     imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
                     setTextForLunchRegister("Ngày mai");
+                    hideFeedbackView();
                     break;
                 case 4:
                     imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
                     setTextForLunchRegister("Hủy ăn trưa");
+                    hideFeedbackView();
                     break;
             }
 
@@ -298,17 +309,23 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
         if (!lunch.getContent_feedback().equals("")){
             tvFeedback.setText(lunch.getContent_feedback());
-            tvFeedback.setVisibility(VISIBLE);
-            rlFeedback.setVisibility(GONE);
-            tvNumberOfMessage.setVisibility(GONE);
-        } else {
-            tvFeedback.setVisibility(GONE);
-            rlFeedback.setVisibility(VISIBLE);
-            tvNumberOfMessage.setVisibility(VISIBLE);
-
+            showFeedbackView();
         }
 
+    }
 
+    private void hideFeedbackView(){
+        tvFeedbackTitle.setVisibility(GONE);
+        tvFeedback.setVisibility(GONE);
+        rlFeedback.setVisibility(GONE);
+        tvNumberOfMessage.setVisibility(GONE);
+    }
+
+    private void showFeedbackView(){
+        tvFeedbackTitle.setVisibility(VISIBLE);
+        tvFeedback.setVisibility(VISIBLE);
+        rlFeedback.setVisibility(GONE);
+        tvNumberOfMessage.setVisibility(GONE);
     }
 
     private void setTextForLunchRegister(String content){
