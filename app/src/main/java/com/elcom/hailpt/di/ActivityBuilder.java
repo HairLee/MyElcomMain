@@ -5,6 +5,7 @@ import com.elcom.hailpt.view.ui.LoginActivity;
 import com.elcom.hailpt.view.ui.MainActivity;
 import com.elcom.hailpt.view.ui.SourcesActivity;
 import com.elcom.hailpt.view.ui.activity.ForgetPasswordActivity;
+import com.elcom.hailpt.view.ui.activity.LunchCalendarRegisActivity;
 import com.elcom.hailpt.view.ui.activity.LunchRegistrationActivity;
 import com.elcom.hailpt.view.ui.activity.NotificationActivity;
 import com.elcom.hailpt.view.ui.activity.ProfileActivity;
@@ -12,6 +13,7 @@ import com.elcom.hailpt.view.ui.activity.ProfileFavouriteActivity;
 import com.elcom.hailpt.view.ui.activity.SettingActivity;
 import com.elcom.hailpt.view.ui.activity.SettingChangePwActivity;
 import com.elcom.hailpt.view.ui.activity.TimeKeepingActivity;
+import com.elcom.hailpt.view.ui.fragment.LunchRegistrationFragment;
 import com.elcom.hailpt.view.ui.fragment.TimeKeepingFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.AllContactFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.FavouriteContactFragment;
@@ -62,6 +64,9 @@ abstract class ActivityBuilder {
     @ContributesAndroidInjector
     abstract ForgetPasswordActivity bindForgetPasswordActivity();
 
+    @ContributesAndroidInjector
+    abstract LunchCalendarRegisActivity bindLunchCalendarRegisActivity();
+
 
 
     // Fragment
@@ -73,5 +78,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract FavouriteContactFragment bindFavouriteContactFragment();
+
+    @ContributesAndroidInjector
+    abstract LunchRegistrationFragment bindLunchRegistrationFragment();
 
 }

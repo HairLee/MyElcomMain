@@ -100,11 +100,6 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
         return parts;
     }
 
-    TimeKeepingUpdateDataListener timeKeepingUpdateDataListener;
-    public void setTimeKeepingUpdateDataListener(TimeKeepingUpdateDataListener pTimeKeepingUpdateDataListener){
-        timeKeepingUpdateDataListener = pTimeKeepingUpdateDataListener;
-    }
-
     private void setupViewPager(List<List<Date>> pDates){
 
         TimeKeepingPagerAdapter mDemoCollectionPagerAdapter = new TimeKeepingPagerAdapter(getSupportFragmentManager(),pDates,currentPosOfDay);
@@ -122,7 +117,7 @@ public class TimeKeepingActivity extends BaseActivity<TimeKeepingViewModel, Acti
 
             @Override
             public void onPageSelected(int position) {
-                timeKeepingUpdateDataListener.pushData(DateTimeUtils.getDayMonthYearFromDate(getApplicationContext(),pDates.get(position).get(0)),DateTimeUtils.getDayMonthYearFromDate(getApplicationContext(),pDates.get(position).get(pDates.get(position).size() - 1)));
+
             }
 
             @Override

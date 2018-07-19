@@ -66,7 +66,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
 
             int currentPosDay = 0;
             for (int i = 0; i < lunchList.size(); i++) {
-                if(lunchList.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat(this))){
+                if(lunchList.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                     currentPosDay = i;
                 }
             }

@@ -35,9 +35,10 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
     private TextView tvLike, tvDislike,txtRegisterLunch,tvNumberOfMessage;
     private List<TextView> mMainDishLish = new ArrayList<>();
     private List<TextView> mSideDishLish = new ArrayList<>();
-    private ImageView imvLunch,imvLikeIc,imvSendFeedBack;
+    private ImageView imvLunch,imvLikeIc,imvUnlikeIc,imvSendFeedBack;
     private EditText edtFeedback;
     private boolean isLunchRegister = false;
+    private boolean isHaveLunchOrNot = false;
     private enum TimerStatus {
         STARTED,
         STOPPED
@@ -96,6 +97,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         tvLunchRegister = view.findViewById(R.id.tvLunchRegister);
         imvLunch = view.findViewById(R.id.imvLunch);
         imvLikeIc = view.findViewById(R.id.imvLikeIc);
+        imvUnlikeIc = view.findViewById(R.id.imvUnlikeIc);
 
         tvLike = view.findViewById(R.id.tvLike);
         tvDislike = view.findViewById(R.id.tvDislike);
@@ -152,10 +154,14 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
                 break;
             case R.id.lnLike:
-                mHomeFragmentCalendarListener.onLikeOrDislike(true);
+                if(isHaveLunchOrNot){
+                    mHomeFragmentCalendarListener.onLikeOrDislike(true);
+                }
                 break;
             case R.id.lnUnlike:
-                mHomeFragmentCalendarListener.onLikeOrDislike(false);
+                if(isHaveLunchOrNot) {
+                    mHomeFragmentCalendarListener.onLikeOrDislike(false);
+                }
                 break;
         }
 
@@ -163,9 +169,6 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
     public void updateMainContent(Lunch lunch, int dayChoosed){
         resetView();
-
-        Log.e("hailpt"," DayChoosed "+dayChoosed);
-
 
         /* MainDish Start */
         int totalMainDish = 5 - lunch.getMainDishes().size(); // 3
@@ -207,22 +210,26 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
         tvLike.setText(lunch.getLike().toString());
         tvDislike.setText(lunch.getDislike().toString());
+
+        if (lunch.getStatusVote() == 2){
+            imvLikeIc.setBackgroundResource(R.drawable.smile_gray_ic);
+            imvUnlikeIc.setBackgroundResource(R.drawable.sad_gray_ic);
+        } else if (lunch.getStatusVote() == 1){
+            imvLikeIc.setBackgroundResource(R.drawable.smile_yellow_ic);
+            imvUnlikeIc.setBackgroundResource(R.drawable.sad_gray_ic);
+        } else if (lunch.getStatusVote() == 0){
+            imvLikeIc.setBackgroundResource(R.drawable.smile_gray_ic);
+            imvUnlikeIc.setBackgroundResource(R.drawable.sad_yellow_ic);
+        }
+
         int statusLunch = lunch.getStatusLunch();
-
-        Log.e("hailpt"," statusLunch ~~~> "+statusLunch);
-
-        // Dont wanna have a lunch - dont use card to go to the company - have a day off
-//        if(statusLunch == 0){
-//            setTextForLunchRegister("Không ăn");
-//            imvLunch.setBackgroundResource(R.drawable.lunch_not_eat);
-//            return;
-//        }
 
         // Previous Day, the title is always ..
         if(DateTimeUtils.isCurrentTimeIsBefore9Am() && DateTimeUtils.currentDay() == dayChoosed){
             if(statusLunch == 4){
                 // have not order
                 isLunchRegister = false;
+                isHaveLunchOrNot = true;
                 lnRegisLunch.setVisibility(VISIBLE);
                 imvLunch.setVisibility(INVISIBLE);
                 lnRegisLunch.setBackgroundResource(R.drawable.radius_blue_bg_blue_srtoke_layout);
@@ -236,6 +243,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         } else {
             imvLunch.setVisibility(VISIBLE);
             lnRegisLunch.setVisibility(INVISIBLE);
+
             switch (statusLunch){
 
                 case 0:
@@ -245,19 +253,20 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                     break;
                 case 1:
                     imvLunch.setVisibility(VISIBLE);
+                    isHaveLunchOrNot = true;
                     setTextForLunchRegister("Đã ăn");
                     imvLunch.setBackgroundResource(R.drawable.lunch_eat_ic);
                     break;
                 case 2:
-                    imvLunch.setVisibility(GONE);
+                    imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
                     setTextForLunchRegister("Đăng ký không ăn");
                     break;
                 case 3:
-                    imvLunch.setVisibility(GONE);
+                    imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
                     setTextForLunchRegister("Ngày mai");
                     break;
                 case 4:
-                    imvLunch.setVisibility(GONE);
+                    imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
                     setTextForLunchRegister("Hủy ăn trưa");
                     break;
             }

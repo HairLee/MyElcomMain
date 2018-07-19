@@ -29,6 +29,7 @@
            android:layout_height="wrap_content">
 
            <ImageView
+               android:visibility="gone"
                android:id="@+id/imvLunch"
                android:layout_marginRight="5dp"
                android:layout_centerVertical="true"
@@ -232,7 +233,6 @@
             <ImageView
                 android:id="@+id/imvLikeIc"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/smile_gray_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -254,8 +254,8 @@
             android:layout_width="100dp"
             android:layout_height="30dp">
             <ImageView
+                android:id="@+id/imvUnlikeIc"
                 android:layout_marginLeft="5dp"
-                android:src="@drawable/sad_gray_ic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

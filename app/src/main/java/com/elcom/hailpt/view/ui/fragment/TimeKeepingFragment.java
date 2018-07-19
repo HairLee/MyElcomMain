@@ -83,9 +83,6 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TimeKeepingActivity mTimeKeepingActivity = (TimeKeepingActivity) getActivity();
-        mTimeKeepingActivity.setTimeKeepingUpdateDataListener(this);
-
         homeFragmentCalendarView = view.findViewById(R.id.homeFragmentCalendarView);
         homeFragmentCheckTimeView = view.findViewById(R.id.homeFragmentCheckTimeView);
 
@@ -155,11 +152,12 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     @Override
     protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel) {
         timeKeepingViewModel = viewModel;
-        Log.e("hailpt"," TimeKeepingFragment onCreate");
+
+
 
         String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(0));
         String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
-
+        Log.e("hailpt"," LunchRegistrationFragment fromTime "+fromTime + " toTime "+toTime);
         init();
 //        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         TimeKeepReq timeKeepReq = new TimeKeepReq();
@@ -177,7 +175,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
             timeKeepingViewModel.getTimeKeepingList().observe(this, listRestData ->{
 //                        ProgressDialogUtils.dismissProgressDialog();
                         for (int i = 0; i < listRestData.data.size(); i++) {
-                            if(listRestData.data.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat(getContext()))){
+                            if(listRestData.data.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                                 currentPosDay = i;
                             }
                         }

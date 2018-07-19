@@ -74,11 +74,12 @@
                     android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:background="@drawable/tomorow_choosed_ic"
+                    android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv2"
-                    android:text="3"
+                    android:text=""
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
+
                 <ImageView
                     android:visibility="invisible"
                     android:id="@+id/imvCrDay2"
@@ -86,7 +87,6 @@
                     android:src="@drawable/curent_day_ic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
 
             </LinearLayout>
             <!--End-->
@@ -107,9 +107,9 @@
                     android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:background="@drawable/tomorow_choosed_ic"
+                    android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv3"
-                    android:text="3"
+                    android:text=""
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
 
@@ -140,12 +140,11 @@
                     android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:background="@drawable/tomorow_choosed_ic"
+                    android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv4"
-                    android:text="3"
+                    android:text=""
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
-
                 <ImageView
                     android:visibility="invisible"
                     android:id="@+id/imvCrDay4"
@@ -153,6 +152,7 @@
                     android:src="@drawable/curent_day_ic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
 
             </LinearLayout>
             <!--End-->
@@ -173,9 +173,9 @@
                     android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:background="@drawable/tomorow_choosed_ic"
+                    android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv5"
-                    android:text="3"
+                    android:text=""
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
                 <ImageView
@@ -205,11 +205,12 @@
                     android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:background="@drawable/tomorow_choosed_ic"
+                    android:background="@drawable/shape_oval_green"
                     android:id="@+id/tv6"
-                    android:text="3"
+                    android:text=""
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
+
                 <ImageView
                     android:visibility="invisible"
                     android:id="@+id/imvCrDay6"
@@ -217,77 +218,12 @@
                     android:src="@drawable/curent_day_ic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
             <!--End-->
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lnKeepTime"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:weightSum="3"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:src="@drawable/on_time_ic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Đúng Giờ"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:src="@drawable/over_time_ic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Đi muộn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center_vertical|end"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:src="@drawable/miss_time_ic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Vắng mặt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-
-        </LinearLayout>
 
     </LinearLayout>
 

@@ -107,7 +107,11 @@
         <activity
             android:name=".view.ui.activity.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"></activity>
+        <activity
+            android:name=".view.ui.activity.LunchCalendarRegisActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

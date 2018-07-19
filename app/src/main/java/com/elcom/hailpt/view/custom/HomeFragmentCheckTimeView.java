@@ -248,8 +248,6 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
                 tvToday.setTextColor(getResources().getColor(R.color.late));
             }
 
-
-
         } else {
             tvToday.setText("Vắng mặt");
             tvToday.setTextColor(getResources().getColor(R.color.lost));

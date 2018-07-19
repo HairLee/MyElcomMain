@@ -22,6 +22,7 @@ import com.elcom.hailpt.R;
 import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.Toaster;
+import com.elcom.hailpt.view.ui.activity.LunchCalendarRegisActivity;
 import com.elcom.hailpt.view.ui.activity.LunchRegistrationActivity;
 import com.elcom.hailpt.view.ui.activity.NotificationActivity;
 import com.elcom.hailpt.view.ui.activity.ProfileFavouriteActivity;
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 TimeKeepingActivity.start(getContext(),1);
                 break;
             case R.id.rlLunch:
-                LunchRegistrationActivity.start(getContext(),1);
+                LunchCalendarRegisActivity.start(getContext(),1);
                 break;
             case R.id.rlSetting:
                 SettingActivity.start(getContext());

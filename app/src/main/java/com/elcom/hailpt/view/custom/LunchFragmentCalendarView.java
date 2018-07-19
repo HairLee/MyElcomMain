@@ -2,7 +2,6 @@ package com.elcom.hailpt.view.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.elcom.hailpt.util.DateTimeUtils;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,19 +28,16 @@ import java.util.List;
  * Created by admin on 3/5/2018.
  */
 
-public class HomeFragmentCalendarView extends RelativeLayout implements View.OnClickListener {
+public class LunchFragmentCalendarView extends RelativeLayout implements View.OnClickListener {
 
     private TextView tv2,tv3,tv4,tv5,tv6,tvMonth;
-    private ImageView imvBack;
+    private ImageView imvBack,imvCrDay2,imvCrDay3,imvCrDay4,imvCrDay5,imvCrDay6;
     private LinearLayout lnRegisLunch,lnKeepTime;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private List<TimeKeep> timeKeeps;
     List<TextView> textViewList = new ArrayList<>();
-    List<ImageView> currentDayIcon = new ArrayList<>();
 
-    public String firstDayOfWeek(){
-        return  tv2.getText().toString();
-    }
+    List<ImageView> currentDayIcon = new ArrayList<>();
 
     private enum TimerStatus {
         STARTED,
@@ -50,38 +45,40 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
     }
     private TimerStatus timerStatus = TimerStatus.STOPPED;
 
-    public HomeFragmentCalendarView(Context context) {
+    public LunchFragmentCalendarView(Context context) {
         super(context);
         init(context);
     }
 
-    public HomeFragmentCalendarView(Context context, AttributeSet attrs) {
+    public LunchFragmentCalendarView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public HomeFragmentCalendarView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public LunchFragmentCalendarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @SuppressLint("NewApi")
-    public HomeFragmentCalendarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public LunchFragmentCalendarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     private void init(final Context context) {
-        View view = inflate(context, R.layout.fragment_time_keeping_first_item, this);
+        View view = inflate(context, R.layout.fragment_regis_lunch_first_item, this);
         tv2 = (TextView)view.findViewById(R.id.tv2);
         tv3 = (TextView)view.findViewById(R.id.tv3);
         tv4 = (TextView)view.findViewById(R.id.tv4);
         tv5 = (TextView)view.findViewById(R.id.tv5);
         tv6 = (TextView)view.findViewById(R.id.tv6);
 
-        ImageView imvCrDay2 = view.findViewById(R.id.imvCrDay2);
-        ImageView imvCrDay3 = view.findViewById(R.id.imvCrDay3);
-        ImageView imvCrDay4 = view.findViewById(R.id.imvCrDay4);
-        ImageView imvCrDay5 = view.findViewById(R.id.imvCrDay5);
-        ImageView imvCrDay6 = view.findViewById(R.id.imvCrDay6);
+        imvCrDay2 = view.findViewById(R.id.imvCrDay2);
+        imvCrDay3 = view.findViewById(R.id.imvCrDay3);
+        imvCrDay4 = view.findViewById(R.id.imvCrDay4);
+        imvCrDay5 = view.findViewById(R.id.imvCrDay5);
+        imvCrDay6 = view.findViewById(R.id.imvCrDay6);
+
+
 
 
         tvMonth = (TextView)view.findViewById(R.id.tvMonth);
@@ -105,17 +102,18 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         currentDayIcon.add(imvCrDay5);
         currentDayIcon.add(imvCrDay6);
 
+
         imvBack = view.findViewById(R.id.imvBack);
         imvBack.setOnClickListener(this);
     }
 
-    public void hideLnKeepTime(){
-        lnKeepTime.setVisibility(GONE);
-    }
 
+    private List<Lunch> mlunchList;
     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    public void updateData(List<Date> mDates){
-//        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getContext());
+    public void updateData(List<Date> mDates, List<Lunch> lunchList){
+
+        mlunchList = lunchList;
+
         String month = dateFormat.format(mDates.get(0)).substring(3,5);
         if(month.startsWith("0")){
             tvMonth.setText("Tháng " + dateFormat.format(mDates.get(0)).substring(4,5));
@@ -144,6 +142,37 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         }
 
 
+
+
+        if(mlunchList != null){
+            for (int i = 0; i < mlunchList.size(); i++) {
+                if(mlunchList.get(i).getStatusLunch() == 3){
+                    textViewList.get(i).setBackgroundResource(R.drawable.tomorow_choosed_ic);
+                    textViewList.get(i).setTextColor(getResources().getColor(R.color.black));
+                } else if(mlunchList.get(i).getStatusLunch() == 0){
+                    textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+                    textViewList.get(i).setTextColor(getResources().getColor(R.color.white));
+                } else if(mlunchList.get(i).getStatusLunch() == 1){
+                    textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
+                    textViewList.get(i).setTextColor(getResources().getColor(R.color.white));
+                }
+            }
+        }
+
+        // Set icon for today ( Current day )
+        for (int i = 0; i < textViewList.size(); i++) {
+            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
+            }
+        }
+    }
+
+    public void setDataForView(List<TimeKeep> timeKeeps){
+        this.timeKeeps = timeKeeps;
+        Gson gson = new Gson();
+        String json = gson.toJson(timeKeeps.get(0));
+        Log.e("hailpt"," HomeFragmentCalendarView "+json);
+
         // Set icon for today ( Current day )
         for (int i = 0; i < textViewList.size(); i++) {
             if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
@@ -151,69 +180,37 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
             }
         }
 
-    }
+        for (int i = 0; i < timeKeeps.size(); i++) {
+            if(timeKeeps.get(i).getCheckIn().equals("")){
+                textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+            } else {
 
-    public void setDataForView(List<TimeKeep> pTimeKeeps){
-        this.timeKeeps = pTimeKeeps;
-        Gson gson = new Gson();
-        String json = gson.toJson(timeKeeps.get(0));
-        Log.e("hailpt"," HomeFragmentCalendarView "+json);
+                int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(0,1).toString());
 
-        if(pTimeKeeps != null){
-            for (int i = 0; i < timeKeeps.size(); i++) {
-                if(timeKeeps.get(i).getCheckIn().equals("")){
+                if(timeCheckIn < 8){
                     if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
-                        textViewList.get(i).setBackgroundResource(R.drawable.today_choose_late);
+                        textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
                     } else {
-                        textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
+                        textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
                     }
+
                 } else {
+                    textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);
 
-                    int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(0,1).toString());
-
-                    if(timeCheckIn < 8){
-                        if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
-                            textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
-                        } else {
-                            textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
-                        }
-
-                    } else {
-
-                        if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
-                            textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);
-                        } else {
-                            textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_oringe);
-                        }
-                    }
-                }
-            }
-
-
-            //If tomorrow
-            for (int i = 0; i < timeKeeps.size(); i++) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date strDate = null;
-                try {
-                    strDate = sdf.parse(timeKeeps.get(i).getDate());
-                    if (System.currentTimeMillis() < strDate.getTime()) {
-                        textViewList.get(i).setBackgroundResource(R.drawable.tomorow_choosed_ic);
-                        textViewList.get(i).setTextColor(getResources().getColor(R.color.black));
-                    }
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
             }
         }
 
+
+
+
+
     }
-
-
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
             case R.id.imvBack:
                 mHomeFragmentCalendarListener.onBack();
                 break;
@@ -245,6 +242,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
     }
 
     private void setSelectedBackgroundIcon(int currentPos){
+
         for (int i = 0; i < currentDayIcon.size(); i++) {
             if (i == currentPos){
                 currentDayIcon.get(i).setVisibility(VISIBLE);
@@ -252,6 +250,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                 currentDayIcon.get(i).setVisibility(INVISIBLE);
             }
         }
+
     }
 
     public void setHomeFragmentCalendarListener(HomeFragmentCalendarListener homeFragmentCalendarListener){

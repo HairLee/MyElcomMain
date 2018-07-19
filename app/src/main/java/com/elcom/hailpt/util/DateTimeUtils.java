@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.Log;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -40,18 +41,11 @@ public class DateTimeUtils {
     }
 
 
-    public static String getToDayDateTimeFormat(Context context){
+    public static String getToDayDateTimeFormat(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return  dateFormat.format(Calendar.getInstance().getTime());
     }
 
-    public static String convertLongToTime(String TimeinMilliSeccond){
-        if (TimeinMilliSeccond.equals("")){
-            return "";
-        }
-        String dateString = new SimpleDateFormat("MM/dd/yyyy").format(new Date(Long.parseLong(TimeinMilliSeccond)));
-        return dateString;
-    }
 
     public static  List<List<Date>> getBigListCurrentDate(Context context){
         List<List<Date>> mParts;
@@ -154,17 +148,6 @@ public class DateTimeUtils {
         return mParts.get(currentPosOfDay);
     }
 
-    static int getCurrentPositionOfDayInList(List<Date> dateList, Date CurremtDate, Context context){
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
-        int pos = 0;
-        for (int i = 0; i < dateList.size(); i++) {
-            if(dateFormat.format(CurremtDate).equals(dateFormat.format(dateList.get(i)))){
-                pos = i;
-            }
-        }
-        return pos;
-    }
-
     static <T> List<List<T>> chopped(List<T> list, final int L) {
         List<List<T>> parts = new ArrayList<List<T>>();
         final int N = list.size();
@@ -214,6 +197,16 @@ public class DateTimeUtils {
         long millisecond = Long.parseLong(longV);
         String dateString = android.text.format.DateFormat.format("h:mm", new Date(millisecond)).toString();
         return  dateString;
+    }
+
+    public static Date convertStringTodate(String datestring)  {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return dateFormat.parse(datestring);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }
