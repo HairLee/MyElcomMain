@@ -1,13 +1,10 @@
 package com.elcom.hailpt.util;
 
 import android.content.Context;
-import android.os.Build;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -195,9 +192,10 @@ public class DateTimeUtils {
         }
 
         long millisecond = Long.parseLong(longV);
-        String dateString = android.text.format.DateFormat.format("h:mm", new Date(millisecond)).toString();
+        String dateString = android.text.format.DateFormat.format("hh:mm aa", new Date(millisecond)).toString();
         return  dateString;
     }
+
 
     public static Date convertStringTodate(String datestring)  {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

@@ -2,7 +2,6 @@ package com.elcom.hailpt.view.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.listener.HomeFragmentCalendarListener;
-import com.elcom.hailpt.model.api.response.Lunch;
 import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.DateTimeUtils;
 import com.google.gson.Gson;
@@ -150,6 +148,8 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                 textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
             }
         }
+
+        setSelectedBackgroundIcon(0);
 
     }
 
