@@ -6,7 +6,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,16 +31,18 @@ import java.util.List;
 public class LunchRegistrationContentView extends RelativeLayout implements View.OnClickListener {
 
     private LinearLayout lnRegisLunch,lnLike,lnUnlike;
+    private RelativeLayout rlFeedback;
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private TextView tvMainDish1,tvMainDish2,tvMainDish3,tvMainDish4,tvMainDish5,tvLunchRegister;
     private TextView tvSideDish1,tvSideDish2,tvSideDish3,tvSideDish4,tvSideDish5;
-    private TextView tvLike, tvDislike,txtRegisterLunch,tvNumberOfMessage;
+    private TextView tvLike, tvDislike,txtRegisterLunch,tvNumberOfMessage,tvFeedback;
     private List<TextView> mMainDishLish = new ArrayList<>();
     private List<TextView> mSideDishLish = new ArrayList<>();
     private ImageView imvLunch,imvLikeIc,imvUnlikeIc,imvSendFeedBack;
     private EditText edtFeedback;
     private boolean isLunchRegister = false;
     private boolean isHaveLunchOrNot = false;
+    private Lunch mLunch;
     private enum TimerStatus {
         STARTED,
         STOPPED
@@ -66,6 +70,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
     private void init(final Context context) {
         View view = inflate(context, R.layout.lunch_registration_content_view_item, this);
+        rlFeedback = view.findViewById(R.id.rlFeedback);
         lnRegisLunch = view.findViewById(R.id.lnRegisLunch);
         lnRegisLunch.setOnClickListener(this);
 
@@ -102,6 +107,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         tvLike = view.findViewById(R.id.tvLike);
         tvDislike = view.findViewById(R.id.tvDislike);
         txtRegisterLunch = view.findViewById(R.id.txtRegisterLunch);
+        tvFeedback = view.findViewById(R.id.tvFeedback);
 
         mMainDishLish.add(tvMainDish1);
         mMainDishLish.add(tvMainDish2);
@@ -134,8 +140,21 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
             }
         });
 
+        edtFeedback.setOnEditorActionListener((v, actionId, event) -> {
+            boolean handled = false;
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                mHomeFragmentCalendarListener.onSendFeedBack(edtFeedback.getText().toString(), mLunch.getDate());
+                edtFeedback.setText("");
+                handled = true;
+            }
+            return handled;
+        });
+
         imvSendFeedBack.setOnClickListener(v -> {
-            mHomeFragmentCalendarListener.onSendFeedBack(edtFeedback.getText().toString());
+            if(isHaveLunchOrNot){
+                mHomeFragmentCalendarListener.onSendFeedBack(edtFeedback.getText().toString(), mLunch.getDate());
+                edtFeedback.setText("");
+            }
         });
     }
 
@@ -168,7 +187,11 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
     }
 
     public void updateMainContent(Lunch lunch, int dayChoosed){
+        isHaveLunchOrNot = false;
+        mLunch = lunch;
         resetView();
+
+        Log.e("hailpt"," Date choosed updateMainContent " + dayChoosed);
 
         /* MainDish Start */
         int totalMainDish = 5 - lunch.getMainDishes().size(); // 3
@@ -229,7 +252,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
             if(statusLunch == 4){
                 // have not order
                 isLunchRegister = false;
-                isHaveLunchOrNot = true;
+                isHaveLunchOrNot = false;
                 lnRegisLunch.setVisibility(VISIBLE);
                 imvLunch.setVisibility(INVISIBLE);
                 lnRegisLunch.setBackgroundResource(R.drawable.radius_blue_bg_blue_srtoke_layout);
@@ -272,6 +295,19 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
             }
 
         }
+
+        if (!lunch.getContent_feedback().equals("")){
+            tvFeedback.setText(lunch.getContent_feedback());
+            tvFeedback.setVisibility(VISIBLE);
+            rlFeedback.setVisibility(GONE);
+            tvNumberOfMessage.setVisibility(GONE);
+        } else {
+            tvFeedback.setVisibility(GONE);
+            rlFeedback.setVisibility(VISIBLE);
+            tvNumberOfMessage.setVisibility(VISIBLE);
+
+        }
+
 
     }
 

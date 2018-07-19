@@ -147,7 +147,7 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
     }
 
     @Override
-    public void onSendFeedBack(String content) {
+    public void onSendFeedBack(String content, String date) {
         showProgressDialog();
         KeyBoardUtils.hideKeyboard(this);
         LunchFeedBackReq lunchFeedBackReq = new LunchFeedBackReq();

@@ -12,6 +12,21 @@ public class Lunch {
     @SerializedName("date")
     @Expose
     private String date;
+
+    public String getContent_feedback() {
+        return content_feedback;
+    }
+
+    public void setContent_feedback(String content_feedback) {
+        this.content_feedback = content_feedback;
+    }
+
+    @SerializedName("content_feedback")
+    @Expose
+    private String content_feedback;
+
+
+
     @SerializedName("status_lunch")
     @Expose
     private Integer statusLunch;

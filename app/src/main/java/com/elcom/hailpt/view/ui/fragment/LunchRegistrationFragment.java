@@ -45,6 +45,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     private List<Lunch> lunchList;
     private String currentDayChoosed = "";
     private int currentDay = 0;
+    private int mCurrentPosDay = -1;
     public LunchRegistrationFragment() {
         // Required empty public constructor
     }
@@ -79,6 +80,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     protected void onCreate(Bundle instance, LunchRegistrationViewModel viewModel) {
         lunchRegistrationViewModel = viewModel;
         currentDayChoosed = DateTimeUtils.getToDayDateTime(getContext());
+        currentDay = Integer.parseInt(DateTimeUtils.getDayMonthYear());
         init(lunchRegistrationViewModel);
         getListCurrentDate();
     }
@@ -105,13 +107,19 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
                     currentPosDay = i;
                 }
             }
-            lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),currentDay);
+
+            if(mCurrentPosDay != -1){
+                // F5 when give a like or dislike to the lunch
+                lunchRegistrationContentView.updateMainContent(lunchList.get(mCurrentPosDay),currentDay);
+            } else  {
+                lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),currentDay);
+            }
+
 
             lunchFragmentCalendarView.updateData(mDates, lunchList);
         });
 
         viewModel.getLikeLunch().observe(this, jsonElementRestData -> {
-            Toaster.longToast(jsonElementRestData.message);
             ProgressDialogUtils.dismissProgressDialog();
             getListCurrentDate();
         });
@@ -119,7 +127,8 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         viewModel.sendFeedBackLunch().observe(this, data -> {
             ProgressDialogUtils.dismissProgressDialog();
             if (data != null){
-                Log.e("hailpt"," sendFeedBackLunch OK");
+                getListCurrentDate();
+               Toaster.shortToast("Gửi phản hồi thành công");
             }
         });
 
@@ -162,6 +171,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     public void onChooseDate(int position, int dayChoosed) {
         if (lunchList != null){
             currentDay = dayChoosed;
+            mCurrentPosDay = position;
             currentDayChoosed = lunchList.get(position).getDate();
             lunchRegistrationContentView.updateMainContent(lunchList.get(position),dayChoosed);
         }
@@ -177,11 +187,11 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     }
 
     @Override
-    public void onSendFeedBack(String content) {
+    public void onSendFeedBack(String content, String date) {
         ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         KeyBoardUtils.hideKeyboard(getActivity());
         LunchFeedBackReq lunchFeedBackReq = new LunchFeedBackReq();
-        lunchFeedBackReq.setDate(DateTimeUtils.getToDayDateTime(getContext()));
+        lunchFeedBackReq.setDate(date);
         lunchFeedBackReq.setFeedback_content(content);
         lunchRegistrationViewModel.setFeedBackunchRequest(lunchFeedBackReq);
     }
@@ -191,18 +201,11 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
 
     }
 
-
     private void getListCurrentDate(){
         ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
-//        Log.e("hailpt", " getListCurrentDate Date == "+DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0)));
-//        lunchFragmentCalendarView.updateData(DateTimeUtils.getListCurrentDate(getContext()));
-//        String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(), DateTimeUtils.getListCurrentDate(getContext()).get(0));
-//        String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(), DateTimeUtils.getListCurrentDate(getContext()).get(DateTimeUtils.getListCurrentDate(getContext()).size() -1));
 
         String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(0));
         String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
-
-        Log.e("hailpt"," getListCurrentDate fromTime "+fromTime + " toTime "+toTime);
 
         TimeKeepReq timeKeepReq = new TimeKeepReq();
         timeKeepReq.setFromTime(fromTime);

@@ -292,13 +292,24 @@
              android:layout_height="wrap_content" />
 
      </RelativeLayout>
-
+     <TextView
+         android:visibility="gone"
+         android:layout_marginTop="5dp"
+         android:text="11111"
+         android:id="@+id/tvFeedback"
+         android:paddingRight="40dp"
+         android:paddingLeft="5dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
     <RelativeLayout
+        android:id="@+id/rlFeedback"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
+            android:inputType="text"
+            android:imeOptions="actionSend"
             android:maxLength="200"
             android:id="@+id/edtFeedback"
             android:textSize="15sp"

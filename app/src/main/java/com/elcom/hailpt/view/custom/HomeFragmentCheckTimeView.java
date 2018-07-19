@@ -127,7 +127,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         month12.setOnClickListener(this);
 
         imvSendFeedBack.setOnClickListener(v -> {
-            mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString());
+            mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString(),"");
         });
 //
 //        imvBack = view.findViewById(R.id.imvBack);

@@ -70,9 +70,10 @@ public class SplashActivity extends AppCompatActivity {
         userForSave = qbUser;
         qbUser.setPassword("1234567890");
         StringifyArrayList<String> userTags = new StringifyArrayList<>();
-        userTags.add(sharedPrefsHelper.getQbUser().getFullName());
-        qbUser.setTags(userTags);
-
+        if(sharedPrefsHelper != null && sharedPrefsHelper.getQbUser() != null){
+            userTags.add(sharedPrefsHelper.getQbUser().getFullName());
+            qbUser.setTags(userTags);
+        }
         Intent tempIntent = new Intent(this, CallService.class);
         PendingIntent pendingIntent = createPendingResult(Consts.EXTRA_LOGIN_RESULT_CODE, tempIntent, 0);
         CallService.start(this, qbUser, pendingIntent);

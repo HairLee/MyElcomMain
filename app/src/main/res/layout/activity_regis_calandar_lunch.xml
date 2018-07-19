@@ -25,7 +25,7 @@
             android:textSize="17sp"
             style="@style/WrapContent"
             android:layout_centerInParent="true"
-            android:text="Chấm Công"
+            android:text="Cơm trưa"
             />
 
 

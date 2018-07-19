@@ -125,7 +125,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     }
 
     @Override
-    public void onSendFeedBack(String content) {
+    public void onSendFeedBack(String content, String date) {
         // Result why you are late.
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);

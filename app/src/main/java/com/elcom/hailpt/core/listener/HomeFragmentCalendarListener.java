@@ -15,7 +15,7 @@ public interface HomeFragmentCalendarListener {
 
     void onLikeOrDislike(boolean isLike);
 
-    void onSendFeedBack(String content);
+    void onSendFeedBack(String content, String date);
 
 
     void onGetMonthInformation(String month);
