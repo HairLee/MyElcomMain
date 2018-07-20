@@ -16,7 +16,33 @@
             android:layout_height="wrap_content"
             app:tabMode="fixed"
             app:tabGravity="fill"/>
+
+        <RelativeLayout
+            android:background="#F4F5FB"
+            android:layout_width="match_parent"
+            android:layout_height="42dp">
+
+            <ImageView
+                android:layout_marginLeft="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        <EditText
+            android:paddingLeft="30dp"
+            android:hint="Tìm một người bạn"
+            android:textSize="13sp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/radius_edittext_white_bg_gray_srtoke2_layout"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            />
+
+        </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
+
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

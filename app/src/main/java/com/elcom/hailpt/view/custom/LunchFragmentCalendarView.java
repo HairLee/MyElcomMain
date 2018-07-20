@@ -105,6 +105,8 @@ public class LunchFragmentCalendarView extends RelativeLayout implements View.On
 
         imvBack = view.findViewById(R.id.imvBack);
         imvBack.setOnClickListener(this);
+
+        setSelectedBackgroundIcon(0);
     }
 
 

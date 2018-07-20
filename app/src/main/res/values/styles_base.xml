@@ -37,6 +37,12 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="BlueColor">
+        <item name="android:textColor">#3B71BC</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="WeightWidthBlack">
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">#54586B</item>

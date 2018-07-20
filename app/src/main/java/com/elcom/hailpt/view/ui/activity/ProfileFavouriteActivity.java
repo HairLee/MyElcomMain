@@ -2,9 +2,7 @@ package com.elcom.hailpt.view.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
@@ -24,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityProfileFavouriteBinding;
-import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.services.CallService;
@@ -38,7 +34,6 @@ import com.elcom.hailpt.util.WebRtcSessionManager;
 import com.elcom.hailpt.view.ui.CallActivity;
 import com.elcom.hailpt.view.ui.PermissionsActivity;
 import com.elcom.hailpt.viewmodel.ProfileFavouriteViewModel;
-import com.google.gson.JsonElement;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.users.model.QBUser;
 import com.quickblox.videochat.webrtc.QBRTCClient;
@@ -57,8 +52,6 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-
-import static org.webrtc.ContextUtils.getApplicationContext;
 
 public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewModel,ActivityProfileFavouriteBinding> implements View.OnClickListener {
 
@@ -165,6 +158,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
             binding.imageView13.setVisibility(View.GONE);
             binding.imageView14.setVisibility(View.GONE);
             binding.view4.setVisibility(View.GONE);
+            binding.imageView11.setVisibility(View.GONE);
         }
 
     }

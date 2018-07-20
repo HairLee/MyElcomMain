@@ -2,12 +2,9 @@ package com.elcom.hailpt.view.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,13 +18,8 @@ import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.DateTimeUtils;
 import com.google.gson.Gson;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import okhttp3.internal.Util;
 
 
 /**
@@ -129,9 +121,8 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         imvSendFeedBack.setOnClickListener(v -> {
             mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString(),"");
         });
-//
-//        imvBack = view.findViewById(R.id.imvBack);
-//        imvBack.setOnClickListener(this);
+
+        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
     }
 
     @Override
@@ -251,13 +242,13 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         } else {
             tvToday.setText("Vắng mặt");
             tvToday.setTextColor(getResources().getColor(R.color.lost));
-            tvCheckIn.setText("Không có dữ liệu");
+            tvCheckIn.setText("--:--");
         }
 
         if(!timeKeep.getCheckOut().equals("")){
             tvCheckOut.setText(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeep.getCheckOut())*1000)+""));
         } else {
-            tvCheckOut.setText("Không có dữ liệu");
+            tvCheckOut.setText("--:--");
         }
 
         if(timeKeep.getStatistic() != null){
@@ -269,7 +260,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
 
 //        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
 
-        tvDate.setText(timeKeep.getDate());
+//        tvDate.setText(timeKeep.getDate());
     }
 
     public void setHomeFragmentCalendarListener(HomeFragmentCalendarListener homeFragmentCalendarListener){
