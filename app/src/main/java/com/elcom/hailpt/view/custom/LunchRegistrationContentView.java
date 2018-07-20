@@ -249,7 +249,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         int statusLunch = lunch.getStatusLunch();
 
         // Previous Day, the title is always ..
-        if(DateTimeUtils.isCurrentTimeIsBefore9Am() && DateTimeUtils.currentDay() == dayChoosed){
+        if(DateTimeUtils.isCurrentTimeIsBefore9Am() && DateTimeUtils.getToDayDateTimeFormat().equals(lunch.getDate())){
             if(statusLunch == 4){
                 // have not order
                 isLunchRegister = false;
@@ -258,12 +258,13 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                 imvLunch.setVisibility(INVISIBLE);
                 lnRegisLunch.setBackgroundResource(R.drawable.radius_blue_bg_blue_srtoke_layout);
                 txtRegisterLunch.setText("ĐĂNG KÝ");
-            } else {
+            } else if (statusLunch == 2){
                 isLunchRegister = true;
                 lnRegisLunch.setVisibility(VISIBLE);
                 lnRegisLunch.setBackgroundResource(R.drawable.radius_red_bg_red_srtoke_layout);
                 txtRegisterLunch.setText("HỦY ĐĂNG KÝ");
             }
+
         } else {
             imvLunch.setVisibility(VISIBLE);
             lnRegisLunch.setVisibility(INVISIBLE);
@@ -290,7 +291,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
                     break;
                 case 2:
                     imvLunch.setBackgroundColor(getResources().getColor(R.color.white));
-                    setTextForLunchRegister("Đăng ký không ăn");
+                    setTextForLunchRegister("Đã đăng ký");
                     hideFeedbackView();
                     break;
                 case 3:

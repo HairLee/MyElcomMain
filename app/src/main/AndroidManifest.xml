@@ -84,6 +84,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".view.ui.activity.LunchRegistrationActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity

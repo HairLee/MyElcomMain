@@ -112,8 +112,8 @@ public class LunchFragmentCalendarView extends RelativeLayout implements View.On
 
     private List<Lunch> mlunchList;
     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    public void updateData(List<Date> mDates, List<Lunch> lunchList){
-
+    public void updateData(List<Date> mDates, List<Lunch> lunchList, int currentPosDay){
+        setSelectedBackgroundIcon(currentPosDay);
         mlunchList = lunchList;
 
         String month = dateFormat.format(mDates.get(0)).substring(3,5);

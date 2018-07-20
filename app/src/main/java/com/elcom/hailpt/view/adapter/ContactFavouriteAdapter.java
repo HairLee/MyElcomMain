@@ -101,6 +101,15 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
 
             ImageView imvChat =  binding.getRoot().findViewById(R.id.imageView4);
             imvChat.setOnClickListener(v -> chatAndCallListener.doChat(data));
+
+            ImageView imageView15 = binding.getRoot().findViewById(R.id.imageView15);
+
+            if (data.getStatus() == 1){
+                imageView15.setVisibility(View.VISIBLE);
+            } else {
+                imageView15.setVisibility(View.GONE);
+            }
+
         }
 
         @Override

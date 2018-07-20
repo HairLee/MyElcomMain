@@ -46,6 +46,14 @@ public class User  implements Parcelable {
     @Expose
     private String day_to_company;
 
+    public String getDay_to_company() {
+        return day_to_company;
+    }
+
+    public void setDay_to_company(String day_to_company) {
+        this.day_to_company = day_to_company;
+    }
+
     @SerializedName("staff_id")
     @Expose
     private String staffId;

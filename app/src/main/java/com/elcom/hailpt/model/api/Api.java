@@ -2,6 +2,7 @@ package com.elcom.hailpt.model.api;
 
 import android.arch.lifecycle.LiveData;
 
+import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.ChangePwRq;
 import com.elcom.hailpt.model.api.request.ForgetPwReq;
 import com.elcom.hailpt.model.api.request.LoginReq;
@@ -30,6 +31,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -68,6 +70,9 @@ public interface Api {
     @GET("user-group")
     Observable<RestData<List<Contact>>> getAllContact(@Header("Authorization") String s);
 
+    @GET("user")
+    Observable<RestData<List<User>>> getOnlineContact(@Header("Authorization") String s);
+
     @GET("mark-user")
     Observable<RestData<List<User>>> getFavouriteContact(@Header("Authorization") String s);
 
@@ -95,6 +100,8 @@ public interface Api {
     @POST("mark-user")
     Observable<RestData<JsonElement>> markFriend(@Body MarkUserReq markUserReq, @Header("Authorization") String s);
 
+    @PUT("user")
+    Observable<RestData<JsonElement>> changeMobile(@Body ChangeMobileReq changeMobileReq, @Header("Authorization") String s);
 
      /*Setting*/
      @POST("change-pwd")

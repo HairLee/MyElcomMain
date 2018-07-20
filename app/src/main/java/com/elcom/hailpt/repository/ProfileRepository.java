@@ -6,6 +6,7 @@ import com.elcom.hailpt.core.AppSchedulerProvider;
 import com.elcom.hailpt.core.BaseViewModel;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
@@ -133,6 +134,33 @@ public class ProfileRepository implements BaseViewModel {
                     }
                 });
         return avatarMutableLiveData;
+    }
+
+    public MutableLiveData<RestData<JsonElement>> updateMobile(ChangeMobileReq changeMobileReq) {
+        api.changeMobile(changeMobileReq,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        markFriendMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return markFriendMutableLiveData;
     }
 
 

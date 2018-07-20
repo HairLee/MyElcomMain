@@ -6,6 +6,7 @@ import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 
 import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.repository.ProfileRepository;
@@ -22,10 +23,12 @@ import okhttp3.MultipartBody;
 public class ProfileFavouriteViewModel extends ViewModel {
     private final MutableLiveData<Integer> request = new MutableLiveData<>();
     private final MutableLiveData<MarkUserReq> markUserReq = new MutableLiveData<>();
+    private final MutableLiveData<ChangeMobileReq> changeMobileReq = new MutableLiveData<>();
     private final MutableLiveData<MultipartBody.Part> avatarReq = new MutableLiveData<>();
 
     private final LiveData<RestData<User>> userResult;
     private final LiveData<RestData<JsonElement>> markUserResponse;
+    private final LiveData<RestData<JsonElement>> changeMobileResponse;
     private final LiveData<RestData<User>> avatarResponse;
     private final ProfileRepository repository;
 
@@ -40,6 +43,10 @@ public class ProfileFavouriteViewModel extends ViewModel {
 
         avatarResponse = Transformations.switchMap(avatarReq, param -> repository.uploadAvatar(avatarReq.getValue()));
 
+
+        changeMobileResponse = Transformations.switchMap(changeMobileReq, param -> repository.updateMobile(changeMobileReq.getValue()));
+
+
     }
 
     public LiveData<RestData<User>> getUserProfile() {
@@ -48,6 +55,11 @@ public class ProfileFavouriteViewModel extends ViewModel {
 
     public LiveData<RestData<JsonElement>> getMarkFriend() {
         return markUserResponse;
+    }
+
+
+    public LiveData<RestData<JsonElement>> getChangeMobileResponse() {
+        return changeMobileResponse;
     }
 
     public LiveData<RestData<User>> uploadAvatar() {
@@ -60,6 +72,10 @@ public class ProfileFavouriteViewModel extends ViewModel {
 
     public void setMarkFriendRequest(MarkUserReq markFriendRequest){
         markUserReq.setValue(markFriendRequest);
+    }
+
+    public void setChangeMobileRequest(ChangeMobileReq pchangeMobileReq){
+        changeMobileReq.setValue(pchangeMobileReq);
     }
 
     public void setAvatarRequest(MultipartBody.Part avatarRequest){

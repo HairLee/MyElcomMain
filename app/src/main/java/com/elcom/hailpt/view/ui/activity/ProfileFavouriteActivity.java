@@ -2,6 +2,7 @@ package com.elcom.hailpt.view.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
@@ -20,7 +22,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
+import com.elcom.hailpt.core.listener.ChangeMobilePhoneListener;
 import com.elcom.hailpt.databinding.ActivityProfileFavouriteBinding;
+import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.services.CallService;
@@ -31,9 +36,11 @@ import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.PushNotificationSender;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.util.WebRtcSessionManager;
+import com.elcom.hailpt.view.dialog.ChangMobileDialog;
 import com.elcom.hailpt.view.ui.CallActivity;
 import com.elcom.hailpt.view.ui.PermissionsActivity;
 import com.elcom.hailpt.viewmodel.ProfileFavouriteViewModel;
+import com.google.gson.JsonElement;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.users.model.QBUser;
 import com.quickblox.videochat.webrtc.QBRTCClient;
@@ -94,24 +101,35 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
 //                hideProgressDialog();
                 user = userRestData.data;
 
-                binding.setUser(user);
-                if(userRestData.data.getAvatar() != null){
-                    Glide.with(this).load(userRestData.data.getAvatar())
-                            .thumbnail(0.5f)
-                            .into(binding.profileImage);
-                } else {
-                    binding.profileImage.setImageDrawable(getResources().getDrawable(R.drawable.defaul_ava));
+                if (user != null){
+                    binding.setUser(user);
+                    if(userRestData.data.getAvatar() != null){
+                        Glide.with(this).load(userRestData.data.getAvatar())
+                                .thumbnail(0.5f)
+                                .into(binding.profileImage);
+                    } else {
+                        binding.profileImage.setImageDrawable(getResources().getDrawable(R.drawable.defaul_ava));
+                    }
+
+                    if(userRestData.data.getStatus_mark() == 1){
+                        binding.imageView11.setImageResource(R.drawable.favor_ic);
+                    } else {
+                        binding.imageView11.setImageResource(R.drawable.favor_not_ic);
+                    }
+
+                    if (userRestData.data.getStatus() == 1){
+                        binding.textView11.setText("Đang hoạt động");
+                    } else if (userRestData.data.getStatus() == 2){
+                        binding.textView11.setText("Không hoạt động");
+                    } else  if (userRestData.data.getStatus() == 3){
+                        binding.textView11.setText("Đang bận");
+                    }
+
+                    binding.textView6.setText("Tham gia từ : "+user.getDay_to_company());
+
+                    binding.tvCompa.setText(user.getGroupName().toString());
                 }
 
-                if(userRestData.data.getStatus_mark() == 1){
-                    binding.imageView11.setImageResource(R.drawable.favor_ic);
-                } else {
-                    binding.imageView11.setImageResource(R.drawable.favor_not_ic);
-                }
-
-                if (userRestData.data.getStatus() != 1){
-                    binding.textView11.setText("Không hoạt động");
-                }
             }
         });
 
@@ -134,6 +152,15 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
             }
         });
 
+
+        viewModel.getChangeMobileResponse().observe(this, new Observer<RestData<JsonElement>>() {
+            @Override
+            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
+                Toaster.shortToast("Change OK");
+            }
+        });
+
+
         binding.imageView6.setOnClickListener(v -> ActivityCompat.finishAfterTransition(ProfileFavouriteActivity.this));
         binding.imageView11.setOnClickListener(v -> {
             showProgressDialog();
@@ -149,6 +176,31 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                     showPictureDialog();
                 }
             }
+        });
+
+        binding.textView14.setOnClickListener(v -> {
+                // Change mobile
+                ChangMobileDialog changMobileDialog = new ChangMobileDialog(this, mobile -> {
+                ChangeMobileReq changeMobileReq = new ChangeMobileReq();
+                changeMobileReq.setHotline("");
+                changeMobileReq.setMobile(mobile);
+                viewModel.setChangeMobileRequest(changeMobileReq);
+            });
+
+            changMobileDialog.show();
+        });
+
+        binding.textView17.setOnClickListener(v -> {
+                // Change hotline
+                ChangMobileDialog changMobileDialog = new ChangMobileDialog(this, mobile -> {
+                ChangeMobileReq changeMobileReq = new ChangeMobileReq();
+                changeMobileReq.setHotline(mobile);
+                changeMobileReq.setMobile("");
+                viewModel.setChangeMobileRequest(changeMobileReq);
+            });
+
+            changMobileDialog.show();
+
         });
     }
 

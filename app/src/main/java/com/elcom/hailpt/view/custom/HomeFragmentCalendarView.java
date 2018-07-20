@@ -149,11 +149,11 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
             }
         }
 
-        setSelectedBackgroundIcon(0);
 
     }
 
-    public void setDataForView(List<TimeKeep> pTimeKeeps){
+    public void setDataForView(List<TimeKeep> pTimeKeeps,int currentPosDay){
+        setSelectedBackgroundIcon(currentPosDay);
         this.timeKeeps = pTimeKeeps;
         Gson gson = new Gson();
         String json = gson.toJson(timeKeeps.get(0));
@@ -169,9 +169,10 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                     }
                 } else {
 
-                    int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(0,1).toString());
+                    int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(1,2).toString());
+                    String time = textViewList.get(i).getText().toString();
 
-                    if(timeCheckIn < 8){
+                    if(timeCheckIn < 8 && !DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("PM") ){
                         if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
                             textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
                         } else {

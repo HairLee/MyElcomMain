@@ -130,8 +130,8 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(Objects.requireNonNull(getView()).getWindowToken(), 0);
         ReasonLate reasonLate = new ReasonLate();
-        reasonLate.setReason("Em bị mệt");
-        reasonLate.setDate("2018-09-01");
+        reasonLate.setReason(content);
+        reasonLate.setDate(date);
         timeKeepingViewModel.setReasonLateReq(reasonLate);
     }
 
@@ -152,8 +152,6 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     @Override
     protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel) {
         timeKeepingViewModel = viewModel;
-
-
 
         String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(0));
         String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
@@ -184,7 +182,7 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
                         homeFragmentCheckTimeView.setDataForView(timeKeeps);
                         homeFragmentCheckTimeView.updateLayout(currentPosDay);
 
-                        homeFragmentCalendarView.setDataForView(timeKeeps);
+                        homeFragmentCalendarView.setDataForView(timeKeeps,currentPosDay);
                     }
             );
 

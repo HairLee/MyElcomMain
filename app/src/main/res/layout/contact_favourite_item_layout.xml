@@ -16,17 +16,18 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:src="@drawable/defaul_ava"
         android:id="@+id/imageView2"
         android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:src="@drawable/defaul_ava"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <TextView
         android:id="@+id/list_item_artist_name"
@@ -74,6 +75,15 @@
         android:background="@color/colorLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/list_item_artist_name" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:srcCompat="@drawable/online_ic"
+        tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>
 
 </layout>

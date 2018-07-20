@@ -38,6 +38,7 @@ import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.util.PermissionsChecker;
 import com.elcom.hailpt.util.PreferUtils;
+import com.elcom.hailpt.util.ProgressDialogUtils;
 import com.elcom.hailpt.util.PushNotificationSender;
 import com.elcom.hailpt.util.SharedPrefsHelper;
 import com.elcom.hailpt.util.Toaster;
@@ -96,7 +97,8 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         if(view == null){
             view = inflater.inflate(R.layout.fragment_all_contact, container, false);
             imvLoading = view.findViewById(R.id.imvLoading);
-            makeDialogProgress();
+            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//            makeDialogProgress();
         }
         // Inflate the layout for this fragment
 //        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
@@ -139,9 +141,10 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 //            allContactAdaprer.setData(listRestData.data);
 //            hideProgressDialog();
             contacts = listRestData.data;
-            rotation.cancel();
+//            rotation.cancel();
             imvLoading.setVisibility(View.GONE);
             setupViewTest();
+            ProgressDialogUtils.dismissProgressDialog();
         });
 
 
@@ -232,7 +235,6 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         QBRTCClient qbrtcClient = QBRTCClient.getInstance(getContext());
 
         QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
-
 
         Map<String, String> userInfo = new HashMap<>();
         userInfo.put("userID", PreferUtils.getUserId(getContext())+"");

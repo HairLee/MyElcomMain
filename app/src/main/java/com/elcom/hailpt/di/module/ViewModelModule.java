@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import com.elcom.hailpt.di.ViewModelKey;
 import com.elcom.hailpt.viewmodel.AllContactSuggestViewModel;
 import com.elcom.hailpt.viewmodel.ContactFavouriteViewModel;
+import com.elcom.hailpt.viewmodel.ContactOnlineViewModel;
 import com.elcom.hailpt.viewmodel.DetailViewModel;
 import com.elcom.hailpt.viewmodel.ForgetPasswordViewModel;
 import com.elcom.hailpt.viewmodel.LoginViewModel;
@@ -105,6 +106,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ForgetPasswordViewModel.class)
     abstract ViewModel bindsForgetPasswordViewModel(ForgetPasswordViewModel forgetPasswordViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ContactOnlineViewModel.class)
+    abstract ViewModel bindsContactOnlineViewModel(ContactOnlineViewModel forgetPasswordViewModel);
 
 
     @Binds

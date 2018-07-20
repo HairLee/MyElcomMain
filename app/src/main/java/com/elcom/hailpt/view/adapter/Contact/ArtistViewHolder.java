@@ -15,13 +15,14 @@ import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
 public class ArtistViewHolder extends ChildViewHolder {
 
   private TextView childTextView;
-  private ImageView imageView3,imvAva;
+  private ImageView imageView3,imvAva,imageView16;
   private AllContactFragmentListener allContactFragmentListener;
   private User user;
   public ArtistViewHolder(View itemView) {
     super(itemView);
     childTextView = (TextView) itemView.findViewById(R.id.list_item_artist_name);
     imageView3 = (ImageView) itemView.findViewById(R.id.imageView3);
+    imageView16 = (ImageView) itemView.findViewById(R.id.imageView16);
     imvAva = (ImageView) itemView.findViewById(R.id.imageView2);
 
     imageView3.setOnClickListener(v -> allContactFragmentListener.onCallVideo(user));
@@ -44,6 +45,13 @@ public class ArtistViewHolder extends ChildViewHolder {
     } else {
       imvAva.setImageResource(R.drawable.defaul_ava);
     }
+
+    if (user.getStatus() == 1){
+      imageView16.setVisibility(View.VISIBLE);
+    } else {
+      imageView16.setVisibility(View.GONE);
+    }
+
   }
 
   public void setAllContactFragmentListener(AllContactFragmentListener allContactFragmentListener){

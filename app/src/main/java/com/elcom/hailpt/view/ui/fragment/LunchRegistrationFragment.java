@@ -43,9 +43,10 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     private LunchFragmentCalendarView lunchFragmentCalendarView;
     LunchRegistrationViewModel lunchRegistrationViewModel;
     private List<Lunch> lunchList;
-    private String currentDayChoosed = "";
+    private String currentDayChoosed = "0";
     private int currentDay = 0;
     private int mCurrentPosDay = -1;
+    int currentPosDay = 0;
     public LunchRegistrationFragment() {
         // Required empty public constructor
     }
@@ -89,34 +90,37 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         viewModel.registerLunch().observe(this, jsonElementRestData -> {
             Toaster.longToast(jsonElementRestData.message);
             ProgressDialogUtils.dismissProgressDialog();
+            getListCurrentDate();
         });
 
 
         viewModel.cancelLunch().observe(this, jsonElementRestData -> {
             Toaster.longToast("Hủy cơm thành công");
             ProgressDialogUtils.dismissProgressDialog();
+            getListCurrentDate();
         });
 
         viewModel.getLunchMenu().observe(this, listRestData -> {
             ProgressDialogUtils.dismissProgressDialog();
             lunchList = listRestData.data;
 
-            int currentPosDay = 0;
-            for (int i = 0; i < lunchList.size(); i++) {
-                if(lunchList.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
-                    currentPosDay = i;
-                }
-            }
 
             if(mCurrentPosDay != -1){
                 // F5 when give a like or dislike to the lunch
                 lunchRegistrationContentView.updateMainContent(lunchList.get(mCurrentPosDay),currentDay);
             } else  {
+                currentDayChoosed = lunchList.get(0).getDate();
+                for (int i = 0; i < lunchList.size(); i++) {
+                    if(lunchList.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
+                        currentPosDay = i;
+                        currentDayChoosed = lunchList.get(i).getDate();
+                    }
+                }
+
                 lunchRegistrationContentView.updateMainContent(lunchList.get(currentPosDay),currentDay);
             }
 
-
-            lunchFragmentCalendarView.updateData(mDates, lunchList);
+            lunchFragmentCalendarView.updateData(mDates, lunchList,currentPosDay);
         });
 
         viewModel.getLikeLunch().observe(this, jsonElementRestData -> {
@@ -149,8 +153,9 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         LunchRegisDialog lunchRegisDialog = new LunchRegisDialog(getContext(), true, () -> {
             ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
             LunchCancelReq lunchCancelReq = new LunchCancelReq();
-            lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(getContext()));
+            lunchCancelReq.setData(DateTimeUtils.getToDayDateTimeFormat());
             lunchRegistrationViewModel.setRequest(lunchCancelReq);
+
 
         });
         lunchRegisDialog.show();
@@ -161,7 +166,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         LunchRegisDialog lunchRegisDialog = new LunchRegisDialog(getContext(), false, () -> {
             ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
             LunchCancelReq lunchCancelReq = new LunchCancelReq();
-            lunchCancelReq.setData(DateTimeUtils.getToDayDateTime(getContext()));
+            lunchCancelReq.setData(DateTimeUtils.getToDayDateTimeFormat());
             lunchRegistrationViewModel.setRegisterLunchRequest(lunchCancelReq);
         });
         lunchRegisDialog.show();
@@ -172,6 +177,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         if (lunchList != null){
             currentDay = dayChoosed;
             mCurrentPosDay = position;
+            currentPosDay = position;
             currentDayChoosed = lunchList.get(position).getDate();
             lunchRegistrationContentView.updateMainContent(lunchList.get(position),dayChoosed);
         }

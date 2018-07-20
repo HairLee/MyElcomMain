@@ -40,12 +40,12 @@
             app:srcCompat="@drawable/profile_bg" />
 
         <ImageView
-            android:padding="5dp"
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:padding="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/back_ic" />
@@ -56,7 +56,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginBottom="75dp"
-            android:layout_marginTop="73dp"
+            android:layout_marginTop="50dp"
             app:civ_border_color="#ffffff"
             app:civ_border_width="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
@@ -66,20 +66,34 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvCompa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{user.job_title}"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textSize="15sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
         <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@{user.job_title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompa" />
+
+        <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{user.mobile}"
+            android:layout_marginTop="3dp"
+            android:text=""
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -151,7 +165,7 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{user.mobile}"
+            android:text="@{user.hotline}"
             android:textColor="#3B71BC"
             app:layout_constraintBottom_toBottomOf="@+id/imageView8"
             app:layout_constraintStart_toStartOf="@+id/textView8"
@@ -274,6 +288,28 @@
             android:background="@color/colorLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Sửa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:text="Sửa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
 
     </android.support.constraint.ConstraintLayout>
 

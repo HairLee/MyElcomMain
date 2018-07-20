@@ -34,6 +34,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     private HomeFragmentCalendarListener mHomeFragmentCalendarListener;
     private List<TimeKeep> timeKeeps;
     private EditText edtLate;
+    private String currentDate = "";
     private TextView month1,month2,month3,month4,month5,month6,month7,month8,month9,month10,month11,month12;
 
     private List<TextView> monthList;
@@ -119,7 +120,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         month12.setOnClickListener(this);
 
         imvSendFeedBack.setOnClickListener(v -> {
-            mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString(),"");
+            mHomeFragmentCalendarListener.onSendFeedBack(edtLate.getText().toString(),currentDate);
         });
 
         tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
@@ -190,6 +191,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
                monthList.get(i).setTextColor(getResources().getColor(R.color.color_monthText));
            }
         }
+
     }
 
     public void setDataForView(List<TimeKeep> timeKeeps){
@@ -197,6 +199,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     }
 
     public void updatelayout(List<TimeKeep> timeKeeps, int currentLocation){
+
         this.timeKeeps = timeKeeps;
         tvCheckIn.setText(timeKeeps.get(currentLocation).getCheckIn());
         tvCheckOut.setText(timeKeeps.get(currentLocation).getCheckOut());
@@ -210,6 +213,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     public void updateLayout(int pos){
         if (timeKeeps != null && timeKeeps.size() > 0){
             updateLayout(timeKeeps.get(pos));
+            currentDate = timeKeeps.get(pos).getDate();
         }
     }
 
@@ -227,10 +231,10 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         if(!timeKeep.getCheckIn().equals("")){
             tvCheckIn.setText(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeep.getCheckIn())*1000)+""));
 
+            int timeCheckIn = Integer.parseInt(tvCheckIn.getText().subSequence(1,2).toString());
+            String time = tvCheckIn.getText().toString();
 
-            int timeCheckIn = Integer.parseInt(tvCheckIn.getText().subSequence(0,1).toString());
-
-            if(timeCheckIn < 8){
+            if(time.startsWith("0") && timeCheckIn < 8 && !tvCheckIn.getText().toString().contains("PM")){
                 tvToday.setText("Đúng giờ");
                 tvToday.setTextColor(getResources().getColor(R.color.onTime));
             } else {
@@ -256,7 +260,6 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
             tvLateTime.setText(timeKeep.getStatistic().getLate().toString());
             tvAbsent.setText(timeKeep.getStatistic().getAbsent().toString());
         }
-
 
 //        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
 

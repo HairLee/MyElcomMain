@@ -22,6 +22,7 @@ import com.elcom.hailpt.services.CallService;
 import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.util.PermissionsChecker;
 import com.elcom.hailpt.util.PreferUtils;
+import com.elcom.hailpt.util.ProgressDialogUtils;
 import com.elcom.hailpt.util.PushNotificationSender;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.util.WebRtcSessionManager;
@@ -79,7 +80,8 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
             contactFavouriteViewModel.setAllContactrequest();
         });
 
-        makeDialogProgress();
+//        makeDialogProgress();
+        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         init();
 
         return view;
@@ -101,9 +103,10 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         contactFavouriteViewModel.getFavouriteContact().observe(this, new Observer<RestData<List<User>>>() {
             @Override
             public void onChanged(@Nullable RestData<List<User>> listRestData) {
+                ProgressDialogUtils.dismissProgressDialog();
                 if(listRestData != null){
                     contactFavouriteAdapter.setData(listRestData.data);
-                    rotation.cancel();
+//                    rotation.cancel();
                     imvLoading.setVisibility(View.GONE);
                     swipeRefreshLayout.setRefreshing(false);
                 }

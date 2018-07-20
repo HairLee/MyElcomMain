@@ -17,6 +17,7 @@ import com.elcom.hailpt.view.ui.fragment.LunchRegistrationFragment;
 import com.elcom.hailpt.view.ui.fragment.TimeKeepingFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.AllContactFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.FavouriteContactFragment;
+import com.elcom.hailpt.view.ui.fragment.contact.OnlineContactFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -81,5 +82,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract LunchRegistrationFragment bindLunchRegistrationFragment();
+
+    @ContributesAndroidInjector
+    abstract OnlineContactFragment bindOnlineContactFragment();
 
 }
