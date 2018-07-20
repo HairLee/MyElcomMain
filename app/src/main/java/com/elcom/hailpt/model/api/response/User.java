@@ -42,6 +42,10 @@ public class User  implements Parcelable {
     @Expose
     private String job_title;
 
+    @SerializedName("day_to_company")
+    @Expose
+    private String day_to_company;
+
     @SerializedName("staff_id")
     @Expose
     private String staffId;
