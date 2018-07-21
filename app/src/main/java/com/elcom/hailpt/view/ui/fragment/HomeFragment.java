@@ -4,7 +4,6 @@ package com.elcom.hailpt.view.ui.fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,23 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
-import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.ui.activity.LunchCalendarRegisActivity;
-import com.elcom.hailpt.view.ui.activity.LunchRegistrationActivity;
 import com.elcom.hailpt.view.ui.activity.NotificationActivity;
 import com.elcom.hailpt.view.ui.activity.ProfileFavouriteActivity;
 import com.elcom.hailpt.view.ui.activity.SettingActivity;
 import com.elcom.hailpt.view.ui.activity.TimeKeepingActivity;
-import com.elcom.hailpt.view.ui.fragment.contact.AllContactFragment;
-
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,11 +104,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void updateAvatar(){
+    public void updateAvatar(){
         if(!PreferUtils.getAvatar(getContext()).equals("")){
             Glide.with(this).load(PreferUtils.getAvatar(getContext()))
                     .thumbnail(0.5f)
                     .into(imvAva);
+        }
+    }
+
+    public class MyReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(context, "Intent Detected.", Toast.LENGTH_LONG).show();
+            updateAvatar();
         }
     }
 }

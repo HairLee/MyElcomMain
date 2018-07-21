@@ -1,7 +1,7 @@
 package com.elcom.hailpt.view.ui.activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
-import com.elcom.hailpt.core.listener.ChangeMobilePhoneListener;
 import com.elcom.hailpt.databinding.ActivityProfileFavouriteBinding;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.ChangeMobileReq;
@@ -46,6 +45,7 @@ import com.quickblox.users.model.QBUser;
 import com.quickblox.videochat.webrtc.QBRTCClient;
 import com.quickblox.videochat.webrtc.QBRTCSession;
 import com.quickblox.videochat.webrtc.QBRTCTypes;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -67,6 +67,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
     private ProfileFavouriteViewModel viewModel;
     private PermissionsChecker checker;
     private User user;
+    static Bitmap mImage;
     @Override
     protected Class<ProfileFavouriteViewModel> getViewModel() {
         return ProfileFavouriteViewModel.class;
@@ -204,6 +205,14 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         });
     }
 
+
+    public void goToCropActivity(String path){
+        Intent intent = new Intent(ProfileFavouriteActivity.this, CropImageActivity.class);
+        intent.putExtra(ConstantsApp.EXTRA_URI_STR, path);
+        startActivityForResult(intent, 10);
+
+    }
+
     private void hideCallLayoutWithMySelfAccount(){
         if (userId == PreferUtils.getUserId(this)){
             binding.imageView12.setVisibility(View.GONE);
@@ -215,74 +224,57 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
 
     }
 
-    private static final String IMAGE_DIRECTORY = "/demonuts";
-    private int GALLERY = 1, CAMERA = 2;
+    @SuppressLint("NewApi")
     private void showPictureDialog(){
-        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
-        pictureDialog.setTitle("Select Action");
-        String[] pictureDialogItems = {
-                "Select photo from gallery",
-                "Capture photo from camera" };
-        pictureDialog.setItems(pictureDialogItems,
-                (dialog, which) -> {
-                    switch (which) {
-                        case 0:
-                            ActivityCompat.requestPermissions(ProfileFavouriteActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                            break;
-                        case 1:
-                            ActivityCompat.requestPermissions(ProfileFavouriteActivity.this, new String[]{Manifest.permission.CAMERA}, 2);
-                            break;
-                    }
-                });
-        pictureDialog.show();
+        if (CropImage.isExplicitCameraPermissionRequired(this)) {
+            requestPermissions(
+                    new String[] {Manifest.permission.CAMERA},
+                    CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+        } else {
+            CropImage.startPickImageActivity(this);
+        }
     }
 
-    public void choosePhotoFromGallary() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY);
-    }
-
-    private void takePhotoFromCamera() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA);
-    }
-
+    private static final String IMAGE_DIRECTORY = "/myelcom";
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+    @SuppressLint("NewApi")
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == this.RESULT_CANCELED) {
-            return;
-        }
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                Uri contentURI = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-                    binding.profileImage.setImageBitmap(bitmap);
-                    saveImage(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
-                }
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE
+                && resultCode == AppCompatActivity.RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(this, data);
+
+            Log.e("hailpt"," CropImageView "+imageUri);
+
+            File fileLocation = new File(imageUri.getPath());
+//            uploadAvatar(fileLocation);
+
+//            binding.profileImage.setImageBitmap();
+            // For API >= 23 we need to check specifically that we have permissions to read external
+            // storage,
+            // but we don't know if we need to for the URI so the simplest is to try open the stream and
+            // see if we get error.
+            boolean requirePermissions = false;
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
+
+                // request permissions and handle the result in onRequestPermissionsResult()
+                requirePermissions = true;
+                mCropImageUri = imageUri;
+                requestPermissions(
+                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                        CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+            } else {
+                CropImageActivity.uri = imageUri;
+                goToCropActivity(imageUri.getPath());
             }
-
-        } else if (requestCode == CAMERA) {
-            Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            binding.profileImage.setImageBitmap(thumbnail);
-            saveImage(thumbnail);
+        } else if(requestCode == 10){
+            if (resultCode == ConstantsApp.RESULT_CODE_CROP_IMAGE){
+                binding.profileImage.setImageBitmap(mImage);
+                saveImage(mImage);
+            }
         }
     }
-
-    private void uploadAvatar(){
-        showProgressDialog();
-        RequestBody avatarImage = RequestBody.create(MediaType.parse("image/*"), avatar);
-        MultipartBody.Part bodyAvatarImage = MultipartBody.Part.createFormData("filePath", avatar.getName(), avatarImage);
-        viewModel.setAvatarRequest(bodyAvatarImage);
-    }
-
 
     private File avatar;
     public String saveImage(Bitmap myBitmap) {
@@ -316,23 +308,37 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         return "";
     }
 
+    private void uploadAvatar(){
+        showProgressDialog();
+        RequestBody avatarImage = RequestBody.create(MediaType.parse("image/*"), avatar);
+        MultipartBody.Part bodyAvatarImage = MultipartBody.Part.createFormData("filePath", avatar.getName(), avatarImage);
+        viewModel.setAvatarRequest(bodyAvatarImage);
+    }
+
+
+
+    private Uri mCropImageUri;
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(
+            int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                CropImage.startPickImageActivity(this);
+            } else {
+                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
+                        .show();
+            }
+        }
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+            if (mCropImageUri != null
+                    && grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                goToCropActivity(mCropImageUri.getPath());
 
-        if (grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            switch (requestCode) {
 
-                case 1: {
-                    choosePhotoFromGallary();
-                    break;
-                }
-
-                case 2: {
-                    takePhotoFromCamera();
-                    break;
-                }
-
-
+            } else {
+                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
+                        .show();
             }
         }
     }
@@ -397,8 +403,8 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
     }
 
     private void sendImageBroadcast() {
-        Intent intent = new  Intent(ConstantsApp.BROARD_CHANGE_AVATAR);
-        intent.putExtra(ConstantsApp.BROARD_CHANGE_AVATAR, avatar); // not user
+        Intent intent = new  Intent();
+        intent.setAction(ConstantsApp.BROARD_CHANGE_AVATAR);
         sendBroadcast(intent);
     }
 

@@ -16,10 +16,9 @@ import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.util.SharedPrefsHelper;
 import com.elcom.hailpt.util.WebRtcSessionManager;
-import com.elcom.hailpt.view.ui.fragment.AllFriendQuickBloxFragment;
-import com.elcom.hailpt.view.ui.fragment.contact.ContactFragment;
 import com.elcom.hailpt.view.ui.fragment.HomeFragment;
 import com.elcom.hailpt.view.ui.fragment.NewsFragment;
+import com.elcom.hailpt.view.ui.fragment.contact.ContactFragment;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -109,6 +108,12 @@ public class HomeActivity extends AppCompatActivity {
         } else {
             getSupportFragmentManager().popBackStackImmediate();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeFragment.updateAvatar();
     }
 
     public static void start(Context context, boolean isRunForCall) {

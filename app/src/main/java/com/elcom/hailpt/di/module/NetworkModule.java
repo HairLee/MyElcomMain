@@ -2,10 +2,10 @@ package com.elcom.hailpt.di.module;
 
 import com.elcom.hailpt.BuildConfig;
 import com.elcom.hailpt.model.api.Api;
-import com.elcom.hailpt.util.ConstantsApp;
-import com.elcom.hailpt.util.Consts;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -42,6 +42,9 @@ public class NetworkModule {
     OkHttpClient provideOkHttp(LoggingInterceptor interceptor) {
         return new OkHttpClient.Builder()
                 .addNetworkInterceptor(interceptor)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
                 .build();
     }
 
@@ -53,6 +56,7 @@ public class NetworkModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl("http://myelcom.elcom.com.vn:8000/api/")
                 .client(client)
+
                 .build();
     }
 

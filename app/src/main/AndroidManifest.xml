@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -84,8 +85,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2" />
         <activity
-            android:screenOrientation="portrait"
             android:name=".view.ui.activity.LunchRegistrationActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.ui.activity.ProfileActivity"
@@ -108,12 +109,31 @@
         <activity
             android:name=".view.ui.activity.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:name=".view.ui.activity.LunchCalendarRegisActivity"
+            android:name=".view.ui.activity.CropImageActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"
-            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.ui.activity.LunchCalendarRegisActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.ui.activity.UpdateMobileActivity"></activity>
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+
+        <receiver android:name=".view.ui.fragment.HomeFragment$MyReceiver">
+            <intent-filter>
+                <action android:name="BROARD_CHANGE_AVATAR">
+                </action>
+            </intent-filter>
+
+        </receiver>
+
     </application>
 
 </manifest>

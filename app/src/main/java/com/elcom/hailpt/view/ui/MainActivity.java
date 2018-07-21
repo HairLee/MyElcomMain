@@ -69,4 +69,6 @@ public class MainActivity extends BaseActivity<MainViewModel, ActivityMainBindin
                 makeSceneTransitionAnimation(this, viewAnimation, getString(R.string.trans_shared_image));
         DetailActivity.start(this, item.getId(), options);
     }
+
+
 }

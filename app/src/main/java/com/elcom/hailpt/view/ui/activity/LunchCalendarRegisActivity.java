@@ -5,27 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
-import com.elcom.hailpt.core.listener.TimeKeepingUpdateDataListener;
 import com.elcom.hailpt.databinding.ActivityRegisCalandarLunchBinding;
-import com.elcom.hailpt.databinding.ActivityTimeKeepingBinding;
 import com.elcom.hailpt.util.DateTimeUtils;
+import com.elcom.hailpt.util.NetworkConnectionChecker;
+import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.adapter.RegisLunchPagerAdapter;
-import com.elcom.hailpt.view.adapter.TimeKeepingPagerAdapter;
 import com.elcom.hailpt.viewmodel.LunchRegistrationViewModel;
-import com.elcom.hailpt.viewmodel.TimeKeepingViewModel;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationViewModel, ActivityRegisCalandarLunchBinding> {
+public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationViewModel, ActivityRegisCalandarLunchBinding> implements  NetworkConnectionChecker.OnConnectivityChangedListener {
 
 
     private static final String KEY_ITEM_ID = "item:article";
@@ -34,7 +29,7 @@ public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationVi
     List<Date> mDates;
     private  List<List<Date>> mParts;
     ActivityRegisCalandarLunchBinding binding;
-
+    private NetworkConnectionChecker networkConnectionChecker;
 
 
     @Override
@@ -46,7 +41,7 @@ public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationVi
     protected void onCreate(Bundle instance, LunchRegistrationViewModel viewModel, ActivityRegisCalandarLunchBinding binding) {
         this.binding = binding;
         mParts = DateTimeUtils.getBigListCurrentDate(this);
-
+        initWiFiManagerListener();
         Calendar calendar = Calendar.getInstance();
         Date CurremtDate = calendar.getTime();
         DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
@@ -58,7 +53,7 @@ public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationVi
             }
         }
 
-        setupViewPager(mParts);
+
         binding.imvBack.setOnClickListener(view -> onBackPressed());
     }
 
@@ -74,10 +69,36 @@ public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationVi
         mViewPager.postDelayed(() -> mViewPager.setCurrentItem(currentPosOfDay,false), 50);
     }
 
+    private void initWiFiManagerListener() {
+        networkConnectionChecker = new NetworkConnectionChecker(getApplication());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkConnectionChecker.registerListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkConnectionChecker.unregisterListener(this);
+    }
+
     public static void start(Context context, int id) {
         Intent starter = new Intent(context, LunchCalendarRegisActivity.class);
         starter.putExtra(KEY_ITEM_ID, id);
         context.startActivity(starter);
+    }
+
+
+    @Override
+    public void connectivityChanged(boolean availableNow) {
+       if(availableNow){
+           setupViewPager(mParts);
+       } else {
+           Toaster.shortToast("Vui long kiem tra ket noi mang");
+       }
     }
 
 

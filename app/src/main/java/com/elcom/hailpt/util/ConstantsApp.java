@@ -10,8 +10,9 @@ public class ConstantsApp {
 
     public static String BEAR = "Bearer ";
 
-
+    public static final int RESULT_CODE_CROP_IMAGE = 4444;
     public static String BROARD_CHANGE_AVATAR = "BROARD_CHANGE_AVATAR ";
+    public static String EXTRA_URI_STR = "EXTRA_URI_STR ";
 
     public static String KEEPING_FROM_TIME = "2018-07-09";
     public static String KEEPING_TO_TIME = "2018-07-13";

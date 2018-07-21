@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toolbar;
 
 import com.elcom.hailpt.R;
+import com.elcom.hailpt.util.NetworkConnectionChecker;
+import com.elcom.hailpt.util.Toaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +24,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ContactFragment extends Fragment {
+public class ContactFragment extends Fragment  implements  NetworkConnectionChecker.OnConnectivityChangedListener{
 
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private  AllContactFragment allContactFragment;
+    private NetworkConnectionChecker networkConnectionChecker;
     public ContactFragment() {
         // Required empty public constructor
     }
@@ -48,12 +51,10 @@ public class ContactFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        networkConnectionChecker = new NetworkConnectionChecker(getActivity().getApplication());
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -62,6 +63,16 @@ public class ContactFragment extends Fragment {
         adapter.addFragment(new OnlineContactFragment(), "Đang Hoạt Động");
         adapter.addFragment(new FavouriteContactFragment(), "Đã Đánh Dấu");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void connectivityChanged(boolean availableNow) {
+        if (availableNow){
+            setupViewPager(viewPager);
+            tabLayout.setupWithViewPager(viewPager);
+        } else {
+            Toaster.shortToast("check Internet");
+        }
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -93,4 +104,15 @@ public class ContactFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        networkConnectionChecker.registerListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        networkConnectionChecker.unregisterListener(this);
+    }
 }
