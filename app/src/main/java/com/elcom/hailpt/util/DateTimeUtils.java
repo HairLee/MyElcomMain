@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class DateTimeUtils {
 
-    public static String getDayMonthYearFromDate(Context context, Date date){
+    public static String getDayMonthYearFromDate(Date date){
         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+//        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
         return  inputFormat.format(date);
     }
 

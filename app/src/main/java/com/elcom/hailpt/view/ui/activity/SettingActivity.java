@@ -79,7 +79,7 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
         QBUsers.signOut().performAsync(new QBEntityCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid, Bundle bundle) {
-                viewModel.setRequest(PreferUtils.getToken(SettingActivity.this));
+
             }
 
             @Override
@@ -87,6 +87,8 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
                 showProgressDialog();
             }
         });
+
+        viewModel.setRequest(PreferUtils.getToken(SettingActivity.this));
     }
 
     @Override

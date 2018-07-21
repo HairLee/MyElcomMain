@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import com.elcom.hailpt.util.DateTimeUtils;
 import com.elcom.hailpt.util.KeyBoardUtils;
 import com.elcom.hailpt.util.ProgressDialogUtils;
 import com.elcom.hailpt.util.Toaster;
-import com.elcom.hailpt.view.custom.HomeFragmentCalendarView;
-import com.elcom.hailpt.view.custom.HomeFragmentCheckTimeView;
 import com.elcom.hailpt.view.custom.LunchFragmentCalendarView;
 import com.elcom.hailpt.view.custom.LunchRegistrationContentView;
 import com.elcom.hailpt.view.dialog.LunchRegisDialog;
@@ -210,8 +207,8 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     private void getListCurrentDate(){
         ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
 
-        String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(0));
-        String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
+        String fromTime = DateTimeUtils.getDayMonthYearFromDate(mDates.get(0));
+        String toTime = DateTimeUtils.getDayMonthYearFromDate(mDates.get(mDates.size() -1));
 
         TimeKeepReq timeKeepReq = new TimeKeepReq();
         timeKeepReq.setFromTime(fromTime);

@@ -165,8 +165,8 @@ public class LunchRegistrationActivity extends BaseActivity<LunchRegistrationVie
         showProgressDialog();
 //        Log.e("hailpt", " getListCurrentDate Date == "+DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0)));
         binding.homeFragmentCalendarView.updateData(DateTimeUtils.getListCurrentDate(this));
-        String fromTime = DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(0));
-        String toTime = DateTimeUtils.getDayMonthYearFromDate(this, DateTimeUtils.getListCurrentDate(this).get(DateTimeUtils.getListCurrentDate(this).size() -1));
+        String fromTime = DateTimeUtils.getDayMonthYearFromDate(DateTimeUtils.getListCurrentDate(this).get(0));
+        String toTime = DateTimeUtils.getDayMonthYearFromDate( DateTimeUtils.getListCurrentDate(this).get(DateTimeUtils.getListCurrentDate(this).size() -1));
 
         TimeKeepReq timeKeepReq = new TimeKeepReq();
         timeKeepReq.setFromTime(fromTime);

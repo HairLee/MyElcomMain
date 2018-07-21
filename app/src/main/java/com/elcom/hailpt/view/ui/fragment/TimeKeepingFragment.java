@@ -153,8 +153,8 @@ public class TimeKeepingFragment extends BaseFragment<TimeKeepingViewModel> impl
     protected void onCreate(Bundle instance, TimeKeepingViewModel viewModel) {
         timeKeepingViewModel = viewModel;
 
-        String fromTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(0));
-        String toTime = DateTimeUtils.getDayMonthYearFromDate(getContext(),mDates.get(mDates.size() -1));
+        String fromTime = DateTimeUtils.getDayMonthYearFromDate(mDates.get(0));
+        String toTime = DateTimeUtils.getDayMonthYearFromDate(mDates.get(mDates.size() -1));
         Log.e("hailpt"," LunchRegistrationFragment fromTime "+fromTime + " toTime "+toTime);
         init();
 //        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);

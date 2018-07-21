@@ -143,10 +143,15 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
 
 
         // Set icon for today ( Current day )
-        for (int i = 0; i < textViewList.size(); i++) {
-            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+        for (int i = 0; i < mDates.size(); i++) {
+
+            if(DateTimeUtils.getDayMonthYearFromDate(mDates.get(i)).equals(DateTimeUtils.getToDayDateTimeFormat())){
                 textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
             }
+
+//            if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+//                textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
+//            }
         }
 
 
@@ -162,7 +167,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         if(pTimeKeeps != null){
             for (int i = 0; i < timeKeeps.size(); i++) {
                 if(timeKeeps.get(i).getCheckIn().equals("")){
-                    if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                    if (timeKeeps.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                         textViewList.get(i).setBackgroundResource(R.drawable.today_choose_late);
                     } else {
                         textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_red);
@@ -173,7 +178,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                     String time = textViewList.get(i).getText().toString();
 
                     if((timeCheckIn < 8 && !DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("PM") ) || DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("08:00 AM") ){
-                        if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                        if (timeKeeps.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                             textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
                         } else {
                             textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
@@ -181,7 +186,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
 
                     } else {
 
-                        if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
+                        if (timeKeeps.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                             textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);
                         } else {
                             textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_oringe);
