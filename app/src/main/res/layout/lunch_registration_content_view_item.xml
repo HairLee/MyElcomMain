@@ -298,15 +298,16 @@
          android:layout_marginTop="5dp"
          android:text="11111"
          android:id="@+id/tvFeedback"
-         android:paddingRight="40dp"
+         android:paddingRight="5dp"
          android:paddingLeft="5dp"
-         android:layout_width="wrap_content"
+         android:layout_width="match_parent"
          android:layout_height="wrap_content" />
     <RelativeLayout
+        android:layout_weight="1"
         android:id="@+id/rlFeedback"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
         <EditText
             android:inputType="text"

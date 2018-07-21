@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private ContactFragment contactFragment = new ContactFragment();
     private WebRtcSessionManager webRtcSessionManager;
     private SharedPrefsHelper sharedPrefsHelper;
+    private int fragmentPos = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,16 +65,19 @@ public class HomeActivity extends AppCompatActivity {
             switch (id){
                 case R.id.action_item1:
                     fragment = homeFragment;
+                    fragmentPos = 1;
                     break;
                 case R.id.action_item2:
+                    fragmentPos = 2;
                     fragment = new NewsFragment();
                     break;
                 case R.id.action_item3:
+                    fragmentPos = 3;
                     fragment = contactFragment;
                     break;
             }
             final FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.frame_layout, fragment).commit();
+            transaction.replace(R.id.frame_layout, fragment, fragment.getClass().getName()).commit();
             return true;
         });
 
@@ -81,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
         transaction.replace(R.id.frame_layout, homeFragment).commit();
 
 
-       User user =  sharedPrefsHelper.getUser();
+        User user =  sharedPrefsHelper.getUser();
 //       Log.e("hailpt"," sharedPrefsHelper~~> "+ user.getAvatar() + sharedPrefsHelper.getQbUser().getEmail());
     }
 
@@ -93,10 +97,10 @@ public class HomeActivity extends AppCompatActivity {
 
         if (intent.getExtras() != null) {
 //            if(fragment instanceof AllFriendQuickBloxFragment){
-                isRunForCall = intent.getExtras().getBoolean(Consts.EXTRA_IS_STARTED_FOR_CALL);
-                if (isRunForCall) {
-                    CallActivity.start(HomeActivity.this, true);
-                }
+            isRunForCall = intent.getExtras().getBoolean(Consts.EXTRA_IS_STARTED_FOR_CALL);
+            if (isRunForCall) {
+                CallActivity.start(HomeActivity.this, true);
+            }
 //            }
         }
     }
@@ -113,7 +117,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        homeFragment.updateAvatar();
+        if(fragmentPos == 1) {
+            homeFragment.updateAvatar();
+        }
     }
 
     public static void start(Context context, boolean isRunForCall) {

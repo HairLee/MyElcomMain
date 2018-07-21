@@ -18,7 +18,10 @@ import com.elcom.hailpt.model.data.TimeKeep;
 import com.elcom.hailpt.util.DateTimeUtils;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -234,7 +237,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
             int timeCheckIn = Integer.parseInt(tvCheckIn.getText().subSequence(1,2).toString());
             String time = tvCheckIn.getText().toString();
 
-            if(time.startsWith("0") && timeCheckIn < 8 && !tvCheckIn.getText().toString().contains("PM")){
+            if((time.startsWith("0") && timeCheckIn < 8 && !time.contains("PM")) || time.equals("08:00 AM")){
                 tvToday.setText("Đúng giờ");
                 tvToday.setTextColor(getResources().getColor(R.color.onTime));
             } else {
@@ -261,9 +264,19 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
             tvAbsent.setText(timeKeep.getStatistic().getAbsent().toString());
         }
 
-//        tvDate.setText("Hôm nay, "+ DateTimeUtils.getToDayDateTime(getContext()));
+        //If tomorrow
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date strDate = null;
+            try {
+                strDate = sdf.parse(timeKeep.getDate());
+                if (System.currentTimeMillis() < strDate.getTime()) {
+                    tvToday.setText("Ngày mai");
+                    tvToday.setTextColor(getResources().getColor(R.color.onTime));
+                }
 
-//        tvDate.setText(timeKeep.getDate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+        }
     }
 
     public void setHomeFragmentCalendarListener(HomeFragmentCalendarListener homeFragmentCalendarListener){

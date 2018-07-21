@@ -43,7 +43,7 @@
                 android:textColor="#54586B"
                 android:textSize="17sp"
                 android:gravity="center"
-                android:text="Tháng 7"
+                android:text="Tháng "
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

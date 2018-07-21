@@ -1,25 +1,21 @@
 package com.elcom.hailpt.view.ui.activity;
 
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityUpdateMobileBinding;
-import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.viewmodel.ProfileFavouriteViewModel;
-import com.google.gson.JsonElement;
 
 public class UpdateMobileActivity extends BaseActivity<ProfileFavouriteViewModel, ActivityUpdateMobileBinding> {
 
 
     ProfileFavouriteViewModel profileFavouriteViewModel;
     private static boolean isChangeMobileOrHotline = false;
+    public static String KEY_IS_MOBILE_CHANGED = "KEY_IS_MOBILE_CHANGED";
+    public static int KEY_IS_MOBILE_REQUSET = 9999;
     @Override
     protected Class<ProfileFavouriteViewModel> getViewModel() {
         return ProfileFavouriteViewModel.class;
@@ -28,6 +24,15 @@ public class UpdateMobileActivity extends BaseActivity<ProfileFavouriteViewModel
     @Override
     protected void onCreate(Bundle instance, ProfileFavouriteViewModel viewModel, ActivityUpdateMobileBinding binding) {
         profileFavouriteViewModel = viewModel;
+        getSupportActionBar().hide();
+        if (getIntent().hasExtra("KEY_IS_MOBILE_CHANGED")){
+            isChangeMobileOrHotline = getIntent().getExtras().getBoolean("KEY_IS_MOBILE_CHANGED");
+            if(isChangeMobileOrHotline){
+                binding.tvTitle.setText("Nhập số điện thoại bạn muốn đổi");
+            } else {
+                binding.tvTitle.setText("Nhập số hotline bạn muốn đổi");
+            }
+        }
 
         binding.btnOK.setOnClickListener(view -> {
 
@@ -52,6 +57,10 @@ public class UpdateMobileActivity extends BaseActivity<ProfileFavouriteViewModel
             viewModel.setChangeMobileRequest(changeMobileReq);
         });
 
+        binding.btnNo.setOnClickListener(view -> onBackPressed());
+
+        binding.lnRoot.setOnClickListener(view-> onBackPressed());
+
         init(viewModel);
     }
 
@@ -62,23 +71,14 @@ public class UpdateMobileActivity extends BaseActivity<ProfileFavouriteViewModel
 
     private void init(ProfileFavouriteViewModel viewModel){
 
-        viewModel.getChangeMobileResponse().observe(this, new Observer<RestData<JsonElement>>() {
-            @Override
-            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
-                Toaster.shortToast("Change OK");
-            }
+        viewModel.getChangeMobileResponse().observe(this, jsonElementRestData -> {
+            finish();
         });
 
 
 
     }
 
-
-    public static void start(Context context, boolean pIsChangeMobileOrHotline) {
-        isChangeMobileOrHotline = pIsChangeMobileOrHotline;
-        Intent intent = new Intent(context, UpdateMobileActivity.class);
-        context.startActivity(intent);
-    }
 }
 
 

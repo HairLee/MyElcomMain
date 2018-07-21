@@ -172,7 +172,7 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                     int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(1,2).toString());
                     String time = textViewList.get(i).getText().toString();
 
-                    if(timeCheckIn < 8 && !DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("PM") ){
+                    if((timeCheckIn < 8 && !DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("PM") ) || DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("08:00 AM") ){
                         if (textViewList.get(i).getText().toString().startsWith(DateTimeUtils.getDayMonthYear())){
                             textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
                         } else {

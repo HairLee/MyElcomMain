@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 <LinearLayout
+    android:id="@+id/lnRoot"
     android:background="@color/transparent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
  >
 
 <LinearLayout
-    android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
-    android:layout_gravity="center"
+    android:layout_marginTop="150dp"
+    android:background="@drawable/radius_edittext_white_bg_white_srtoke_layout"
     android:padding="10dp"
     android:gravity="center_horizontal"
     android:layout_width="262dp"
@@ -21,6 +22,8 @@
 
 
     <TextView
+        android:fontFamily="monospace"
+        android:textColor="#3B71BC"
         android:id="@+id/tvTitle"
         android:gravity="center"
         android:text="Nhập số điện thoại bạn muốn đổi"
@@ -29,6 +32,10 @@
 
 
     <EditText
+        android:fontFamily="monospace"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:focusableInTouchMode="true"
         android:paddingLeft="10dp"
         android:focusable="true"
         android:inputType="number"
@@ -39,10 +46,12 @@
         android:layout_height="40dp" />
 
     <RelativeLayout
+        android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:fontFamily="monospace"
             android:id="@+id/btnNo"
             android:textColor="#3B71BC"
             android:text="THOÁT"
@@ -52,6 +61,7 @@
             android:layout_height="36dp" />
 
         <Button
+            android:fontFamily="monospace"
             android:id="@+id/btnOK"
             android:textColor="#FB676C"
             android:text="XÁC NHẬN"

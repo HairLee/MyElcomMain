@@ -171,13 +171,15 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         binding.textView14.setOnClickListener(v -> {
 //            UpdateMobileActivity.start(this,true);
             Intent intent = new Intent(this, UpdateMobileActivity.class);
-            startActivityForResult(intent,9999);
+            intent.putExtra(UpdateMobileActivity.KEY_IS_MOBILE_CHANGED, true);
+            startActivityForResult(intent,UpdateMobileActivity.KEY_IS_MOBILE_REQUSET);
         });
 
         binding.textView17.setOnClickListener(v -> {
 //            UpdateMobileActivity.start(this,false);
             Intent intent = new Intent(this, UpdateMobileActivity.class);
-            startActivityForResult(intent,9999);
+            intent.putExtra(UpdateMobileActivity.KEY_IS_MOBILE_CHANGED, false);
+            startActivityForResult(intent,UpdateMobileActivity.KEY_IS_MOBILE_REQUSET);
         });
     }
 
@@ -196,6 +198,8 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
             binding.imageView14.setVisibility(View.GONE);
             binding.view4.setVisibility(View.GONE);
             binding.imageView11.setVisibility(View.GONE);
+            binding.textView14.setVisibility(View.VISIBLE);
+            binding.textView17.setVisibility(View.VISIBLE);
         }
 
     }
@@ -249,6 +253,8 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                 binding.profileImage.setImageBitmap(mImage);
                 saveImage(mImage);
             }
+        } else if(requestCode == UpdateMobileActivity.KEY_IS_MOBILE_REQUSET){
+            viewModel.setRequest(userId);
         }
     }
 

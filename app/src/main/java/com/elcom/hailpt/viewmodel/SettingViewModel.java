@@ -4,16 +4,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
-import android.content.Context;
 
 import com.elcom.hailpt.model.api.RestData;
-import com.elcom.hailpt.model.api.response.Contact;
-import com.elcom.hailpt.model.api.response.ContactSuggest;
-import com.elcom.hailpt.repository.AllContactSuggestRepository;
+import com.elcom.hailpt.model.api.response.Support;
 import com.elcom.hailpt.repository.SettingRepository;
 import com.google.gson.JsonElement;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,6 +20,7 @@ public class SettingViewModel extends ViewModel {
 
     private final MutableLiveData<String> requestLogout = new MutableLiveData<>();
     private final LiveData<RestData<JsonElement>> logoutResult;
+    private final LiveData<RestData<Support>> supportResult;
     private final SettingRepository repository;
 
     @Inject
@@ -32,10 +28,16 @@ public class SettingViewModel extends ViewModel {
         this.repository = repository;
         logoutResult = Transformations.switchMap(requestLogout,
                 param -> repository.logout(requestLogout.getValue()));
+
+        supportResult = repository.getSupport();
     }
 
     public LiveData<RestData<JsonElement>> logout() {
         return logoutResult;
+    }
+
+    public LiveData<RestData<Support>> getSupport() {
+        return supportResult;
     }
 
     public void setRequest(String request){

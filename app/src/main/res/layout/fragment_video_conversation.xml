@@ -7,14 +7,17 @@
     android:background="@color/transparent">
 
 
-    <com.quickblox.videochat.webrtc.view.QBRTCSurfaceView
-        android:id="@+id/remote_video_view"
 
+
+    <com.quickblox.videochat.webrtc.view.QBRTCSurfaceView
+
+        android:id="@+id/remote_video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
     <com.quickblox.videochat.webrtc.view.QBRTCSurfaceView
+        android:layout_below="@+id/lnName"
         android:layout_margin="20dp"
         android:layout_alignParentRight="true"
         android:id="@+id/local_video_view"
@@ -52,5 +55,33 @@
         android:layout_centerHorizontal="true"
       />
 
+    <RelativeLayout
+        android:id="@+id/lnName"
+        android:gravity="center_vertical"
+        android:background="#16000000"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
 
+        <TextView
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:text="Nguyễn Thị Thanh Thúy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Chronometer
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/timer_chronometer_action_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/text_color_light_grey"
+            android:textSize="13sp"
+            android:visibility="invisible" />
+
+
+    </RelativeLayout>
 </RelativeLayout>

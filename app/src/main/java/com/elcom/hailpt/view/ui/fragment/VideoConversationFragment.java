@@ -22,13 +22,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Chronometer;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.util.Toaster;
@@ -105,6 +103,7 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = super.onCreateView(inflater, container, savedInstanceState);
+        timerChronometer = view.findViewById(R.id.timer_chronometer_action_bar);
         return view;
     }
 
@@ -142,7 +141,7 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
         allOpponents = Collections.synchronizedList(new ArrayList<QBUser>(opponents.size()));
         allOpponents.addAll(opponents);
 
-        timerChronometer = (Chronometer) getActivity().findViewById(R.id.timer_chronometer_action_bar);
+
 
         isPeerToPeerCall = opponents.size() == 1;
     }

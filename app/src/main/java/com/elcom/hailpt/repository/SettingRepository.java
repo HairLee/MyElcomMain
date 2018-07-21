@@ -1,23 +1,15 @@
 package com.elcom.hailpt.repository;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.content.Context;
 
 import com.elcom.hailpt.core.AppSchedulerProvider;
 import com.elcom.hailpt.core.BaseViewModel;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
-import com.elcom.hailpt.model.api.response.Contact;
-import com.elcom.hailpt.model.api.response.ContactSuggest;
-import com.elcom.hailpt.model.data.Source;
+import com.elcom.hailpt.model.api.response.Support;
 import com.elcom.hailpt.model.db.AppDatabase;
-import com.elcom.hailpt.model.db.ArticleDao;
-import com.elcom.hailpt.model.db.SourceDao;
 import com.elcom.hailpt.util.ConstantsApp;
-import com.elcom.hailpt.util.PreferUtils;
 import com.google.gson.JsonElement;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -34,6 +26,7 @@ public class SettingRepository implements BaseViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
     private final Api api;
     private final MutableLiveData<RestData<JsonElement>> articleMutableLiveData;
+    private final MutableLiveData<RestData<Support>> supportMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
 
 
@@ -42,6 +35,7 @@ public class SettingRepository implements BaseViewModel {
         this.api = api;
         this.schedulerProvider = schedulerProvider;
         articleMutableLiveData = new MutableLiveData<>();
+        supportMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<JsonElement>> logout(String token) {
@@ -69,6 +63,34 @@ public class SettingRepository implements BaseViewModel {
                     }
                 });
         return articleMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<Support>> getSupport() {
+        api.getSupport(ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<Support>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<Support> sources) {
+                        supportMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return supportMutableLiveData;
     }
 
 

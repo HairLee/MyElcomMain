@@ -1,11 +1,7 @@
 package com.elcom.hailpt.view.ui.activity;
 
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,13 +9,11 @@ import android.widget.TextView;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivitySettingBinding;
-import com.elcom.hailpt.model.api.RestData;
-import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.model.api.response.Support;
 import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.ui.LoginActivity;
 import com.elcom.hailpt.viewmodel.SettingViewModel;
-import com.google.gson.JsonElement;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.users.QBUsers;
@@ -41,6 +35,7 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
         findViewById(R.id.rlPassword).setOnClickListener(this);
         findViewById(R.id.tvLogout).setOnClickListener(this);
         findViewById(R.id.imvBack).setOnClickListener(this);
+        findViewById(R.id.rlNotification).setOnClickListener(this);
         tvEmail = findViewById(R.id.tvEmail);
         tvEmail.setText(PreferUtils.getEmail(this));
         viewModel.logout().observe(this, jsonElementRestData ->
@@ -56,6 +51,17 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
                     }
                 }
         );
+
+        viewModel.getSupport().observe(this, supportRestData -> {
+            if(supportRestData != null && supportRestData.data != null){
+                Support support = supportRestData.data;
+                binding.tvSupport.setText(support.getBuilding_techniques());
+                binding.tvItSupport.setText(support.getSupport_it());
+                binding.tvCofee.setText(support.getBlackbox_coffee());
+            }
+        });
+
+
     }
 
     @Override
@@ -95,6 +101,10 @@ public class SettingActivity extends BaseActivity<SettingViewModel,ActivitySetti
             case R.id.imvBack:
                 onBackPressed();
                 break;
+            case R.id.rlNotification:
+                NotificationActivity.start(this);
+                break;
+
         }
     }
 }

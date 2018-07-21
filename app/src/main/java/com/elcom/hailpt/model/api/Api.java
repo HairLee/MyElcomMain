@@ -1,7 +1,5 @@
 package com.elcom.hailpt.model.api;
 
-import android.arch.lifecycle.LiveData;
-
 import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.ChangePwRq;
 import com.elcom.hailpt.model.api.request.ForgetPwReq;
@@ -15,6 +13,7 @@ import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
 import com.elcom.hailpt.model.api.response.Lunch;
 import com.elcom.hailpt.model.api.response.Notification;
+import com.elcom.hailpt.model.api.response.Support;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.model.data.Articles;
 import com.elcom.hailpt.model.data.Sources;
@@ -112,6 +111,9 @@ public interface Api {
 
     @GET("auth/logout/{token}")
     Observable<RestData<JsonElement>> logout(@Path("token")  String token);
+
+    @GET("setup/support")
+    Observable<RestData<Support>> getSupport(@Header("Authorization") String s);
 
     @Multipart
     @POST("upload-avatar")
