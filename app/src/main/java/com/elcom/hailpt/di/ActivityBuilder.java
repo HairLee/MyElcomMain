@@ -13,6 +13,7 @@ import com.elcom.hailpt.view.ui.activity.ProfileFavouriteActivity;
 import com.elcom.hailpt.view.ui.activity.SettingActivity;
 import com.elcom.hailpt.view.ui.activity.SettingChangePwActivity;
 import com.elcom.hailpt.view.ui.activity.TimeKeepingActivity;
+import com.elcom.hailpt.view.ui.activity.UpdateMobileActivity;
 import com.elcom.hailpt.view.ui.fragment.LunchRegistrationFragment;
 import com.elcom.hailpt.view.ui.fragment.TimeKeepingFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.AllContactFragment;
@@ -67,6 +68,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract LunchCalendarRegisActivity bindLunchCalendarRegisActivity();
+
+    @ContributesAndroidInjector
+    abstract UpdateMobileActivity bindUpdateMobileActivity();
 
 
 

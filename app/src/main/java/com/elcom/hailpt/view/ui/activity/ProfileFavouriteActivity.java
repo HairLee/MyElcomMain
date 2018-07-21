@@ -2,7 +2,6 @@ package com.elcom.hailpt.view.ui.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +10,6 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +21,6 @@ import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityProfileFavouriteBinding;
-import com.elcom.hailpt.model.api.RestData;
-import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.services.CallService;
@@ -35,11 +31,9 @@ import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.PushNotificationSender;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.util.WebRtcSessionManager;
-import com.elcom.hailpt.view.dialog.ChangMobileDialog;
 import com.elcom.hailpt.view.ui.CallActivity;
 import com.elcom.hailpt.view.ui.PermissionsActivity;
 import com.elcom.hailpt.viewmodel.ProfileFavouriteViewModel;
-import com.google.gson.JsonElement;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.users.model.QBUser;
 import com.quickblox.videochat.webrtc.QBRTCClient;
@@ -154,12 +148,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         });
 
 
-        viewModel.getChangeMobileResponse().observe(this, new Observer<RestData<JsonElement>>() {
-            @Override
-            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
-                Toaster.shortToast("Change OK");
-            }
-        });
+
 
 
         binding.imageView6.setOnClickListener(v -> ActivityCompat.finishAfterTransition(ProfileFavouriteActivity.this));
@@ -180,28 +169,15 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         });
 
         binding.textView14.setOnClickListener(v -> {
-                // Change mobile
-                ChangMobileDialog changMobileDialog = new ChangMobileDialog(this, mobile -> {
-                ChangeMobileReq changeMobileReq = new ChangeMobileReq();
-                changeMobileReq.setHotline("");
-                changeMobileReq.setMobile(mobile);
-                viewModel.setChangeMobileRequest(changeMobileReq);
-            });
-
-            changMobileDialog.show();
+//            UpdateMobileActivity.start(this,true);
+            Intent intent = new Intent(this, UpdateMobileActivity.class);
+            startActivityForResult(intent,9999);
         });
 
         binding.textView17.setOnClickListener(v -> {
-                // Change hotline
-                ChangMobileDialog changMobileDialog = new ChangMobileDialog(this, mobile -> {
-                ChangeMobileReq changeMobileReq = new ChangeMobileReq();
-                changeMobileReq.setHotline(mobile);
-                changeMobileReq.setMobile("");
-                viewModel.setChangeMobileRequest(changeMobileReq);
-            });
-
-            changMobileDialog.show();
-
+//            UpdateMobileActivity.start(this,false);
+            Intent intent = new Intent(this, UpdateMobileActivity.class);
+            startActivityForResult(intent,9999);
         });
     }
 
@@ -315,8 +291,6 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         viewModel.setAvatarRequest(bodyAvatarImage);
     }
 
-
-
     private Uri mCropImageUri;
     @Override
     public void onRequestPermissionsResult(
@@ -340,6 +314,8 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                 Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
                         .show();
             }
+        } else if(requestCode == 999){
+            viewModel.setRequest(userId);
         }
     }
 
@@ -458,4 +434,6 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
             }
         }
     }
+
+
 }

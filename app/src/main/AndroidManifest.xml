@@ -121,7 +121,9 @@
         <activity
             android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.ui.activity.UpdateMobileActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".view.ui.activity.UpdateMobileActivity"/>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>

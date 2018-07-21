@@ -105,10 +105,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     public void updateAvatar(){
-        if(!PreferUtils.getAvatar(getContext()).equals("")){
-            Glide.with(this).load(PreferUtils.getAvatar(getContext()))
-                    .thumbnail(0.5f)
-                    .into(imvAva);
+        if(getContext()!= null && !PreferUtils.getAvatar(getContext()).equals("")){
+            if(imvAva != null){
+                Glide.with(this).load(PreferUtils.getAvatar(getContext()))
+                        .thumbnail(0.5f)
+                        .into(imvAva);
+            }
         }
     }
 
