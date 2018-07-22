@@ -93,12 +93,12 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
 
         viewModel.cancelLunch().observe(this, jsonElementRestData -> {
             Toaster.longToast("Hủy cơm thành công");
-            ProgressDialogUtils.dismissProgressDialog();
+//            ProgressDialogUtils.dismissProgressDialog();
             getListCurrentDate();
         });
 
         viewModel.getLunchMenu().observe(this, listRestData -> {
-            ProgressDialogUtils.dismissProgressDialog();
+//            ProgressDialogUtils.dismissProgressDialog();
             lunchList = listRestData.data;
 
 
@@ -121,12 +121,12 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         });
 
         viewModel.getLikeLunch().observe(this, jsonElementRestData -> {
-            ProgressDialogUtils.dismissProgressDialog();
+//            ProgressDialogUtils.dismissProgressDialog();
             getListCurrentDate();
         });
 
         viewModel.sendFeedBackLunch().observe(this, data -> {
-            ProgressDialogUtils.dismissProgressDialog();
+//            ProgressDialogUtils.dismissProgressDialog();
             if (data != null){
                 getListCurrentDate();
                Toaster.shortToast("Gửi phản hồi thành công");
@@ -148,7 +148,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     @Override
     public void onCancelLunchRegister() {
         LunchRegisDialog lunchRegisDialog = new LunchRegisDialog(getContext(), true, () -> {
-            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
             LunchCancelReq lunchCancelReq = new LunchCancelReq();
             lunchCancelReq.setData(DateTimeUtils.getToDayDateTimeFormat());
             lunchRegistrationViewModel.setRequest(lunchCancelReq);
@@ -161,7 +161,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     @Override
     public void onDoLunchRegister() {
         LunchRegisDialog lunchRegisDialog = new LunchRegisDialog(getContext(), false, () -> {
-            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
             LunchCancelReq lunchCancelReq = new LunchCancelReq();
             lunchCancelReq.setData(DateTimeUtils.getToDayDateTimeFormat());
             lunchRegistrationViewModel.setRegisterLunchRequest(lunchCancelReq);
@@ -182,7 +182,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
 
     @Override
     public void onLikeOrDislike(boolean isLike) {
-        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         LunchLikeReq lunchLikeReq = new LunchLikeReq();
         lunchLikeReq.setData(currentDayChoosed);
         lunchLikeReq.setLike(isLike);
@@ -191,7 +191,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
 
     @Override
     public void onSendFeedBack(String content, String date) {
-        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         KeyBoardUtils.hideKeyboard(getActivity());
         LunchFeedBackReq lunchFeedBackReq = new LunchFeedBackReq();
         lunchFeedBackReq.setDate(date);
@@ -205,7 +205,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
     }
 
     private void getListCurrentDate(){
-        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
 
         String fromTime = DateTimeUtils.getDayMonthYearFromDate(mDates.get(0));
         String toTime = DateTimeUtils.getDayMonthYearFromDate(mDates.get(mDates.size() -1));
