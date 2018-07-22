@@ -6,14 +6,11 @@ import com.elcom.hailpt.core.AppSchedulerProvider;
 import com.elcom.hailpt.core.BaseViewModel;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
-import com.elcom.hailpt.model.api.response.Contact;
-import com.elcom.hailpt.model.api.response.ContactSuggest;
+import com.elcom.hailpt.model.api.request.RemoveNotificationReq;
 import com.elcom.hailpt.model.api.response.Notification;
-import com.elcom.hailpt.model.data.Source;
 import com.elcom.hailpt.model.db.AppDatabase;
-import com.elcom.hailpt.model.db.ArticleDao;
-import com.elcom.hailpt.model.db.SourceDao;
 import com.elcom.hailpt.util.ConstantsApp;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -32,6 +29,7 @@ public class NotificationRepository implements BaseViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
     private final Api api;
     private final MutableLiveData<RestData<List<Notification>>> articleMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> removeNotificationMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
 
 
@@ -40,6 +38,7 @@ public class NotificationRepository implements BaseViewModel {
         this.api = api;
         this.schedulerProvider = schedulerProvider;
         articleMutableLiveData = new MutableLiveData<>();
+        removeNotificationMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<List<Notification>>> getAllNotification() {
@@ -68,6 +67,36 @@ public class NotificationRepository implements BaseViewModel {
                 });
         return articleMutableLiveData;
     }
+
+
+    public MutableLiveData<RestData<JsonElement>> removeNotification(RemoveNotificationReq removeNotificationReq) {
+        api.removeNotification(removeNotificationReq,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        removeNotificationMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return removeNotificationMutableLiveData;
+    }
+
+
 
     @Override
     public void onClear() {

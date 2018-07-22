@@ -9,6 +9,7 @@ import com.elcom.hailpt.model.api.request.LunchFeedBackReq;
 import com.elcom.hailpt.model.api.request.LunchLikeReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.request.ReasonLate;
+import com.elcom.hailpt.model.api.request.RemoveNotificationReq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
 import com.elcom.hailpt.model.api.response.Lunch;
@@ -27,6 +28,7 @@ import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -108,6 +110,9 @@ public interface Api {
 
     @GET("notify")
     Observable<RestData<List<Notification>>> getAllNotification(@Header("Authorization") String s);
+
+    @HTTP(method = "DELETE", path = "notify", hasBody = true)
+    Observable<RestData<JsonElement>> removeNotification(@Body RemoveNotificationReq removeNotificationReq, @Header("Authorization") String s);
 
     @GET("auth/logout/{token}")
     Observable<RestData<JsonElement>> logout(@Path("token")  String token);
