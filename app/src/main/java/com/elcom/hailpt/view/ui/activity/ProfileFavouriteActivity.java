@@ -215,7 +215,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         }
     }
 
-    private static final String IMAGE_DIRECTORY = "/myelcom";
+    private static final String IMAGE_DIRECTORY = "/MyElcom";
     @Override
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

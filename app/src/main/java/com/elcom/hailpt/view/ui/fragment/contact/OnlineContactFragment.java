@@ -71,11 +71,11 @@ public class OnlineContactFragment extends BaseFragment<ContactOnlineViewModel> 
     }
 
     private void init() {
-        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         contactOnlineViewModel.getOnlineContact().observe(this, new Observer<RestData<List<User>>>() {
             @Override
             public void onChanged(@Nullable RestData<List<User>> listRestData) {
-                ProgressDialogUtils.dismissProgressDialog();
+//                ProgressDialogUtils.dismissProgressDialog();
                 if(listRestData != null){
                     contactFavouriteAdapter.setData(listRestData.data);
                     swipeRefreshLayout.setRefreshing(false);
@@ -83,6 +83,10 @@ public class OnlineContactFragment extends BaseFragment<ContactOnlineViewModel> 
 
             }
         });
+    }
+
+    public void doSearch(String search) {
+        contactFavouriteAdapter.getFilter().filter(search);
     }
 
     @Override

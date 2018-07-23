@@ -15,6 +15,7 @@ import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityForgetPasswordBinding;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.ForgetPwReq;
+import com.elcom.hailpt.util.NetworkConnectionChecker;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.viewmodel.ForgetPasswordViewModel;
 import com.google.gson.JsonElement;
@@ -22,11 +23,11 @@ import com.google.gson.JsonElement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordViewModel,ActivityForgetPasswordBinding> {
+public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordViewModel,ActivityForgetPasswordBinding> implements  NetworkConnectionChecker.OnConnectivityChangedListener {
 
 
-
-
+    private NetworkConnectionChecker networkConnectionChecker;
+    private boolean mNetAvailableNow = false;
     @Override
     protected Class<ForgetPasswordViewModel> getViewModel() {
         return ForgetPasswordViewModel.class;
@@ -34,6 +35,8 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordViewModel
 
     @Override
     protected void onCreate(Bundle instance, ForgetPasswordViewModel viewModel, ActivityForgetPasswordBinding binding) {
+
+            initWiFiManagerListener();
             binding.imvBack.setOnClickListener(view-> {
                 onBackPressed();
             });
@@ -50,6 +53,11 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordViewModel
             });
 
             binding.btnOk.setOnClickListener(v -> {
+
+                if(!mNetAvailableNow){
+                    Toaster.shortToast(R.string.check_internet_plz);
+                    return;
+                }
 
                 if(binding.edtEmail.getText().toString().equals("")){
                     Toaster.shortToast("Vui lòng nhập email");
@@ -88,5 +96,32 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPasswordViewModel
     public static void start(Context context) {
         Intent starter = new Intent(context, ForgetPasswordActivity.class);
         context.startActivity(starter);
+    }
+
+    private void initWiFiManagerListener() {
+        networkConnectionChecker = new NetworkConnectionChecker(getApplication());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkConnectionChecker.registerListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkConnectionChecker.unregisterListener(this);
+    }
+
+
+    @Override
+    public void connectivityChanged(boolean availableNow) {
+        mNetAvailableNow = availableNow;
+        if(availableNow){
+
+        } else {
+            Toaster.shortToast(R.string.check_internet_plz);
+        }
     }
 }

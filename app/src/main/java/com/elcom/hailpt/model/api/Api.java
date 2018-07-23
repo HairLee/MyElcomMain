@@ -13,6 +13,8 @@ import com.elcom.hailpt.model.api.request.RemoveNotificationReq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
 import com.elcom.hailpt.model.api.response.Lunch;
+import com.elcom.hailpt.model.api.response.News;
+import com.elcom.hailpt.model.api.response.NewsRes;
 import com.elcom.hailpt.model.api.response.Notification;
 import com.elcom.hailpt.model.api.response.Support;
 import com.elcom.hailpt.model.api.response.User;
@@ -124,5 +126,7 @@ public interface Api {
     @POST("upload-avatar")
     Observable<RestData<User>> uploadAvatar(@Part MultipartBody.Part  avatarPart, @Header("Authorization") String s);
 
-
+    // News
+    @GET("article")
+    Observable<RestData<NewsRes>> getNews(@Header("Authorization") String s);
 }

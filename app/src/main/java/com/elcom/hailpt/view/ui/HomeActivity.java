@@ -17,8 +17,8 @@ import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.util.SharedPrefsHelper;
 import com.elcom.hailpt.util.WebRtcSessionManager;
 import com.elcom.hailpt.view.ui.fragment.HomeFragment;
-import com.elcom.hailpt.view.ui.fragment.NewsFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.ContactFragment;
+import com.elcom.hailpt.view.ui.fragment.news.NewsFragment;
 
 
 public class HomeActivity extends AppCompatActivity {

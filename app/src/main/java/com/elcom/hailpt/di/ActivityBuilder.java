@@ -19,6 +19,7 @@ import com.elcom.hailpt.view.ui.fragment.TimeKeepingFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.AllContactFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.FavouriteContactFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.OnlineContactFragment;
+import com.elcom.hailpt.view.ui.fragment.news.NewsFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -89,5 +90,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract OnlineContactFragment bindOnlineContactFragment();
+
+    @ContributesAndroidInjector
+    abstract NewsFragment bindNewsFragment();
 
 }

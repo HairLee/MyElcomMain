@@ -9,9 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toolbar;
 
 import com.elcom.hailpt.R;
@@ -30,7 +35,11 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private EditText edtSearch;
+    private int mPagePos = 0;
     private  AllContactFragment allContactFragment;
+    private OnlineContactFragment onlineContactFragment;
+    private FavouriteContactFragment favouriteContactFragment;
     private NetworkConnectionChecker networkConnectionChecker;
     public ContactFragment() {
         // Required empty public constructor
@@ -43,6 +52,8 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
         if (view == null){
             view = inflater.inflate(R.layout.fragment_contact, container, false);
             allContactFragment = new AllContactFragment();
+            onlineContactFragment = new OnlineContactFragment();
+            favouriteContactFragment = new FavouriteContactFragment();
         }
 
         return view;
@@ -54,14 +65,66 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
         networkConnectionChecker = new NetworkConnectionChecker(getActivity().getApplication());
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        edtSearch = view.findViewById(R.id.edtSearch);
+
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mPagePos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.e("hailpt"," addTextChangedListener "+s.toString());
+                switch (mPagePos){
+
+                    case 0:
+                        allContactFragment.doSearch(s.toString());
+                        break;
+
+                    case  1:
+                        onlineContactFragment.doSearch(s.toString());
+                        break;
+
+                    case 2:
+                        favouriteContactFragment.doSearch(s.toString());
+                        break;
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(allContactFragment, "Tất Cả");
-        adapter.addFragment(new OnlineContactFragment(), "Đang Hoạt Động");
-        adapter.addFragment(new FavouriteContactFragment(), "Đã Đánh Dấu");
+        adapter.addFragment( onlineContactFragment, "Hoạt Động");
+        adapter.addFragment( favouriteContactFragment, "Đánh Dấu");
         viewPager.setAdapter(adapter);
     }
 

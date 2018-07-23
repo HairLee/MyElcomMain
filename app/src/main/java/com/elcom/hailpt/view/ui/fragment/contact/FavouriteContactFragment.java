@@ -112,6 +112,12 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
                 }
             }
         });
+
+    }
+
+    public void doSearch(String search)
+    {
+        contactFavouriteAdapter.getFilter().filter(search);
     }
 
     @Override

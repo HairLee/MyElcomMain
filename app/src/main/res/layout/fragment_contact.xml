@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/edtSearch"
             android:paddingLeft="30dp"
             android:hint="Tìm một người bạn"
             android:textSize="13sp"

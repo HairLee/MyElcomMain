@@ -22,6 +22,7 @@ import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.services.CallService;
 import com.elcom.hailpt.util.ConstantsApp;
 import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.util.NetworkConnectionChecker;
 import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.SharedPrefsHelper;
 import com.elcom.hailpt.util.Toaster;
@@ -38,10 +39,11 @@ import com.quickblox.users.model.QBUser;
 
 import java.util.ArrayList;
 
-public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBinding> {
-
+public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBinding> implements  NetworkConnectionChecker.OnConnectivityChangedListener  {
+    private NetworkConnectionChecker networkConnectionChecker;
     private  ActivityLoginBinding binding;
     private QBUser userForSave;
+    private boolean mNetAvailableNow = false;
     @Override
     protected Class<LoginViewModel> getViewModel() {
         return LoginViewModel.class;
@@ -52,6 +54,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         this.binding = binding;
         init(viewModel);
         binding.btnLogin.setOnClickListener(view -> {
+
+            if(!mNetAvailableNow){
+                Toaster.shortToast(R.string.check_internet_plz);
+                return;
+            }
 
             if (binding.edtUsername.getText().toString().equals("")){
                 Toaster.shortToast("Vui lòng nhập email");
@@ -84,6 +91,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
     }
 
     private void init(LoginViewModel viewModel) {
+        initWiFiManagerListener();
         viewModel.getLoginResult().observe(this, data -> {
             binding.btnLogin.setEnabled(true);
             if (data != null &&  data.status_code != 200){
@@ -182,6 +190,10 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
         }
     }
 
+    private void initWiFiManagerListener() {
+        networkConnectionChecker = new NetworkConnectionChecker(getApplication());
+    }
+
     private void makeDialogProgress(){
         Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clockwise_rotation);
         rotation.setRepeatCount(Animation.INFINITE);
@@ -191,5 +203,29 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
     public static void start(Context context) {
         Intent starter = new Intent(context, LoginActivity.class);
         context.startActivity(starter);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkConnectionChecker.registerListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkConnectionChecker.unregisterListener(this);
+    }
+
+
+    @Override
+    public void connectivityChanged(boolean availableNow) {
+        mNetAvailableNow = availableNow;
+        if(availableNow){
+
+        } else {
+            Toaster.shortToast(R.string.check_internet_plz);
+        }
     }
 }

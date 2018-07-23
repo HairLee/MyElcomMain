@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import com.elcom.hailpt.BR;
@@ -22,9 +24,10 @@ import java.util.List;
  * @author ihsan on 12/19/17.
  */
 
-public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouriteAdapter.ViewHolder> {
+public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouriteAdapter.ViewHolder>  implements Filterable {
 
     private List<User> data;
+    private List<User> usertList;
     private ItemSelectedListener listener;
     private ChatAndCallListener chatAndCallListener;
 
@@ -34,11 +37,13 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
 
     public ContactFavouriteAdapter() {
         data = new ArrayList<>();
+        usertList = new ArrayList<>();
     }
 
     public void setData(List<User> data) {
         this.data.clear();
         this.data.addAll(data);
+        this.usertList.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -64,6 +69,41 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    data = usertList;
+                } else {
+                    List<User> filteredList = new ArrayList<>();
+                    for (User row : data) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    data = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = data;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                data = (ArrayList<User>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public interface ItemSelectedListener {

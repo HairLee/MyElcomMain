@@ -97,7 +97,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         if(view == null){
             view = inflater.inflate(R.layout.fragment_all_contact, container, false);
             imvLoading = view.findViewById(R.id.imvLoading);
-            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//            ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
 //            makeDialogProgress();
         }
         // Inflate the layout for this fragment
@@ -119,6 +119,11 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 
         registerChangeAvatarReceiver();
         return view;
+    }
+
+    public void doSearch(String searh)
+    {
+        Log.e("hailpt"," doChat"+searh);
     }
 
     @Override
@@ -144,7 +149,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 //            rotation.cancel();
             imvLoading.setVisibility(View.GONE);
             setupViewTest();
-            ProgressDialogUtils.dismissProgressDialog();
+//            ProgressDialogUtils.dismissProgressDialog();
         });
 
 
