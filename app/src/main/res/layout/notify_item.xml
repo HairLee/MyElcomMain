@@ -69,6 +69,7 @@
 
 
     <View
+        android:visibility="gone"
         android:layout_marginLeft="65dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/view6"

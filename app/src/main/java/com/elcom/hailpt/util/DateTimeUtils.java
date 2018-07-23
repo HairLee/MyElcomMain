@@ -1,15 +1,21 @@
 package com.elcom.hailpt.util;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Hailpt on 6/14/2018.
@@ -196,15 +202,9 @@ public class DateTimeUtils {
         return  dateString;
     }
 
-    public static String convertLongToTimeDateYear(String longV){
-
-        if (longV.equals("")){
-            return "Không có dữ liệu";
-        }
-
-        long millisecond = Long.parseLong(longV);
-        String dateString = android.text.format.DateFormat.format("hh:mm aa dd-MM-yyyy", new Date(millisecond)).toString();
-        return  dateString;
+    public static String getDateFromMillis(long millis) {
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm aa dd-MM-yyyy", Locale.getDefault());
+        return formatter.format(new Date(millis));
     }
 
 
@@ -218,4 +218,15 @@ public class DateTimeUtils {
         return null;
     }
 
+    public static String getDate(long milliSeconds)
+    {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm aa dd-MM-yyyy");
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
 }
+
+
