@@ -85,7 +85,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
 
     private void init(LunchRegistrationViewModel viewModel){
         viewModel.registerLunch().observe(this, jsonElementRestData -> {
-            Toaster.longToast(jsonElementRestData.message);
+            Toaster.longToast("Đăng ký cơm thành công");
             ProgressDialogUtils.dismissProgressDialog();
             getListCurrentDate();
         });
@@ -121,7 +121,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
         });
 
         viewModel.getLikeLunch().observe(this, jsonElementRestData -> {
-//            ProgressDialogUtils.dismissProgressDialog();
+            ProgressDialogUtils.dismissProgressDialog();
             getListCurrentDate();
         });
 
@@ -182,7 +182,7 @@ public class LunchRegistrationFragment extends BaseFragment<LunchRegistrationVie
 
     @Override
     public void onLikeOrDislike(boolean isLike) {
-//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         LunchLikeReq lunchLikeReq = new LunchLikeReq();
         lunchLikeReq.setData(currentDayChoosed);
         lunchLikeReq.setLike(isLike);

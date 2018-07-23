@@ -196,6 +196,17 @@ public class DateTimeUtils {
         return  dateString;
     }
 
+    public static String convertLongToTimeDateYear(String longV){
+
+        if (longV.equals("")){
+            return "Không có dữ liệu";
+        }
+
+        long millisecond = Long.parseLong(longV);
+        String dateString = android.text.format.DateFormat.format("hh:mm aa dd-MM-yyyy", new Date(millisecond)).toString();
+        return  dateString;
+    }
+
 
     public static Date convertStringTodate(String datestring)  {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

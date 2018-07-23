@@ -97,7 +97,7 @@ public class LunchCalendarRegisActivity extends BaseActivity<LunchRegistrationVi
        if(availableNow){
            setupViewPager(mParts);
        } else {
-           Toaster.shortToast("Vui long kiem tra ket noi mang");
+           Toaster.shortToast(R.string.check_internet_plz);
        }
     }
 

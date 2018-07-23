@@ -25,6 +25,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_KEY", "\"" + API_KEY + "\"")
         buildConfigField("String", "END_POINT", "\"https://newsapi.org/v2/\"")
+        multiDexEnabled true
     }
 
     repositories {

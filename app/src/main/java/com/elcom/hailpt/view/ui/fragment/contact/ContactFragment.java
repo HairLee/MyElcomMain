@@ -71,7 +71,7 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
             setupViewPager(viewPager);
             tabLayout.setupWithViewPager(viewPager);
         } else {
-            Toaster.shortToast("check Internet");
+            Toaster.shortToast(R.string.check_internet_plz);
         }
     }
 

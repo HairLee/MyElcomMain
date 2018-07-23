@@ -54,7 +54,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Notification movie = moviesList.get(position);
         holder.title.setText(movie.getMessage().toString());
-        holder.des.setText(DateTimeUtils.convertLongToTimeDate(Integer.parseInt(movie.getCreatedAt().toString())*1000+""));
+        holder.des.setText(DateTimeUtils.convertLongToTimeDateYear(Integer.parseInt(movie.getCreatedAt().toString())*1000+""));
 
         if (movie.getCategory() == 1)
             // 1 Cham cong
