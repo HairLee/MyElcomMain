@@ -226,6 +226,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/textView12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

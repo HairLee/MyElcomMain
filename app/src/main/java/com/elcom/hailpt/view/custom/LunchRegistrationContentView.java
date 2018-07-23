@@ -19,6 +19,7 @@ import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.listener.HomeFragmentCalendarListener;
 import com.elcom.hailpt.model.api.response.Lunch;
 import com.elcom.hailpt.util.DateTimeUtils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,15 +188,39 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
 
     }
 
+    public void setDataForDishTvList(){
+        mMainDishLish.clear();
+        mSideDishLish.clear();
+
+        mMainDishLish.add(tvMainDish1);
+        mMainDishLish.add(tvMainDish2);
+        mMainDishLish.add(tvMainDish3);
+        mMainDishLish.add(tvMainDish4);
+        mMainDishLish.add(tvMainDish5);
+
+        mSideDishLish.add(tvSideDish1);
+        mSideDishLish.add(tvSideDish2);
+        mSideDishLish.add(tvSideDish3);
+        mSideDishLish.add(tvSideDish4);
+        mSideDishLish.add(tvSideDish5);
+    }
+
     public void updateMainContent(Lunch lunch, int dayChoosed){
         isHaveLunchOrNot = false;
         mLunch = lunch;
         resetView();
 
-        Log.e("hailpt"," Date choosed updateMainContent " + dayChoosed);
+        setDataForDishTvList();
 
+        Gson gson = new Gson();
+        String a = gson.toJson(mLunch.getMainDishes());
+
+        Log.e("hailpt"," Date choosed updateMainContent  getSideDishes" + dayChoosed + " " + lunch.getMainDishes().size()+ " "+ gson.toJson(mLunch.getSideDishes()));
         /* MainDish Start */
         int totalMainDish = 5 - lunch.getMainDishes().size(); // 3
+
+        Log.e("hailpt"," Date choosed updateMainContent  getMainDishes" + dayChoosed + " totalMainDish " + totalMainDish);
+
         int count = 0;
         for (int i = mMainDishLish.size() - 1; i >= totalMainDish; i--) {
             if (count < totalMainDish){
@@ -215,7 +240,7 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
         /*MainDish End*/
 
         /* SideDish Start */
-        int totalSideDish = 5 - lunch.getMainDishes().size(); // 3
+        int totalSideDish = 5 - lunch.getSideDishes().size(); // 3
         int sideCount = 0;
         for (int i = mSideDishLish.size() - 1; i >= totalSideDish; i--) {
             if (sideCount < totalSideDish){
@@ -350,6 +375,10 @@ public class LunchRegistrationContentView extends RelativeLayout implements View
     private void resetView(){
         for (int i = 0; i < mMainDishLish.size(); i++) {
             mMainDishLish.get(i).setVisibility(GONE);
+        }
+
+        for (int i = 0; i < mSideDishLish.size(); i++) {
+            mSideDishLish.get(i).setVisibility(GONE);
         }
     }
 

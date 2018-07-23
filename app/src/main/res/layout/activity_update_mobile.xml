@@ -32,6 +32,7 @@
 
 
     <EditText
+        android:maxLength="15"
         android:fontFamily="monospace"
         android:textSize="14sp"
         android:textColor="@color/black"
