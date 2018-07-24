@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.webkit.WebSettings;
 
@@ -14,9 +16,14 @@ import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityNewsDetailBinding;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.NewsDetailRq;
+import com.elcom.hailpt.model.api.response.Comment;
 import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.view.adapter.CommentAdapter;
+import com.elcom.hailpt.view.adapter.ElcomNewsChildBottomAdapter;
 import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
+
+import java.util.List;
 
 public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,ActivityNewsDetailBinding> {
 
@@ -47,6 +54,8 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
                 Log.e("hailpt"," newsRestData "+newsRestData);
                 if(newsRestData != null && newsRestData.status_code == 200){
                     setupView(newsRestData.data);
+
+                    setupListComment(newsRestData.data.getComment());
                 }
             }
         });
@@ -65,6 +74,18 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
         String myHtmlString = "<html><body>"+news.getContent()+"</body></html>";
         activityNewsDetailBinding.webContent.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         activityNewsDetailBinding.webContent.loadData(myHtmlString, "text/html", null);
+
+        activityNewsDetailBinding.tvComment.setText(news.getSum_comment()+ " Likes");
+        activityNewsDetailBinding.tvLike.setText(news.getSum_like()+" Bình luận");
+
+    }
+
+    private void setupListComment(List<Comment> data){
+        CommentAdapter elcomNewsChildBottomAdapter = new CommentAdapter(this);
+        elcomNewsChildBottomAdapter.setData(data);
+//        elcomNewsChildBottomAdapter.setOnItemClickListener(this);
+        activityNewsDetailBinding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
+        activityNewsDetailBinding.recyclerView.setAdapter(elcomNewsChildBottomAdapter);
     }
 
     public static void start(Context context, int caterogyId) {

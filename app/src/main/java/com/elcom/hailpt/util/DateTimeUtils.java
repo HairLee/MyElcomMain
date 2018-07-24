@@ -198,7 +198,7 @@ public class DateTimeUtils {
         }
 
         long millisecond = Long.parseLong(longV);
-        String dateString = android.text.format.DateFormat.format("hh:mm aa", new Date(millisecond)).toString();
+        String dateString = android.text.format.DateFormat.format("hh:mm:ss aa", new Date(millisecond)).toString();
         return  dateString;
     }
 

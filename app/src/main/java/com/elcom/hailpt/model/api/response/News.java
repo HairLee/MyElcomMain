@@ -6,6 +6,8 @@ package com.elcom.hailpt.model.api.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class News {
 
     @SerializedName("id")
@@ -35,6 +37,30 @@ public class News {
     @SerializedName("category_name")
     @Expose
     private String categoryName;
+
+    @SerializedName("sum_like")
+    @Expose
+    private Integer sum_like;
+
+    @SerializedName("status_vote")
+    @Expose
+    private Integer status_vote;
+
+    @SerializedName("sum_comment")
+    @Expose
+    private Integer sum_comment;
+
+    @SerializedName("comment")
+    @Expose
+    private List<Comment> comment;
+
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
+    }
 
     public Integer getId() {
         return id;
@@ -108,4 +134,28 @@ public class News {
         this.categoryName = categoryName;
     }
 
+
+    public Integer getSum_like() {
+        return sum_like;
+    }
+
+    public void setSum_like(Integer sum_like) {
+        this.sum_like = sum_like;
+    }
+
+    public Integer getStatus_vote() {
+        return status_vote;
+    }
+
+    public void setStatus_vote(Integer status_vote) {
+        this.status_vote = status_vote;
+    }
+
+    public Integer getSum_comment() {
+        return sum_comment;
+    }
+
+    public void setSum_comment(Integer sum_comment) {
+        this.sum_comment = sum_comment;
+    }
 }

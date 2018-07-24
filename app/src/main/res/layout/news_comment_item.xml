@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="comment"
+            type="com.elcom.hailpt.model.api.response.Comment" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="42dp"
+
+            >
+
+
+            <TextView
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="#FE8F92"
+                android:gravity="center"
+                android:text="XÓA"
+                android:layout_alignParentRight="true"
+                android:layout_width="100dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:visibility="visible"
+                android:background="@color/white"
+                android:id="@+id/viewForeground"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/imvAva"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                  />
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:background="@color/white"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/imvAva"
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imvAva"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:textColor="#54586B"
+                        android:textSize="13sp"
+                        android:id="@+id/tvNotiName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{comment.name}" />
+
+                    <TextView
+
+                        android:textSize="11sp"
+                        android:id="@+id/tvNoTiDes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:padding="10dp"
+            android:text="@{comment.commentContent}"
+            android:layout_below="@+id/viewForeground"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</layout>

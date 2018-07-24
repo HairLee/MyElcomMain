@@ -237,7 +237,7 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
             int timeCheckIn = Integer.parseInt(tvCheckIn.getText().subSequence(1,2).toString());
             String time = tvCheckIn.getText().toString();
 
-            if((time.startsWith("0") && timeCheckIn < 8 && !time.contains("PM")) || time.equals("08:00 AM")){
+            if((time.startsWith("0") && timeCheckIn < 8 && !time.contains("PM")) || time.equals("08:00:00 AM")){
                 tvToday.setText("Đúng giờ");
                 tvToday.setTextColor(getResources().getColor(R.color.onTime));
             } else {
