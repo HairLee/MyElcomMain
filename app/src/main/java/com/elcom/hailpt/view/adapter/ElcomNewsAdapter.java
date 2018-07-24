@@ -64,7 +64,7 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
     }
 
     public interface ItemSelectedListener {
-        void onItemSelected(View view, Article item);
+        void onItemSelected(View view, News item);
     }
 
     public void setOnItemClickListener(ItemSelectedListener listener) {
@@ -102,7 +102,7 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
         @Override
         public void onClick(View view) {
             if (listener != null) {
-//                listener.onItemSelected(view, data.get(getAdapterPosition()));
+                listener.onItemSelected(view, data.get(getAdapterPosition()));
             }
         }
     }

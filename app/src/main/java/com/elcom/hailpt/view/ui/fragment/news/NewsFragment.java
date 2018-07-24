@@ -20,6 +20,7 @@ import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.model.api.response.NewsNormal;
 import com.elcom.hailpt.model.api.response.NewsRes;
+import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.view.adapter.ElcomNewsAdapter;
 import com.elcom.hailpt.view.adapter.ElcomNewsBottomAdapter;
 import com.elcom.hailpt.view.adapter.ElcomNewsChildBottomAdapter;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNewsBottomAdapter.ItemSelectedListener, ElcomNewsChildBottomAdapter.ItemSelectedListener {
+public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNewsBottomAdapter.ItemSelectedListener, ElcomNewsChildBottomAdapter.ItemChildSelectedListener, ElcomNewsAdapter.ItemSelectedListener {
 
     private RecyclerView recyclerViewTop;
     private RecyclerView recyclerViewBottom;
@@ -82,6 +83,7 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
     private void setupRecyclerViewTop(List<News> news){
         elcomNewsAdapter = new ElcomNewsAdapter(getContext());
         elcomNewsAdapter.setData(news);
+        elcomNewsAdapter.setOnItemClickListener(this);
         recyclerViewTop.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.HORIZONTAL));
         recyclerViewTop.setAdapter(elcomNewsAdapter);
     }
@@ -96,13 +98,17 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
     }
 
     @Override
-    public void onItemSelected(View view, NewsNormal item) {
-            Log.e("hailpt"," NewsNormal " + item.getCategory_name());
+    public void onItemSelected(View view, NewsNormal item) { // Top
             NewsAllActivity.start(getContext(),item.getCategory_id());
     }
 
     @Override
     public void onItemSelected(View view, News item) { // For child
+        NewsDetailActivity.start(getContext(),item.getId());
+    }
+
+    @Override
+    public void onItemChildSelected(View view, News item) {
         NewsDetailActivity.start(getContext(),item.getId());
     }
 }

@@ -27,7 +27,7 @@ import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
 
 import java.util.List;
 
-public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityNewsAllBinding> implements ElcomNewsChildBottomAdapter.ItemSelectedListener {
+public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityNewsAllBinding> implements ElcomNewsChildBottomAdapter.ItemChildSelectedListener {
 
 
 
@@ -86,10 +86,9 @@ public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityN
         context.startActivity(intent);
     }
 
-    @Override
-    public void onItemSelected(View view, News item) {
-        Log.e("hailpt"," item ==== "+item.getCategoryName());
 
+    @Override
+    public void onItemChildSelected(View view, News item) {
         NewsDetailActivity.start(this, item.getId());
     }
 }

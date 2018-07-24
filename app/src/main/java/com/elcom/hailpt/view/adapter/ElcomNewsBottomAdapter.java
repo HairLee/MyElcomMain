@@ -31,7 +31,7 @@ public class ElcomNewsBottomAdapter extends RecyclerView.Adapter<ElcomNewsBottom
 
     private ArrayList<NewsNormal> data;
     private ItemSelectedListener listener;
-    private ElcomNewsChildBottomAdapter.ItemSelectedListener childListener;
+    private ElcomNewsChildBottomAdapter.ItemChildSelectedListener childListener;
     private Context context;
     public ElcomNewsBottomAdapter(Context context) {
         this.context = context;
@@ -69,7 +69,7 @@ public class ElcomNewsBottomAdapter extends RecyclerView.Adapter<ElcomNewsBottom
         void onItemSelected(View view, NewsNormal item);
     }
 
-    public void setOnItemClickListener(ElcomNewsChildBottomAdapter.ItemSelectedListener listener) {
+    public void setOnItemClickListener(ElcomNewsChildBottomAdapter.ItemChildSelectedListener listener) {
         this.childListener = listener;
     }
 

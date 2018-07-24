@@ -27,7 +27,7 @@ import java.util.List;
 public class ElcomNewsChildBottomAdapter extends RecyclerView.Adapter<ElcomNewsChildBottomAdapter.ViewHolder> {
 
     private ArrayList<News> data;
-    private ItemSelectedListener listener;
+    private ItemChildSelectedListener listener;
     private Context context;
     public ElcomNewsChildBottomAdapter(Context context) {
         this.context = context;
@@ -61,20 +61,20 @@ public class ElcomNewsChildBottomAdapter extends RecyclerView.Adapter<ElcomNewsC
         return data.size();
     }
 
-    public interface ItemSelectedListener {
-        void onItemSelected(View view, News item);
+    public interface ItemChildSelectedListener {
+        void onItemChildSelected(View view, News item);
     }
 
-    public void setOnItemClickListener(ItemSelectedListener listener) {
+    public void setOnItemClickListener(ItemChildSelectedListener listener) {
         this.listener = listener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ViewDataBinding binding;
-        private final ItemSelectedListener listener;
+        private final ItemChildSelectedListener listener;
 
-        ViewHolder(ViewDataBinding binding, ItemSelectedListener listener) {
+        ViewHolder(ViewDataBinding binding, ItemChildSelectedListener listener) {
             super(binding.getRoot());
             this.binding = binding;
             this.listener = listener;
@@ -99,7 +99,7 @@ public class ElcomNewsChildBottomAdapter extends RecyclerView.Adapter<ElcomNewsC
         @Override
         public void onClick(View view) {
             if (listener != null) {
-                listener.onItemSelected(view, data.get(getAdapterPosition()));
+                listener.onItemChildSelected(view, data.get(getAdapterPosition()));
             }
         }
     }
