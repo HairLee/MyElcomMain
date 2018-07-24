@@ -63,6 +63,7 @@
         android:layout_height="45dp">
 
         <TextView
+            android:id="@+id/tvName"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
             android:layout_marginLeft="10dp"

@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.elcom.hailpt.R;
+import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.adapter.OpponentsFromCallAdapter;
 import com.quickblox.users.model.QBUser;
@@ -84,7 +85,7 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
     private SparseArray<OpponentsFromCallAdapter.ViewHolder> opponentViewHolders;
     private boolean isPeerToPeerCall;
     private QBRTCVideoTrack localVideoTrack;
-    private TextView connectionStatusLocal;
+    private TextView connectionStatusLocal,tvName;
 
     private Map<Integer, QBRTCVideoTrack> videoTrackMap;
     private OpponentsFromCallAdapter opponentsAdapter;
@@ -104,6 +105,8 @@ public class VideoConversationFragment extends BaseConversationFragment implemen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = super.onCreateView(inflater, container, savedInstanceState);
         timerChronometer = view.findViewById(R.id.timer_chronometer_action_bar);
+        tvName = view.findViewById(R.id.tvName);
+        tvName.setText(PreferUtils.getEmailOpponent(getContext()));
         return view;
     }
 
