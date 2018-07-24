@@ -227,6 +227,12 @@ public class DateTimeUtils {
         calendar.setTimeInMillis(milliSeconds);
         return formatter.format(calendar.getTime());
     }
+
+    public static String getTime(long milliSeconds)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return formatter.format(new Date(milliSeconds));
+    }
 }
 
 

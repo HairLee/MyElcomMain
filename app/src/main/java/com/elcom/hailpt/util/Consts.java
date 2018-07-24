@@ -59,6 +59,7 @@ public interface Consts {
 
 
     String EXTRA_IS_USER_ID = "EXTRA_IS_USER_ID";
+    String EXTRA_IS_ID = "EXTRA_IS_ID";
 
 
     enum StartConversationReason {

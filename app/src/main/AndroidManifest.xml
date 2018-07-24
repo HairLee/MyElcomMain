@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -109,11 +108,9 @@
         <activity
             android:name=".view.ui.activity.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.ui.activity.CropImageActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.ui.activity.LunchCalendarRegisActivity"
             android:screenOrientation="portrait"
@@ -122,22 +119,21 @@
             android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:windowSoftInputMode="stateVisible"
+            android:name=".view.ui.activity.UpdateMobileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent"
-            android:name=".view.ui.activity.UpdateMobileActivity"/>
-
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+            android:windowSoftInputMode="stateVisible" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
 
         <receiver android:name=".view.ui.fragment.HomeFragment$MyReceiver">
             <intent-filter>
-                <action android:name="BROARD_CHANGE_AVATAR">
-                </action>
+                <action android:name="BROARD_CHANGE_AVATAR"></action>
             </intent-filter>
-
         </receiver>
 
+        <activity android:name=".view.ui.fragment.news.NewsAllActivity"></activity>
     </application>
 
 </manifest>

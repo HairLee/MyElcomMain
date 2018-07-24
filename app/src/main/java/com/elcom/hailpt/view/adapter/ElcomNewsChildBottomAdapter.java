@@ -14,10 +14,8 @@ import com.bumptech.glide.Glide;
 import com.elcom.hailpt.BR;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.model.api.response.News;
-import com.elcom.hailpt.model.api.response.Notification;
 import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.util.DateTimeUtils;
-import com.elcom.hailpt.util.PreferUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +24,12 @@ import java.util.List;
  * @author ihsan on 12/19/17.
  */
 
-public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.ViewHolder> {
+public class ElcomNewsChildBottomAdapter extends RecyclerView.Adapter<ElcomNewsChildBottomAdapter.ViewHolder> {
 
     private ArrayList<News> data;
     private ItemSelectedListener listener;
     private Context context;
-    public ElcomNewsAdapter(Context context) {
+    public ElcomNewsChildBottomAdapter(Context context) {
         this.context = context;
         data = new ArrayList<>();
     }
@@ -49,7 +47,7 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewDataBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()), R.layout.elcom_news_item, parent, false);
+                LayoutInflater.from(parent.getContext()), R.layout.elcom_news_child_bottom_item, parent, false);
         return new ViewHolder(binding, listener);
     }
 
@@ -86,6 +84,7 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
         void bind(News data) {
             binding.setVariable(BR.news, data);
             binding.executePendingBindings();
+
             ImageView imvDes = binding.getRoot().findViewById(R.id.imvNews);
             TextView tvTime = binding.getRoot().findViewById(R.id.tvTime);
             tvTime.setText(DateTimeUtils.getTime(Long.parseLong(data.getCreatedAt().toString())*1000));
@@ -95,8 +94,6 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
                         .thumbnail(0.5f)
                         .into(imvDes);
             }
-
-
         }
 
         @Override

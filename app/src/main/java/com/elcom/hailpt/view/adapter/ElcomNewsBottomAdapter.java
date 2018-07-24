@@ -3,7 +3,9 @@ package com.elcom.hailpt.view.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,9 @@ import com.bumptech.glide.Glide;
 import com.elcom.hailpt.BR;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.model.api.response.News;
-import com.elcom.hailpt.model.api.response.Notification;
+import com.elcom.hailpt.model.api.response.NewsNormal;
 import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.util.DateTimeUtils;
-import com.elcom.hailpt.util.PreferUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,30 +27,30 @@ import java.util.List;
  * @author ihsan on 12/19/17.
  */
 
-public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.ViewHolder> {
+public class ElcomNewsBottomAdapter extends RecyclerView.Adapter<ElcomNewsBottomAdapter.ViewHolder> {
 
-    private ArrayList<News> data;
+    private ArrayList<NewsNormal> data;
     private ItemSelectedListener listener;
     private Context context;
-    public ElcomNewsAdapter(Context context) {
+    public ElcomNewsBottomAdapter(Context context) {
         this.context = context;
         data = new ArrayList<>();
     }
 
-    public void setData(List<News> data) {
+    public void setData(List<NewsNormal> data) {
         this.data.clear();
         this.data.addAll(data);
         notifyDataSetChanged();
     }
 
-    public ArrayList<News> getData() {
+    public ArrayList<NewsNormal> getData() {
         return data;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewDataBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()), R.layout.elcom_news_item, parent, false);
+                LayoutInflater.from(parent.getContext()), R.layout.elcom_news_bottom_item, parent, false);
         return new ViewHolder(binding, listener);
     }
 
@@ -64,7 +65,7 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
     }
 
     public interface ItemSelectedListener {
-        void onItemSelected(View view, Article item);
+        void onItemSelected(View view, NewsNormal item);
     }
 
     public void setOnItemClickListener(ItemSelectedListener listener) {
@@ -83,26 +84,27 @@ public class ElcomNewsAdapter extends RecyclerView.Adapter<ElcomNewsAdapter.View
             binding.getRoot().setOnClickListener(this);
         }
 
-        void bind(News data) {
-            binding.setVariable(BR.news, data);
+        void bind(NewsNormal data) {
+            binding.setVariable(BR.newsnormal, data);
             binding.executePendingBindings();
-            ImageView imvDes = binding.getRoot().findViewById(R.id.imvNews);
-            TextView tvTime = binding.getRoot().findViewById(R.id.tvTime);
-            tvTime.setText(DateTimeUtils.getTime(Long.parseLong(data.getCreatedAt().toString())*1000));
 
-            if(!data.getThumbnail().equals("")){
-                Glide.with(context).load(data.getThumbnail())
-                        .thumbnail(0.5f)
-                        .into(imvDes);
-            }
+            TextView tvTitle = binding.getRoot().findViewById(R.id.tvTitle);
+            TextView tvViewAll = binding.getRoot().findViewById(R.id.tvViewAll);
+            tvTitle.setText(data.getCategory_name());
+            RecyclerView recyclerView = binding.getRoot().findViewById(R.id.recyclerView);
 
+            ElcomNewsChildBottomAdapter elcomNewsChildBottomAdapter = new ElcomNewsChildBottomAdapter(context);
+            elcomNewsChildBottomAdapter.setData(data.getArticles());
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
+            recyclerView.setAdapter(elcomNewsChildBottomAdapter);
 
+            tvViewAll.setOnClickListener(v -> listener.onItemSelected(v,data));
         }
 
         @Override
         public void onClick(View view) {
             if (listener != null) {
-//                listener.onItemSelected(view, data.get(getAdapterPosition()));
+                listener.onItemSelected(view, data.get(getAdapterPosition()));
             }
         }
     }

@@ -12,6 +12,7 @@ import com.elcom.hailpt.viewmodel.ForgetPasswordViewModel;
 import com.elcom.hailpt.viewmodel.LoginViewModel;
 import com.elcom.hailpt.viewmodel.LunchRegistrationViewModel;
 import com.elcom.hailpt.viewmodel.MainViewModel;
+import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
 import com.elcom.hailpt.viewmodel.NewsViewModel;
 import com.elcom.hailpt.viewmodel.NotificationViewModel;
 import com.elcom.hailpt.viewmodel.ProfileFavouriteViewModel;
@@ -118,6 +119,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(NewsViewModel.class)
     abstract ViewModel bindsNewsViewModel(NewsViewModel newsViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NewsDetailViewModel.class)
+    abstract ViewModel bindsNewsDetailViewModel(NewsDetailViewModel newsViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindsViewModelFactory(ViewModelFactory viewModelFactory);

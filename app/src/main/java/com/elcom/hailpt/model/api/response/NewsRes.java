@@ -7,14 +7,14 @@ import java.util.List;
  */
 public class NewsRes {
 
-    private List<News> normal_articles;
+    private List<NewsNormal> normal_articles;
     private List<News> hot_articles;
 
-    public List<News> getNormal_articles() {
+    public List<NewsNormal> getNormal_articles() {
         return normal_articles;
     }
 
-    public void setNormal_articles(List<News> normal_articles) {
+    public void setNormal_articles(List<NewsNormal> normal_articles) {
         this.normal_articles = normal_articles;
     }
 

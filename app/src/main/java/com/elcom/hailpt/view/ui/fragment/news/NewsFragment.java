@@ -18,8 +18,10 @@ import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseFragment;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.response.News;
+import com.elcom.hailpt.model.api.response.NewsNormal;
 import com.elcom.hailpt.model.api.response.NewsRes;
 import com.elcom.hailpt.view.adapter.ElcomNewsAdapter;
+import com.elcom.hailpt.view.adapter.ElcomNewsBottomAdapter;
 import com.elcom.hailpt.viewmodel.NewsViewModel;
 
 import java.util.List;
@@ -27,12 +29,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewsFragment extends BaseFragment<NewsViewModel> {
+public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNewsBottomAdapter.ItemSelectedListener {
 
     private RecyclerView recyclerViewTop;
     private RecyclerView recyclerViewBottom;
     private NewsViewModel newsViewModel;
     private ElcomNewsAdapter elcomNewsAdapter;
+    private ElcomNewsBottomAdapter elcomNewsBottomAdapter;
     public NewsFragment() {
         // Required empty public constructor
     }
@@ -67,22 +70,32 @@ public class NewsFragment extends BaseFragment<NewsViewModel> {
         newsViewModel.getNews().observe(this, new Observer<RestData<NewsRes>>() {
             @Override
             public void onChanged(@Nullable RestData<NewsRes> newsResRestData) {
-
-                Log.e("hailpt"," "+newsResRestData.message);
-                setupRecyclerViewTop(newsResRestData.data.getHot_articles());
+                if(newsResRestData != null && newsResRestData.status_code == 200){
+                    setupRecyclerViewTop(newsResRestData.data.getHot_articles());
+                    setupRecyclerViewBottom(newsResRestData.data.getNormal_articles());
+                }
             }
         });
     }
 
     private void setupRecyclerViewTop(List<News> news){
-        elcomNewsAdapter = new ElcomNewsAdapter();
+        elcomNewsAdapter = new ElcomNewsAdapter(getContext());
         elcomNewsAdapter.setData(news);
         recyclerViewTop.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.HORIZONTAL));
         recyclerViewTop.setAdapter(elcomNewsAdapter);
     }
 
-    private void setupRecyclerViewBottom(){
+    private void setupRecyclerViewBottom(List<NewsNormal> news){
+        elcomNewsBottomAdapter = new ElcomNewsBottomAdapter(getContext());
+        elcomNewsBottomAdapter.setData(news);
+        elcomNewsBottomAdapter.setOnItemClickListener(this);
+        recyclerViewBottom.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
+        recyclerViewBottom.setAdapter(elcomNewsBottomAdapter);
+    }
 
-
+    @Override
+    public void onItemSelected(View view, NewsNormal item) {
+            Log.e("hailpt"," NewsNormal " + item.getCategory_name());
+            NewsAllActivity.start(getContext(),item.getCategory_id());
     }
 }
