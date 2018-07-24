@@ -6,6 +6,8 @@ import com.elcom.hailpt.core.AppSchedulerProvider;
 import com.elcom.hailpt.core.BaseViewModel;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.LikeCommentReq;
+import com.elcom.hailpt.model.api.request.SendCommentReq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
 import com.elcom.hailpt.model.api.response.News;
@@ -15,6 +17,7 @@ import com.elcom.hailpt.model.db.AppDatabase;
 import com.elcom.hailpt.model.db.ArticleDao;
 import com.elcom.hailpt.model.db.SourceDao;
 import com.elcom.hailpt.util.ConstantsApp;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -35,6 +38,7 @@ public class NewsDetailRepository implements BaseViewModel {
     private final Api api;
     private final MutableLiveData<RestData<NewsDetailRes>> articleMutableLiveData;
     private final MutableLiveData<RestData<News>> newsMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> sendCmtMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
     private final ArticleDao articleDao;
@@ -49,6 +53,7 @@ public class NewsDetailRepository implements BaseViewModel {
         sourceList = sourceDao.getAllList();
         articleMutableLiveData = new MutableLiveData<>();
         newsMutableLiveData = new MutableLiveData<>();
+        sendCmtMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<NewsDetailRes>> getAllNews(int category_id, int ofset, int limit) {
@@ -104,6 +109,62 @@ public class NewsDetailRepository implements BaseViewModel {
                     }
                 });
         return newsMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<JsonElement>> sendComment(SendCommentReq sendCommentReq) {
+        api.sendComment(sendCommentReq,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        sendCmtMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return sendCmtMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<JsonElement>> likeComment(LikeCommentReq likeCommentReq) {
+        api.likeComment(likeCommentReq,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        sendCmtMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return sendCmtMutableLiveData;
     }
 
 

@@ -9,19 +9,23 @@ import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityNewsDetailBinding;
 import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.LikeCommentReq;
 import com.elcom.hailpt.model.api.request.NewsDetailRq;
+import com.elcom.hailpt.model.api.request.SendCommentReq;
 import com.elcom.hailpt.model.api.response.Comment;
 import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.util.Consts;
 import com.elcom.hailpt.view.adapter.CommentAdapter;
 import com.elcom.hailpt.view.adapter.ElcomNewsChildBottomAdapter;
 import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -30,6 +34,7 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
 
     NewsDetailViewModel newsDetailViewModel;
     private ActivityNewsDetailBinding activityNewsDetailBinding;
+    private int caterogyId = 0;
     @Override
     protected Class<NewsDetailViewModel> getViewModel() {
         return NewsDetailViewModel.class;
@@ -60,19 +65,66 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
             }
         });
 
+        newsDetailViewModel.sendComment().observe(this, new Observer<RestData<JsonElement>>() {
+            @Override
+            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
+                if (jsonElementRestData.status_code == 200){
+                    activityNewsDetailBinding.edtComment.setText("");
+                    getData();
+                }
+            }
+        });
+
+        newsDetailViewModel.likeComment().observe(this, jsonElementRestData -> {
+            if (jsonElementRestData.status_code == 200){
+                getData();
+            }
+        });
+
         if(getIntent().hasExtra(Consts.EXTRA_IS_ID)){
-            NewsDetailRq newsDetailRq = new NewsDetailRq();
-            newsDetailRq.setId(getIntent().getExtras().getInt(Consts.EXTRA_IS_ID));
-            newsDetailRq.setOffset(0);
-            newsDetailRq.setLimit(10);
-            viewModel.setDetailReq(newsDetailRq);
+            caterogyId = getIntent().getExtras().getInt(Consts.EXTRA_IS_ID);
+            getData();
         }
 
+        activityNewsDetailBinding.tvSendCommment.setOnClickListener(v -> {
+            SendCommentReq sendCommentReq = new SendCommentReq();
+            sendCommentReq.setArticle_id(caterogyId);
+            sendCommentReq.setComment_content(activityNewsDetailBinding.edtComment.getText().toString());
+            viewModel.setComment(sendCommentReq);
+        });
+
+        activityNewsDetailBinding.rlLike.setOnClickListener(v -> {
+            LikeCommentReq likeCommentReq = new LikeCommentReq();
+            likeCommentReq.setArticle_id(caterogyId);
+            viewModel.likeComment(likeCommentReq);
+        });
+
+
+        activityNewsDetailBinding.imvBack.setOnClickListener(v -> onBackPressed());
+
+    }
+
+    private void getData(){
+        NewsDetailRq newsDetailRq = new NewsDetailRq();
+        newsDetailRq.setId(caterogyId);
+        newsDetailRq.setOffset(0);
+        newsDetailRq.setLimit(10);
+        newsDetailViewModel.setDetailReq(newsDetailRq);
     }
 
     private void setupView(News news){
         String myHtmlString = "<html><body>"+news.getContent()+"</body></html>";
-        activityNewsDetailBinding.webContent.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        activityNewsDetailBinding.webContent.setFocusable(true);
+        activityNewsDetailBinding.webContent.setFocusableInTouchMode(true);
+        activityNewsDetailBinding.webContent.getSettings().setLoadWithOverviewMode(true);
+        activityNewsDetailBinding.webContent.getSettings().setUseWideViewPort(true);
+        activityNewsDetailBinding.webContent.getSettings().setJavaScriptEnabled(true);
+        activityNewsDetailBinding.webContent.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        activityNewsDetailBinding.webContent.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        activityNewsDetailBinding.webContent.getSettings().setDomStorageEnabled(true);
+        activityNewsDetailBinding.webContent.getSettings().setDatabaseEnabled(true);
+        activityNewsDetailBinding.webContent.getSettings().setAppCacheEnabled(true);
+        activityNewsDetailBinding.webContent.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         activityNewsDetailBinding.webContent.loadData(myHtmlString, "text/html", null);
 
         activityNewsDetailBinding.tvComment.setText(news.getSum_comment()+ " Likes");
@@ -85,6 +137,7 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
         elcomNewsChildBottomAdapter.setData(data);
 //        elcomNewsChildBottomAdapter.setOnItemClickListener(this);
         activityNewsDetailBinding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
+        activityNewsDetailBinding.recyclerView.setNestedScrollingEnabled(false);
         activityNewsDetailBinding.recyclerView.setAdapter(elcomNewsChildBottomAdapter);
     }
 

@@ -133,8 +133,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".view.ui.fragment.news.NewsAllActivity" />
-        <activity android:name=".view.ui.fragment.news.NewsDetailActivity"></activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".view.ui.fragment.news.NewsAllActivity" />
+        <activity android:name=".view.ui.fragment.news.NewsDetailActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

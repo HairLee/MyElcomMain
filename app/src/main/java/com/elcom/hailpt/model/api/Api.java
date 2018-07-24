@@ -3,6 +3,7 @@ package com.elcom.hailpt.model.api;
 import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.ChangePwRq;
 import com.elcom.hailpt.model.api.request.ForgetPwReq;
+import com.elcom.hailpt.model.api.request.LikeCommentReq;
 import com.elcom.hailpt.model.api.request.LoginReq;
 import com.elcom.hailpt.model.api.request.LunchCancelReq;
 import com.elcom.hailpt.model.api.request.LunchFeedBackReq;
@@ -10,6 +11,7 @@ import com.elcom.hailpt.model.api.request.LunchLikeReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.request.ReasonLate;
 import com.elcom.hailpt.model.api.request.RemoveNotificationReq;
+import com.elcom.hailpt.model.api.request.SendCommentReq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
 import com.elcom.hailpt.model.api.response.Lunch;
@@ -72,6 +74,13 @@ public interface Api {
 
     @GET("article/{category_id}")
     Observable<RestData<News>> getNewsDetail(@Path("category_id")  int category_id, @Header("Authorization") String s);
+
+
+    @POST("article-comment")
+    Observable<RestData<JsonElement>> sendComment(@Body SendCommentReq sendCommentReq,@Header("Authorization") String s);
+
+    @POST("article-like")
+    Observable<RestData<JsonElement>> likeComment(@Body LikeCommentReq likeCommentReq, @Header("Authorization") String s);
 
     @POST("auth/forgot")
     Observable<RestData<JsonElement>> forgetPassword(@Body ForgetPwReq forgetPwReq);

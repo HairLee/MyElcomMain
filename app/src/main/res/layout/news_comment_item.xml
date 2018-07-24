@@ -40,11 +40,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:src="@drawable/news_share_ic"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/imvAva"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="15dp"
                   />
 
                 <LinearLayout
@@ -84,6 +85,8 @@
         </RelativeLayout>
 
         <TextView
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:padding="10dp"
             android:text="@{comment.commentContent}"
             android:layout_below="@+id/viewForeground"

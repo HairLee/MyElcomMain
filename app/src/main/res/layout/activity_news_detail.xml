@@ -65,6 +65,7 @@
                             android:layout_height="wrap_content">
 
                                 <RelativeLayout
+                                    android:id="@+id/rlLike"
                                     android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
                                     android:layout_width="98dp"
                                     android:layout_height="36dp">
@@ -143,17 +144,36 @@
 
                         </RelativeLayout>
                         <EditText
+                            android:hint="Bình luận của bạn"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:textSize="13sp"
                             android:gravity="top"
                             android:id="@+id/edtComment"
-                            android:layout_margin="10dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
                             android:layout_marginTop="10dp"
                             android:layout_below="@+id/rlComment"
                             android:layout_width="match_parent"
                             android:layout_height="53dp" />
 
-                        <android.support.v7.widget.RecyclerView
+                        <TextView
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="@color/white"
+                            android:text="Gửi"
+                            android:gravity="center"
+                            android:id="@+id/tvSendCommment"
+                            android:background="@drawable/radius_blue_bg_blue_srtoke_layout"
                             android:layout_below="@+id/edtComment"
+                            android:layout_width="104dp"
+                            android:layout_height="36dp" />
+                        
+                        
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@+id/tvSendCommment"
                             android:id="@+id/recyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">

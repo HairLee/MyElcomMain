@@ -92,10 +92,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
             tvNoTiDes.setText(DateTimeUtils.getDateFromMillis(Long.parseLong(data.getCreatedAt().toString())*1000));
 
-//            CropImageView imvAva = binding.getRoot().findViewById(R.id.imvAva);
-//                Glide.with(context).load(data.getAvatar())
-//                        .thumbnail(0.5f)
-//                        .into(imvAva);
+            de.hdodenhof.circleimageview.CircleImageView imvAva = binding.getRoot().findViewById(R.id.imvAva);
+                Glide.with(context).load(data.getAvatar())
+                        .into(imvAva);
 
         }
 
