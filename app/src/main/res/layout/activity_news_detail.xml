@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <android.support.v4.widget.NestedScrollView
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context="com.elcom.hailpt.view.ui.fragment.news.NewsDetailActivity">
+                        <WebView
+
+                            android:id="@+id/webContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_marginTop="20dp"
+                            android:layout_below="@+id/webContent"
+                            android:text="111111111111111111111111111111111111"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+
+
+                </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+</layout>

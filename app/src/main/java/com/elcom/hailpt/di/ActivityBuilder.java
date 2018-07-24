@@ -20,6 +20,7 @@ import com.elcom.hailpt.view.ui.fragment.contact.AllContactFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.FavouriteContactFragment;
 import com.elcom.hailpt.view.ui.fragment.contact.OnlineContactFragment;
 import com.elcom.hailpt.view.ui.fragment.news.NewsAllActivity;
+import com.elcom.hailpt.view.ui.fragment.news.NewsDetailActivity;
 import com.elcom.hailpt.view.ui.fragment.news.NewsFragment;
 
 import dagger.Module;
@@ -76,6 +77,9 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract NewsAllActivity bindNewsAllActivity();
+
+    @ContributesAndroidInjector
+    abstract NewsDetailActivity bindNewsDetailActivity();
 
 
 

@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.View;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
@@ -25,7 +27,7 @@ import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
 
 import java.util.List;
 
-public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityNewsAllBinding> {
+public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityNewsAllBinding> implements ElcomNewsChildBottomAdapter.ItemSelectedListener {
 
 
 
@@ -49,16 +51,11 @@ public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityN
     }
 
     private void init(NewsDetailViewModel viewModel){
+        binding.tvTitle.setText("Bản Tin Elcom");
+        viewModel.getAllNews().observe(this, newsDetailResRestData -> {
 
-        viewModel.getAllNews().observe(this, new Observer<RestData<NewsDetailRes>>() {
-            @Override
-            public void onChanged(@Nullable RestData<NewsDetailRes> newsDetailResRestData) {
-
-                if(newsDetailResRestData != null && newsDetailResRestData.data != null){
-                    setupRecyclerViewBottom(newsDetailResRestData.data.getArticles());
-                }
-
-
+            if(newsDetailResRestData != null && newsDetailResRestData.data != null){
+                setupRecyclerViewBottom(newsDetailResRestData.data.getArticles());
             }
         });
 
@@ -71,15 +68,17 @@ public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityN
             viewModel.setNewsDetailRes(newsDetailRq);
         }
 
+        binding.imvBack.setOnClickListener(v -> onBackPressed());
+
     }
 
     private void setupRecyclerViewBottom(List<News> data){
         ElcomNewsChildBottomAdapter elcomNewsChildBottomAdapter = new ElcomNewsChildBottomAdapter(this);
         elcomNewsChildBottomAdapter.setData(data);
+        elcomNewsChildBottomAdapter.setOnItemClickListener(this);
         binding.recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         binding.recyclerView.setAdapter(elcomNewsChildBottomAdapter);
     }
-
 
     public static void start(Context context, int caterogyId) {
         Intent intent = new Intent(context, NewsAllActivity.class);
@@ -87,4 +86,10 @@ public class NewsAllActivity extends BaseActivity<NewsDetailViewModel, ActivityN
         context.startActivity(intent);
     }
 
+    @Override
+    public void onItemSelected(View view, News item) {
+        Log.e("hailpt"," item ==== "+item.getCategoryName());
+
+        NewsDetailActivity.start(this, item.getId());
+    }
 }

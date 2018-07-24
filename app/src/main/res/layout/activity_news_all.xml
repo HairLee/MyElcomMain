@@ -10,8 +10,31 @@
         android:layout_height="match_parent"
         tools:context="com.elcom.hailpt.view.ui.fragment.news.NewsAllActivity">
 
-        <include layout="@layout/myelcom_header_item" />
+        <!--<include layout="@layout/myelcom_header_item" />-->
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="45dp"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <ImageView
+                android:padding="10dp"
+                android:id="@+id/imvBack"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/back_ic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/tvTitle"
+                android:textColor="#54586B"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                style="@style/WrapContent"
+                android:layout_centerInParent="true"
+                android:text="Chấm Công"
+                />
+
+
+        </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

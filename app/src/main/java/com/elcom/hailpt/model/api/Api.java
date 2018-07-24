@@ -70,6 +70,9 @@ public interface Api {
     @GET("article-category/{category_id}")
     Observable<RestData<NewsDetailRes>> getAllNews(@Path("category_id")  int category_id, @Query("offset") int offset, @Query("limit") int limit, @Header("Authorization") String s);
 
+    @GET("article/{category_id}")
+    Observable<RestData<News>> getNewsDetail(@Path("category_id")  int category_id, @Header("Authorization") String s);
+
     @POST("auth/forgot")
     Observable<RestData<JsonElement>> forgetPassword(@Body ForgetPwReq forgetPwReq);
 

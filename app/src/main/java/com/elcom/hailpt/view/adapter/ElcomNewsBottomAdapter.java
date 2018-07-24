@@ -31,6 +31,7 @@ public class ElcomNewsBottomAdapter extends RecyclerView.Adapter<ElcomNewsBottom
 
     private ArrayList<NewsNormal> data;
     private ItemSelectedListener listener;
+    private ElcomNewsChildBottomAdapter.ItemSelectedListener childListener;
     private Context context;
     public ElcomNewsBottomAdapter(Context context) {
         this.context = context;
@@ -68,7 +69,11 @@ public class ElcomNewsBottomAdapter extends RecyclerView.Adapter<ElcomNewsBottom
         void onItemSelected(View view, NewsNormal item);
     }
 
-    public void setOnItemClickListener(ItemSelectedListener listener) {
+    public void setOnItemClickListener(ElcomNewsChildBottomAdapter.ItemSelectedListener listener) {
+        this.childListener = listener;
+    }
+
+    public void setOnItemChildClickListener(ItemSelectedListener listener) {
         this.listener = listener;
     }
 
@@ -95,10 +100,12 @@ public class ElcomNewsBottomAdapter extends RecyclerView.Adapter<ElcomNewsBottom
 
             ElcomNewsChildBottomAdapter elcomNewsChildBottomAdapter = new ElcomNewsChildBottomAdapter(context);
             elcomNewsChildBottomAdapter.setData(data.getArticles());
+            elcomNewsChildBottomAdapter.setOnItemClickListener(childListener);
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
             recyclerView.setAdapter(elcomNewsChildBottomAdapter);
 
             tvViewAll.setOnClickListener(v -> listener.onItemSelected(v,data));
+//            binding.getRoot().setOnClickListener(v,data);
         }
 
         @Override

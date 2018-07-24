@@ -9,6 +9,7 @@ import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.NewsDetailRq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
+import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.model.api.response.NewsDetailRes;
 import com.elcom.hailpt.repository.AllContactSuggestRepository;
 import com.elcom.hailpt.repository.NewsDetailRepository;
@@ -24,8 +25,10 @@ import javax.inject.Inject;
 public class NewsDetailViewModel extends ViewModel {
 
     private final MutableLiveData<NewsDetailRq> newsDetailRq = new MutableLiveData<>();
+    private final MutableLiveData<NewsDetailRq> detailRq = new MutableLiveData<>();
 
     private final LiveData<RestData<NewsDetailRes>> newsDetailResResult;
+    private final LiveData<RestData<News>> detailResResult;
     private final NewsDetailRepository repository;
 
     @Inject
@@ -35,6 +38,10 @@ public class NewsDetailViewModel extends ViewModel {
         newsDetailResResult = Transformations.switchMap(newsDetailRq,
                 param -> repository.getAllNews(newsDetailRq.getValue().getId(),newsDetailRq.getValue().getOffset(), newsDetailRq.getValue().getLimit()));
 
+
+        detailResResult = Transformations.switchMap(detailRq,
+                param -> repository.getNewsDetail(detailRq.getValue().getId()));
+
     }
 
 
@@ -43,9 +50,18 @@ public class NewsDetailViewModel extends ViewModel {
         return newsDetailResResult;
     }
 
+    public LiveData<RestData<News>> getNewsDetail() {
+        return detailResResult;
+    }
+
     public void setNewsDetailRes(NewsDetailRq newsDetailRes){
         newsDetailRq.setValue(newsDetailRes);
     }
+
+    public void setDetailReq(NewsDetailRq newsDetailRes){
+        detailRq.setValue(newsDetailRes);
+    }
+
 
 
     @Override

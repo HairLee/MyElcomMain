@@ -22,6 +22,7 @@ import com.elcom.hailpt.model.api.response.NewsNormal;
 import com.elcom.hailpt.model.api.response.NewsRes;
 import com.elcom.hailpt.view.adapter.ElcomNewsAdapter;
 import com.elcom.hailpt.view.adapter.ElcomNewsBottomAdapter;
+import com.elcom.hailpt.view.adapter.ElcomNewsChildBottomAdapter;
 import com.elcom.hailpt.viewmodel.NewsViewModel;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNewsBottomAdapter.ItemSelectedListener {
+public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNewsBottomAdapter.ItemSelectedListener, ElcomNewsChildBottomAdapter.ItemSelectedListener {
 
     private RecyclerView recyclerViewTop;
     private RecyclerView recyclerViewBottom;
@@ -89,6 +90,7 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
         elcomNewsBottomAdapter = new ElcomNewsBottomAdapter(getContext());
         elcomNewsBottomAdapter.setData(news);
         elcomNewsBottomAdapter.setOnItemClickListener(this);
+        elcomNewsBottomAdapter.setOnItemChildClickListener(this);
         recyclerViewBottom.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         recyclerViewBottom.setAdapter(elcomNewsBottomAdapter);
     }
@@ -97,5 +99,10 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
     public void onItemSelected(View view, NewsNormal item) {
             Log.e("hailpt"," NewsNormal " + item.getCategory_name());
             NewsAllActivity.start(getContext(),item.getCategory_id());
+    }
+
+    @Override
+    public void onItemSelected(View view, News item) { // For child
+        NewsDetailActivity.start(getContext(),item.getId());
     }
 }

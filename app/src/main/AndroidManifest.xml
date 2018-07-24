@@ -129,11 +129,12 @@
 
         <receiver android:name=".view.ui.fragment.HomeFragment$MyReceiver">
             <intent-filter>
-                <action android:name="BROARD_CHANGE_AVATAR"></action>
+                <action android:name="BROARD_CHANGE_AVATAR" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".view.ui.fragment.news.NewsAllActivity"></activity>
+        <activity android:name=".view.ui.fragment.news.NewsAllActivity" />
+        <activity android:name=".view.ui.fragment.news.NewsDetailActivity"></activity>
     </application>
 
 </manifest>

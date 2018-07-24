@@ -8,6 +8,7 @@ import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
+import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.model.api.response.NewsDetailRes;
 import com.elcom.hailpt.model.data.Source;
 import com.elcom.hailpt.model.db.AppDatabase;
@@ -33,6 +34,7 @@ public class NewsDetailRepository implements BaseViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
     private final Api api;
     private final MutableLiveData<RestData<NewsDetailRes>> articleMutableLiveData;
+    private final MutableLiveData<RestData<News>> newsMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
     private final ArticleDao articleDao;
@@ -46,6 +48,7 @@ public class NewsDetailRepository implements BaseViewModel {
         articleDao = database.articleDao();
         sourceList = sourceDao.getAllList();
         articleMutableLiveData = new MutableLiveData<>();
+        newsMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<NewsDetailRes>> getAllNews(int category_id, int ofset, int limit) {
@@ -73,6 +76,34 @@ public class NewsDetailRepository implements BaseViewModel {
                     }
                 });
         return articleMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<News>> getNewsDetail(int category_id) {
+        api.getNewsDetail(category_id,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<News>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<News> sources) {
+                        newsMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return newsMutableLiveData;
     }
 
 
