@@ -42,13 +42,14 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
         // Required empty public constructor
     }
 
-
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_news2, container, false);
-
+        if(view == null){
+            view = inflater.inflate(R.layout.fragment_news2, container, false);
+        }
 
         return view;
     }
@@ -99,7 +100,7 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
 
     @Override
     public void onItemSelected(View view, NewsNormal item) { // Top
-            NewsAllActivity.start(getContext(),item.getCategory_id());
+        NewsAllActivity.start(getContext(),item.getCategory_id());
     }
 
     @Override

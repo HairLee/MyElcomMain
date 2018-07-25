@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment fragment;
     private FragmentManager fragmentManager;
     private HomeFragment homeFragment = new HomeFragment();
+    private NewsFragment newsFragment = new NewsFragment();
     private ContactFragment contactFragment = new ContactFragment();
     private WebRtcSessionManager webRtcSessionManager;
     private SharedPrefsHelper sharedPrefsHelper;
@@ -69,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case R.id.action_item2:
                     fragmentPos = 2;
-                    fragment = new NewsFragment();
+                    fragment = newsFragment;
                     break;
                 case R.id.action_item3:
                     fragmentPos = 3;
