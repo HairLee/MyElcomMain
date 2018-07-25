@@ -30,6 +30,7 @@ public class NotificationRepository implements BaseViewModel {
     private final Api api;
     private final MutableLiveData<RestData<List<Notification>>> articleMutableLiveData;
     private final MutableLiveData<RestData<JsonElement>> removeNotificationMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> viewNotificationMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
 
 
@@ -39,6 +40,7 @@ public class NotificationRepository implements BaseViewModel {
         this.schedulerProvider = schedulerProvider;
         articleMutableLiveData = new MutableLiveData<>();
         removeNotificationMutableLiveData = new MutableLiveData<>();
+        viewNotificationMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<List<Notification>>> getAllNotification() {
@@ -71,6 +73,34 @@ public class NotificationRepository implements BaseViewModel {
 
     public MutableLiveData<RestData<JsonElement>> removeNotification(RemoveNotificationReq removeNotificationReq) {
         api.removeNotification(removeNotificationReq,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        removeNotificationMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return removeNotificationMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<JsonElement>> viewNotification() {
+        api.viewNotification(ConstantsApp.BASE64_HEADER)
                 .observeOn(schedulerProvider.ui())
                 .subscribeOn(schedulerProvider.io())
                 .map(data -> data)

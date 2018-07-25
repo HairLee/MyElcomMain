@@ -132,6 +132,8 @@ public interface Api {
     @HTTP(method = "DELETE", path = "notify", hasBody = true)
     Observable<RestData<JsonElement>> removeNotification(@Body RemoveNotificationReq removeNotificationReq, @Header("Authorization") String s);
 
+
+
     @GET("auth/logout/{token}")
     Observable<RestData<JsonElement>> logout(@Path("token")  String token);
 
@@ -145,4 +147,11 @@ public interface Api {
     // News
     @GET("article")
     Observable<RestData<NewsRes>> getNews(@Header("Authorization") String s);
+
+
+    @GET("notify-count")
+    Observable<JsonElement> getNotificationCount(@Header("Authorization") String s);
+
+    @POST("notify")
+    Observable<RestData<JsonElement>> viewNotification(@Header("Authorization") String s);
 }

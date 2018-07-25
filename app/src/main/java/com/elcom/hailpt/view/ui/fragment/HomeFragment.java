@@ -1,6 +1,7 @@
 package com.elcom.hailpt.view.ui.fragment;
 
 
+import android.arch.lifecycle.Observer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +10,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
+import com.elcom.hailpt.core.base.BaseFragment;
 import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.Toaster;
 import com.elcom.hailpt.view.ui.activity.LunchCalendarRegisActivity;
@@ -24,14 +28,22 @@ import com.elcom.hailpt.view.ui.activity.NotificationActivity;
 import com.elcom.hailpt.view.ui.activity.ProfileFavouriteActivity;
 import com.elcom.hailpt.view.ui.activity.SettingActivity;
 import com.elcom.hailpt.view.ui.activity.TimeKeepingActivity;
+import com.elcom.hailpt.viewmodel.MainViewModel;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends BaseFragment<MainViewModel> implements View.OnClickListener {
 
 
-    private ImageView imvAva;
+    private ImageView imvAva,imvNotification;
+    private TextView numberCount;
+    private MainViewModel viewModel;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -58,6 +70,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.rlLibrary).setOnClickListener(this);
         view.findViewById(R.id.rlTool).setOnClickListener(this);
         imvAva = view.findViewById(R.id.imvAva);
+        numberCount = view.findViewById(R.id.numberCount);
+        imvNotification = view.findViewById(R.id.imvNotification);
         imvAva.setOnClickListener(this);
         updateAvatar();
     }
@@ -112,6 +126,49 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         .into(imvAva);
             }
         }
+    }
+
+    @Override
+    protected Class<MainViewModel> getViewModel() {
+        return MainViewModel.class;
+    }
+
+    @Override
+    protected void onCreate(Bundle instance, MainViewModel viewModel) {
+        this.viewModel = viewModel;
+
+
+        viewModel.getNotificationCount().observe(this, new Observer<JsonElement>() {
+            @Override
+            public void onChanged(@Nullable JsonElement jsonElement) {
+
+
+                JSONObject currency = null;
+                try {
+                    currency = new JSONObject(jsonElement.toString());
+                    if(currency.get("data").equals(0)){
+                        imvNotification.setBackgroundResource(R.drawable.notifi_zezo_ic);
+                        numberCount.setVisibility(View.GONE);
+                    } else {
+                        imvNotification.setBackgroundResource(R.drawable.home_notification_ic);
+                        numberCount.setVisibility(View.VISIBLE);
+                        numberCount.setText(currency.get("data").toString());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        viewModel.setNotificationRequest();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.setNotificationRequest();
     }
 
     public class MyReceiver extends BroadcastReceiver{

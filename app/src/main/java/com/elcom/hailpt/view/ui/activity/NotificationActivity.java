@@ -1,8 +1,10 @@
 package com.elcom.hailpt.view.ui.activity;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,16 +12,19 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityNotificationBinding;
+import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.RemoveNotificationReq;
 import com.elcom.hailpt.model.api.response.Notification;
 import com.elcom.hailpt.util.RecyclerItemTouchHelper;
 import com.elcom.hailpt.view.adapter.NotifyAdapter;
 import com.elcom.hailpt.viewmodel.NotificationViewModel;
+import com.google.gson.JsonElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +82,13 @@ public class NotificationActivity extends BaseActivity<NotificationViewModel,Act
 
 
 
+        });
+
+        viewModel.getViewNotificationRq().observe(this, new Observer<RestData<JsonElement>>() {
+            @Override
+            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
+                Log.e("hailpt"," jsonElementRestData "+jsonElementRestData);
+            }
         });
 
 

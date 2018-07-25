@@ -6,6 +6,8 @@ import com.elcom.hailpt.core.AppSchedulerProvider;
 import com.elcom.hailpt.core.BaseViewModel;
 import com.elcom.hailpt.core.base.ArticleUtils;
 import com.elcom.hailpt.model.api.Api;
+import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.SendCommentReq;
 import com.elcom.hailpt.model.data.Article;
 import com.elcom.hailpt.model.data.Articles;
 import com.elcom.hailpt.model.data.Source;
@@ -13,6 +15,8 @@ import com.elcom.hailpt.model.data.Sources;
 import com.elcom.hailpt.model.db.AppDatabase;
 import com.elcom.hailpt.model.db.ArticleDao;
 import com.elcom.hailpt.model.db.SourceDao;
+import com.elcom.hailpt.util.ConstantsApp;
+import com.google.gson.JsonElement;
 
 import java.util.List;
 
@@ -32,6 +36,7 @@ public class DataRepository implements BaseViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
     private final Api api;
     private final MutableLiveData<List<Article>> articleMutableLiveData;
+    private final MutableLiveData<JsonElement> notiMutableLiveData;
     private final MutableLiveData<List<Source>> sourceMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
@@ -46,6 +51,7 @@ public class DataRepository implements BaseViewModel {
         sourceList = sourceDao.getAllList();
         articleMutableLiveData = new MutableLiveData<>();
         sourceMutableLiveData = new MutableLiveData<>();
+        notiMutableLiveData = new MutableLiveData<>();
         sourceMutableLiveData.postValue(sourceList);
         articleMutableLiveData.postValue(articleDao.getAll());
     }
@@ -127,6 +133,35 @@ public class DataRepository implements BaseViewModel {
                     }
                 });
         return articleMutableLiveData;
+    }
+
+
+
+    public MutableLiveData<JsonElement> getNotificationCount() {
+        api.getNotificationCount(ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<JsonElement>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(JsonElement sources) {
+                        notiMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return notiMutableLiveData;
     }
 
     private String getQuery() {

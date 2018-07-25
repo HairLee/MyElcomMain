@@ -24,6 +24,7 @@ public class NotificationViewModel extends ViewModel {
     private final LiveData<RestData<List<Notification>>> timeNotificationResult;
 
     private final LiveData<RestData<JsonElement>> removeNotificationResult;
+    private final LiveData<RestData<JsonElement>> viewNotificationResult;
 
     private final MutableLiveData<RemoveNotificationReq> removeNotificationRq = new MutableLiveData<>();
     private final NotificationRepository repository;
@@ -35,6 +36,8 @@ public class NotificationViewModel extends ViewModel {
 
         removeNotificationResult = Transformations.switchMap(removeNotificationRq,
                 param -> repository.removeNotification(removeNotificationRq.getValue()));
+
+        viewNotificationResult = repository.viewNotification();
     }
 
     public LiveData<RestData<List<Notification>>> getAllNotification() {
@@ -47,6 +50,10 @@ public class NotificationViewModel extends ViewModel {
 
     public void setRemoveNotificationRq(RemoveNotificationReq pRemoveNotificationRq){
         removeNotificationRq.setValue(pRemoveNotificationRq);
+    }
+
+    public  LiveData<RestData<JsonElement>> getViewNotificationRq(){
+        return viewNotificationResult;
     }
 
     @Override
