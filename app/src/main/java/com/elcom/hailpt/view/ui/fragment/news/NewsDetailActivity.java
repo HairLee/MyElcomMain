@@ -3,16 +3,13 @@ package com.elcom.hailpt.view.ui.fragment.news;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
-import android.webkit.WebSettings;
 
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
@@ -24,12 +21,10 @@ import com.elcom.hailpt.model.api.request.SendCommentReq;
 import com.elcom.hailpt.model.api.response.Comment;
 import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.util.DateTimeUtils;
 import com.elcom.hailpt.util.KeyBoardUtils;
 import com.elcom.hailpt.view.adapter.CommentAdapter;
-import com.elcom.hailpt.view.adapter.ElcomNewsChildBottomAdapter;
 import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
-import com.google.gson.JsonElement;
-import com.onesignal.OneSignal;
 
 import java.util.List;
 
@@ -149,14 +144,18 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
 //        activityNewsDetailBinding.webContent.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         activityNewsDetailBinding.webContent.loadData(myHtmlString, "text/html", null);
 
-        activityNewsDetailBinding.tvComment.setText(news.getSum_comment()+ " Likes");
-        activityNewsDetailBinding.tvLike.setText(news.getSum_like()+" Bình luận");
+        activityNewsDetailBinding.tvComment.setText(news.getSum_like()+ " Likes");
+        activityNewsDetailBinding.tvLike.setText(news.getSum_comment()+" Bình luận");
 
         if(news.getUrl_article() != null){
             activityNewsDetailBinding.rlShare.setVisibility(View.GONE);
         } else {
             activityNewsDetailBinding.rlShare.setVisibility(View.VISIBLE);
         }
+
+        activityNewsDetailBinding.tvDes.setText(news.getCategoryName());
+        activityNewsDetailBinding.tvTime.setText(DateTimeUtils.convertLongToTimeDate((Long.parseLong(news.getCreatedAt()*1000 +""))+""));
+        activityNewsDetailBinding.tvTtile.setText(news.getTitle());
 
     }
 

@@ -49,8 +49,39 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:context="com.elcom.hailpt.view.ui.fragment.news.NewsDetailActivity">
-                        <WebView
+                        <TextView
+                            android:textSize="14sp"
+                            android:textColor="#72A6F9"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/tvDes"
+                            android:text=""
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
+                        <TextView
+                            android:textSize="12sp"
+                            android:layout_below="@+id/tvDes"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="2dp"
+                            android:id="@+id/tvTime"
+                            android:text=""
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="#72A6F9"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_below="@+id/tvTime"
+                            android:id="@+id/tvTtile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <WebView
+                            android:layout_marginTop="15dp"
+                            android:layout_below="@+id/tvTtile"
                             android:id="@+id/webContent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>

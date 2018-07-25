@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toolbar;
 
 import com.elcom.hailpt.R;
@@ -36,6 +36,7 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private EditText edtSearch;
+    private RelativeLayout rlSearch;
     private int mPagePos = 0;
     private  AllContactFragment allContactFragment;
     private OnlineContactFragment onlineContactFragment;
@@ -66,7 +67,8 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         edtSearch = view.findViewById(R.id.edtSearch);
-
+        rlSearch = view.findViewById(R.id.rlSearch);
+        rlSearch.setVisibility(View.GONE);
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -77,6 +79,23 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
             @Override
             public void onPageSelected(int position) {
                 mPagePos = position;
+                switch (position){
+                    case 0:{
+                        rlSearch.setVisibility(View.GONE);
+                        break;
+                    }
+
+                    case 1:{
+                        rlSearch.setVisibility(View.VISIBLE);
+                        break;
+                    }
+
+                    case 2:{
+                        rlSearch.setVisibility(View.VISIBLE);
+                        break;
+                    }
+
+                }
             }
 
             @Override
@@ -98,10 +117,12 @@ public class ContactFragment extends Fragment  implements  NetworkConnectionChec
 
                     case 0:
                         allContactFragment.doSearch(s.toString());
+
                         break;
 
                     case  1:
                         onlineContactFragment.doSearch(s.toString());
+                        rlSearch.setVisibility(View.GONE);
                         break;
 
                     case 2:

@@ -18,6 +18,7 @@
             app:tabGravity="fill"/>
 
         <RelativeLayout
+            android:id="@+id/rlSearch"
             android:background="#F4F5FB"
             android:layout_width="match_parent"
             android:layout_height="42dp">
