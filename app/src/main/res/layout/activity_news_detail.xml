@@ -89,6 +89,7 @@
                                 </RelativeLayout>
 
                                 <RelativeLayout
+                                    android:id="@+id/rlShare"
                                     android:layout_marginLeft="10dp"
                                     android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
                                     android:layout_width="98dp"

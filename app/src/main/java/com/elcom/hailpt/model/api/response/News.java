@@ -38,6 +38,18 @@ public class News {
     @Expose
     private String categoryName;
 
+    @SerializedName("url_article")
+    @Expose
+    private String url_article;
+
+    public String getUrl_article() {
+        return url_article;
+    }
+
+    public void setUrl_article(String url_article) {
+        this.url_article = url_article;
+    }
+
     @SerializedName("sum_like")
     @Expose
     private Integer sum_like;

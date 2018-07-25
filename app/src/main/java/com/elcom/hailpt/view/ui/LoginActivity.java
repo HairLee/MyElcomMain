@@ -31,6 +31,7 @@ import com.elcom.hailpt.view.ui.activity.ForgetPasswordActivity;
 import com.elcom.hailpt.view.ui.activity.OpponentsActivity;
 import com.elcom.hailpt.viewmodel.LoginViewModel;
 import com.elcom.hailpt.viewmodel.MainViewModel;
+import com.onesignal.OneSignal;
 import com.quickblox.core.QBEntityCallback;
 import com.quickblox.core.exception.QBResponseException;
 import com.quickblox.core.helper.StringifyArrayList;
@@ -100,6 +101,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 return;
             }
 
+
+
             if(data != null && data.data != null){
 
                 PreferUtils.setToken(this,data.data.getApiToken());
@@ -111,6 +114,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel,ActivityLoginBind
                 ConstantsApp.BASE64_HEADER = ConstantsApp.BEAR + data.data.getApiToken();
                 saveUser(data.data);
                 tryToLoginQuickServer(binding.edtUsername.getText().toString(),"1234567890");
+
+                OneSignal.sendTag("user_id",data.data.getId()+"");
             }
         });
 

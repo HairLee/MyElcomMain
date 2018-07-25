@@ -87,15 +87,11 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
                     data = usertList;
                 } else {
                     List<User> filteredList = new ArrayList<>();
-                    for (User row : data) {
-
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
+                    for (User row : usertList) {
                         if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }
-
                     data = filteredList;
                 }
 

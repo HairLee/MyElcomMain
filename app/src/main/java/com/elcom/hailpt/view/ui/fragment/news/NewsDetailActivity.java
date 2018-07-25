@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 
 import com.elcom.hailpt.R;
@@ -101,6 +103,13 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
             viewModel.likeComment(likeCommentReq);
         });
 
+        activityNewsDetailBinding.rlShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         activityNewsDetailBinding.imvBack.setOnClickListener(v -> onBackPressed());
 
@@ -114,24 +123,50 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
         newsDetailViewModel.setDetailReq(newsDetailRq);
     }
 
+//    private int getScale(){
+//        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+//        int width = display.getWidth();
+//        Double val = new Double(width)/new Double(PIC_WIDTH);
+//        val = val * 100d;
+//        return val.intValue();
+//    }
+
     private void setupView(News news){
         String myHtmlString = "<html><body>"+news.getContent()+"</body></html>";
-        activityNewsDetailBinding.webContent.setFocusable(true);
-        activityNewsDetailBinding.webContent.setFocusableInTouchMode(true);
+//        activityNewsDetailBinding.webContent.setFocusable(true);
+//        activityNewsDetailBinding.webContent.setFocusableInTouchMode(true);
+        activityNewsDetailBinding.webContent.getSettings().setJavaScriptEnabled(true);
         activityNewsDetailBinding.webContent.getSettings().setLoadWithOverviewMode(true);
         activityNewsDetailBinding.webContent.getSettings().setUseWideViewPort(true);
-        activityNewsDetailBinding.webContent.getSettings().setJavaScriptEnabled(true);
-        activityNewsDetailBinding.webContent.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        activityNewsDetailBinding.webContent.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        activityNewsDetailBinding.webContent.getSettings().setDomStorageEnabled(true);
-        activityNewsDetailBinding.webContent.getSettings().setDatabaseEnabled(true);
-        activityNewsDetailBinding.webContent.getSettings().setAppCacheEnabled(true);
-        activityNewsDetailBinding.webContent.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+//        activityNewsDetailBinding.webContent.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+
+//        activityNewsDetailBinding.webContent.getSettings().setJavaScriptEnabled(true);
+//        activityNewsDetailBinding.webContent.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+//        activityNewsDetailBinding.webContent.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        activityNewsDetailBinding.webContent.getSettings().setDomStorageEnabled(true);
+//        activityNewsDetailBinding.webContent.getSettings().setDatabaseEnabled(true);
+//        activityNewsDetailBinding.webContent.getSettings().setAppCacheEnabled(true);
+//        activityNewsDetailBinding.webContent.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         activityNewsDetailBinding.webContent.loadData(myHtmlString, "text/html", null);
 
         activityNewsDetailBinding.tvComment.setText(news.getSum_comment()+ " Likes");
         activityNewsDetailBinding.tvLike.setText(news.getSum_like()+" Bình luận");
 
+        if(news.getUrl_article() != null){
+            activityNewsDetailBinding.rlShare.setVisibility(View.GONE);
+        } else {
+            activityNewsDetailBinding.rlShare.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void testLoad(String url){
+        Display display = getWindowManager().getDefaultDisplay();
+        int width=display.getWidth();
+
+        String data="<html><head><title>Example</title><meta name=\"viewport\"\"content=\"width="+width+", initial-scale=0.65 \" /></head>";
+        data=data+"<body><center><img width=\""+width+"\" src=\""+url+"\" /></center></body></html>";
+        activityNewsDetailBinding.webContent.loadData(data, "text/html", null);
     }
 
     private void setupListComment(List<Comment> data){
