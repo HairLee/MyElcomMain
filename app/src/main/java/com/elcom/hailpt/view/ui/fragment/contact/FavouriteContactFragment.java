@@ -122,7 +122,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
 
     @Override
     public void doChat(User user) {
-        Log.e("hailpt"," doChat");
+        Toaster.shortToast("Đang phát triển");
     }
 
     @Override

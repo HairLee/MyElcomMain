@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,12 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
 
     public void setData(List<User> data) {
         this.data.clear();
+        this.usertList.clear();
         this.data.addAll(data);
         this.usertList.addAll(data);
         notifyDataSetChanged();
+
+        Log.e("hailpt"," ~~~ ContactFavouriteAdapter ~~~"+this.data.size());
     }
 
     public List<User> getData() {

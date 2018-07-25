@@ -7,6 +7,7 @@ import com.elcom.hailpt.core.BaseViewModel;
 import com.elcom.hailpt.model.api.Api;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.request.ChangeMobileReq;
+import com.elcom.hailpt.model.api.request.ChangeStatusReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.Contact;
 import com.elcom.hailpt.model.api.response.ContactSuggest;
@@ -38,6 +39,7 @@ public class ProfileRepository implements BaseViewModel {
     private final Api api;
     private final MutableLiveData<RestData<User>> userMutableLiveData;
     private final MutableLiveData<RestData<JsonElement>> markFriendMutableLiveData;
+    private final MutableLiveData<RestData<JsonElement>> changeStatusMutableLiveData;
     private final MutableLiveData<RestData<User>> avatarMutableLiveData;
     private final AppSchedulerProvider schedulerProvider;
     private final SourceDao sourceDao;
@@ -53,6 +55,7 @@ public class ProfileRepository implements BaseViewModel {
         userMutableLiveData = new MutableLiveData<>();
         markFriendMutableLiveData = new MutableLiveData<>();
         avatarMutableLiveData = new MutableLiveData<>();
+        changeStatusMutableLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<RestData<User>> getUserProfile(int userId) {
@@ -161,6 +164,34 @@ public class ProfileRepository implements BaseViewModel {
                     }
                 });
         return markFriendMutableLiveData;
+    }
+
+
+    public MutableLiveData<RestData<JsonElement>> changeStatus(ChangeStatusReq changeStatusReq) {
+        api.changeStatus(changeStatusReq,ConstantsApp.BASE64_HEADER)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io())
+                .map(data -> data)
+                .subscribe(new Observer<RestData<JsonElement>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onNext(RestData<JsonElement> sources) {
+                        changeStatusMutableLiveData.postValue(sources);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+        return changeStatusMutableLiveData;
     }
 
 

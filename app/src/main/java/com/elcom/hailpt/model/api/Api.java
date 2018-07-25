@@ -2,6 +2,7 @@ package com.elcom.hailpt.model.api;
 
 import com.elcom.hailpt.model.api.request.ChangeMobileReq;
 import com.elcom.hailpt.model.api.request.ChangePwRq;
+import com.elcom.hailpt.model.api.request.ChangeStatusReq;
 import com.elcom.hailpt.model.api.request.ForgetPwReq;
 import com.elcom.hailpt.model.api.request.LikeCommentReq;
 import com.elcom.hailpt.model.api.request.LoginReq;
@@ -121,6 +122,9 @@ public interface Api {
 
     @PUT("user")
     Observable<RestData<JsonElement>> changeMobile(@Body ChangeMobileReq changeMobileReq, @Header("Authorization") String s);
+
+    @PUT("change-status")
+    Observable<RestData<JsonElement>> changeStatus(@Body ChangeStatusReq changeMobileReq, @Header("Authorization") String s);
 
      /*Setting*/
      @POST("change-pwd")

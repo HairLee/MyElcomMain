@@ -19,11 +19,28 @@ import com.elcom.hailpt.core.base.BaseFragment;
 import com.elcom.hailpt.core.listener.ChatAndCallListener;
 import com.elcom.hailpt.model.api.RestData;
 import com.elcom.hailpt.model.api.response.User;
+import com.elcom.hailpt.services.CallService;
+import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.util.PermissionsChecker;
+import com.elcom.hailpt.util.PreferUtils;
 import com.elcom.hailpt.util.ProgressDialogUtils;
+import com.elcom.hailpt.util.PushNotificationSender;
+import com.elcom.hailpt.util.Toaster;
+import com.elcom.hailpt.util.WebRtcSessionManager;
 import com.elcom.hailpt.view.adapter.ContactFavouriteAdapter;
+import com.elcom.hailpt.view.ui.CallActivity;
+import com.elcom.hailpt.view.ui.PermissionsActivity;
 import com.elcom.hailpt.viewmodel.ContactOnlineViewModel;
+import com.quickblox.chat.QBChatService;
+import com.quickblox.users.model.QBUser;
+import com.quickblox.videochat.webrtc.QBRTCClient;
+import com.quickblox.videochat.webrtc.QBRTCSession;
+import com.quickblox.videochat.webrtc.QBRTCTypes;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -35,6 +52,8 @@ public class OnlineContactFragment extends BaseFragment<ContactOnlineViewModel> 
     ContactOnlineViewModel contactOnlineViewModel;
     ContactFavouriteAdapter contactFavouriteAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private PermissionsChecker checker;
+    private User user;
     public OnlineContactFragment() {
         // Required empty public constructor
     }
@@ -66,6 +85,7 @@ public class OnlineContactFragment extends BaseFragment<ContactOnlineViewModel> 
 
     @Override
     protected void onCreate(Bundle instance, ContactOnlineViewModel viewModel) {
+        checker = new PermissionsChecker(getContext());
         contactOnlineViewModel = viewModel;
         contactOnlineViewModel.setAllContactrequest();
     }
@@ -91,11 +111,76 @@ public class OnlineContactFragment extends BaseFragment<ContactOnlineViewModel> 
 
     @Override
     public void doChat(User user) {
-
+            Toaster.shortToast("Đang phát triển");
     }
 
     @Override
     public void doCall(User user) {
+        this.user = user;
+        if(user != null){
+            if (isLoggedInChat()) {
+                startCall(false);
+            }
 
+            if (checker.lacksPermissions(Consts.PERMISSIONS)) {
+                startPermissionsActivity(true);
+            }
+        }
+    }
+
+    private boolean isLoggedInChat() {
+        if (!QBChatService.getInstance().isLoggedIn()) {
+            Toaster.shortToast(R.string.dlg_signal_error);
+            tryReLoginToChat();
+            return false;
+        }
+        return true;
+    }
+
+    private void tryReLoginToChat() {
+        if (sharedPrefsHelper.hasQbUser()) {
+            QBUser qbUser = sharedPrefsHelper.getQbUser();
+            CallService.start(getContext(), qbUser);
+        }
+    }
+
+    private void startPermissionsActivity(boolean checkOnlyAudio) {
+        PermissionsActivity.startActivity(getActivity(), checkOnlyAudio, Consts.PERMISSIONS);
+    }
+
+    private void startCall(boolean isVideoCall) {
+//        if (opponentsAdapter.getSelectedItems().size() > Consts.MAX_OPPONENTS_COUNT) {
+//            Toaster.longToast(String.format(getString(R.string.error_max_opponents_count),
+//                    Consts.MAX_OPPONENTS_COUNT));
+//            return;
+//        }
+
+        ArrayList<Integer> opponentsList = new ArrayList<>();
+        opponentsList.add(user.getQuickbloxId());
+        QBRTCTypes.QBConferenceType conferenceType = isVideoCall
+                ? QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_VIDEO
+                : QBRTCTypes.QBConferenceType.QB_CONFERENCE_TYPE_AUDIO;
+
+        QBRTCClient qbrtcClient = QBRTCClient.getInstance(getContext());
+
+        QBRTCSession newQbRtcSession = qbrtcClient.createNewSessionWithOpponents(opponentsList, conferenceType);
+
+        Map<String, String> userInfo = new HashMap<>();
+        userInfo.put("userID", PreferUtils.getUserId(getContext())+"");
+        userInfo.put("quickID", user.getQuickbloxId()+"");
+        userInfo.put("name", PreferUtils.getName(getContext()));
+        userInfo.put("image", PreferUtils.getAvatar(getContext()));
+
+        PreferUtils.setEmailOpponent(getContext(),user.getName());
+        PreferUtils.setAvatarOpponent(getContext(),user.getAvatar());
+
+        newQbRtcSession.startCall(userInfo);
+
+
+        WebRtcSessionManager.getInstance(getContext()).setCurrentSession(newQbRtcSession);
+
+        PushNotificationSender.sendPushMessage(opponentsList, user.getName());
+
+        CallActivity.start(getContext(), false);
     }
 }

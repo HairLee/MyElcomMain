@@ -138,6 +138,13 @@ public class HomeFragment extends BaseFragment<MainViewModel> implements View.On
         this.viewModel = viewModel;
 
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         viewModel.getNotificationCount().observe(this, new Observer<JsonElement>() {
             @Override
             public void onChanged(@Nullable JsonElement jsonElement) {
@@ -162,12 +169,6 @@ public class HomeFragment extends BaseFragment<MainViewModel> implements View.On
             }
         });
 
-        viewModel.setNotificationRequest();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         viewModel.setNotificationRequest();
     }
 

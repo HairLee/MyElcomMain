@@ -2,25 +2,33 @@ package com.elcom.hailpt.view.ui.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.base.BaseActivity;
 import com.elcom.hailpt.databinding.ActivityProfileFavouriteBinding;
+import com.elcom.hailpt.model.api.RestData;
+import com.elcom.hailpt.model.api.request.ChangeStatusReq;
 import com.elcom.hailpt.model.api.request.MarkUserReq;
 import com.elcom.hailpt.model.api.response.User;
 import com.elcom.hailpt.services.CallService;
@@ -34,6 +42,7 @@ import com.elcom.hailpt.util.WebRtcSessionManager;
 import com.elcom.hailpt.view.ui.CallActivity;
 import com.elcom.hailpt.view.ui.PermissionsActivity;
 import com.elcom.hailpt.viewmodel.ProfileFavouriteViewModel;
+import com.google.gson.JsonElement;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.users.model.QBUser;
 import com.quickblox.videochat.webrtc.QBRTCClient;
@@ -43,8 +52,10 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -54,6 +65,8 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+import static android.os.Environment.getExternalStoragePublicDirectory;
+
 public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewModel,ActivityProfileFavouriteBinding> implements View.OnClickListener {
 
     private int userId = 0;
@@ -62,6 +75,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
     private PermissionsChecker checker;
     private User user;
     static Bitmap mImage;
+    private boolean isFirstTimeComeHere = true;
     @Override
     protected Class<ProfileFavouriteViewModel> getViewModel() {
         return ProfileFavouriteViewModel.class;
@@ -81,6 +95,40 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         }
 
         init(viewModel);
+        setupSpinner();
+    }
+
+    private void setupSpinner(){
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
+                .createFromResource(this, R.array.brew_array,
+                        R.layout.spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        staticAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner dynamicSpinner = (Spinner) findViewById(R.id.spinner);
+        // Apply the adapter to the spinner
+        dynamicSpinner.setAdapter(staticAdapter);
+
+        dynamicSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+
+                if(!isFirstTimeComeHere)
+                {
+                    updateStatus(position+1);
+                }
+
+                isFirstTimeComeHere = false;
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 
     @Override
@@ -88,7 +136,15 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         return R.layout.activity_profile_favourite;
     }
 
+    private void updateStatus(int type){
+        ChangeStatusReq changeStatusReq = new ChangeStatusReq();
+        changeStatusReq.setStatus(type);
+        viewModel.setChangeStatusRequest(changeStatusReq);
+    }
+
     private void init(ProfileFavouriteViewModel viewModel){
+
+
 
         this.viewModel = viewModel;
         viewModel.getUserProfile().observe(this, userRestData -> {
@@ -113,9 +169,9 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                     }
 
                     if (userRestData.data.getStatus() == 1){
-                        binding.textView11.setText("Đang hoạt động");
+                        binding.textView11.setText("Hoạt động");
                     } else if (userRestData.data.getStatus() == 2){
-                        binding.textView11.setText("Không hoạt động");
+                        binding.textView11.setText("Ngoại tuyến");
                     } else  if (userRestData.data.getStatus() == 3){
                         binding.textView11.setText("Đang bận");
                     }
@@ -134,6 +190,15 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
                 binding.imageView11.setImageResource(R.drawable.favor_ic);
             } else {
                 binding.imageView11.setImageResource(R.drawable.favor_not_ic);
+            }
+        });
+
+        viewModel.getChangeStatusResponse().observe(this, new Observer<RestData<JsonElement>>() {
+            @Override
+            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
+                if (jsonElementRestData.status_code == 200){
+                    viewModel.setRequest(userId);
+                }
             }
         });
 
@@ -215,7 +280,7 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         }
     }
 
-    private static final String IMAGE_DIRECTORY = "/MyElcom";
+    private static final String IMAGE_DIRECTORY = "/anhdaidien";
     @Override
     @SuppressLint("NewApi")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -290,6 +355,27 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
         return "";
     }
 
+    private boolean saveFile(String fileName) {
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            File path = getExternalStoragePublicDirectory(getString(R.string.sender_id));
+            path.mkdir();
+            File file = new File(path, fileName);
+
+            FileOutputStream stream = new FileOutputStream(file);
+            stream.write(bytes.toByteArray());
+            stream.flush();
+            stream.close();
+
+            MediaScannerConnection.scanFile(this, new String[] {file.toString()}, null, null);
+
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+
     private void uploadAvatar(){
         showProgressDialog();
         RequestBody avatarImage = RequestBody.create(MediaType.parse("image/*"), avatar);
@@ -301,27 +387,51 @@ public class ProfileFavouriteActivity extends BaseActivity<ProfileFavouriteViewM
     @Override
     public void onRequestPermissionsResult(
             int requestCode, String permissions[], int[] grantResults) {
-        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                CropImage.startPickImageActivity(this);
+
+
+       if(isStoragePermissionGranted()){
+           if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE) {
+               if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                   CropImage.startPickImageActivity(this);
+               } else {
+                   Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
+                           .show();
+               }
+           }
+
+           if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+               if (mCropImageUri != null
+                       && grantResults.length > 0
+                       && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                   goToCropActivity(mCropImageUri.getPath());
+
+
+               } else {
+                   Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
+                           .show();
+               }
+           }
+       }
+
+
+       if(requestCode == 999){
+            viewModel.setRequest(userId);
+        }
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
             } else {
-                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
-                        .show();
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
             }
         }
-        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (mCropImageUri != null
-                    && grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                goToCropActivity(mCropImageUri.getPath());
-
-
-            } else {
-                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG)
-                        .show();
-            }
-        } else if(requestCode == 999){
-            viewModel.setRequest(userId);
+        else { //permission is automatically granted on sdk<23 upon installation
+            return true;
         }
     }
 
