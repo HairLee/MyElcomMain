@@ -81,7 +81,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         });
 
 //        makeDialogProgress();
-        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
+//        ProgressDialogUtils.showProgressDialog(getContext(), 0, 0);
         init();
 
         return view;
@@ -103,7 +103,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         contactFavouriteViewModel.getFavouriteContact().observe(this, new Observer<RestData<List<User>>>() {
             @Override
             public void onChanged(@Nullable RestData<List<User>> listRestData) {
-                ProgressDialogUtils.dismissProgressDialog();
+//                ProgressDialogUtils.dismissProgressDialog();
                 if(listRestData != null){
                     contactFavouriteAdapter.setData(listRestData.data);
 //                    rotation.cancel();
