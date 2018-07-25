@@ -8,7 +8,7 @@
 
         <variable
             name="newsnormal"
-            type="com.elcom.hailpt.model.api.response.NewsNormal" />
+            type="com.elcom.myelcom.model.api.response.NewsNormal" />
     </data>
 
 

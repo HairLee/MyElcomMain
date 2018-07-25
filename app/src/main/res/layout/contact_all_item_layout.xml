@@ -6,7 +6,7 @@
     <data>
         <variable
             name="contact"
-            type="com.elcom.hailpt.model.api.response.Contact" />
+            type="com.elcom.myelcom.model.api.response.Contact" />
     </data>
 
 <android.support.constraint.ConstraintLayout

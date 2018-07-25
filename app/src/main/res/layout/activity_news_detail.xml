@@ -48,7 +48,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:context="com.elcom.hailpt.view.ui.fragment.news.NewsDetailActivity">
+                    tools:context="com.elcom.myelcom.view.ui.fragment.news.NewsDetailActivity">
                         <TextView
                             android:textSize="14sp"
                             android:textColor="#72A6F9"

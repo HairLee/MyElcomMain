@@ -8,7 +8,7 @@
 
         <variable
             name="contactSuggest"
-            type="com.elcom.hailpt.model.api.response.ContactSuggest" />
+            type="com.elcom.myelcom.model.api.response.ContactSuggest" />
     </data>
 
 <android.support.constraint.ConstraintLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="article"
-            type="com.elcom.hailpt.model.data.Article" />
+            type="com.elcom.myelcom.model.data.Article" />
     </data>
 
     <android.support.v4.widget.NestedScrollView

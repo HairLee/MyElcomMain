@@ -7,7 +7,7 @@
 
         <variable
             name="notification"
-            type="com.elcom.hailpt.model.api.response.Notification" />
+            type="com.elcom.myelcom.model.api.response.Notification" />
     </data>
 
     <android.support.constraint.ConstraintLayout

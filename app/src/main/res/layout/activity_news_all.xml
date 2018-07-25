@@ -8,7 +8,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.elcom.hailpt.view.ui.fragment.news.NewsAllActivity">
+        tools:context="com.elcom.myelcom.view.ui.fragment.news.NewsAllActivity">
 
         <!--<include layout="@layout/myelcom_header_item" />-->
         <RelativeLayout android:layout_width="match_parent"

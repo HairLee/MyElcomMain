@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.elcom.hailpt">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.elcom.myelcom">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
@@ -9,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"  tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -21,35 +22,35 @@
         android:required="true" />
 
     <application
-        android:name=".AApp"
+        android:name="com.elcom.myelcom.AApp"
         android:allowBackup="true"
         android:icon="@drawable/logo_ic"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme.Base">
-        <activity android:name=".view.ui.activity.SplashActivity">
+        <activity android:name="com.elcom.myelcom.view.ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ui.SourcesActivity" />
-        <activity android:name=".view.ui.DetailActivity" />
+        <activity android:name="com.elcom.myelcom.view.ui.SourcesActivity" />
+        <activity android:name="com.elcom.myelcom.view.ui.DetailActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".view.ui.MainActivity" />
+        <activity android:name="com.elcom.myelcom.view.ui.MainActivity" />
         <activity
-            android:name=".view.ui.HomeActivity"
+            android:name="com.elcom.myelcom.view.ui.HomeActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <service android:name=".services.CallService" />
+        <service android:name="com.elcom.myelcom.services.CallService" />
 
         <meta-data
             android:name="com.quickblox.messages.TYPE"
@@ -65,61 +66,61 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".view.ui.CallActivity"
+            android:name="com.elcom.myelcom.view.ui.CallActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyCallThemes" />
         <activity
-            android:name=".view.ui.PermissionsActivity"
+            android:name="com.elcom.myelcom.view.ui.PermissionsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.AllFriendQuickBloxActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.AllFriendQuickBloxActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.TimeKeepingActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.TimeKeepingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.OpponentsActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.OpponentsActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".view.ui.activity.LunchRegistrationActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.LunchRegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".view.ui.activity.ProfileActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.ProfileFavouriteActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.ProfileFavouriteActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.SettingActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.SettingChangePwActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.SettingChangePwActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.NotificationActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.NotificationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.LoginActivity"
+            android:name="com.elcom.myelcom.view.ui.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.ForgetPasswordActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.CropImageActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.CropImageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.LunchCalendarRegisActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.LunchCalendarRegisActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".view.ui.activity.ForgetPaswordSuccessfullyActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.ForgetPaswordSuccessfullyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.ui.activity.UpdateMobileActivity"
+            android:name="com.elcom.myelcom.view.ui.activity.UpdateMobileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent"
             android:windowSoftInputMode="stateVisible" />
@@ -127,16 +128,16 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
-        <receiver android:name=".view.ui.fragment.HomeFragment$MyReceiver">
-            <intent-filter>
-                <action android:name="BROARD_CHANGE_AVATAR" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name="com.elcom.myelcom.view.ui.fragment.HomeFragment$MyReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="BROARD_CHANGE_AVATAR" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <activity
             android:screenOrientation="portrait"
-            android:name=".view.ui.fragment.news.NewsAllActivity" />
-        <activity android:name=".view.ui.fragment.news.NewsDetailActivity"
+            android:name="com.elcom.myelcom.view.ui.fragment.news.NewsAllActivity" />
+        <activity android:name="com.elcom.myelcom.view.ui.fragment.news.NewsDetailActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
             />

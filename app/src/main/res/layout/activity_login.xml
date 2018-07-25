@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.elcom.hailpt.view.ui.LoginActivity">
+    tools:context="com.elcom.myelcom.view.ui.LoginActivity">
 
     <ImageView
         android:src="@drawable/logo_icon"
@@ -18,29 +18,32 @@
 
 
     <EditText
+        android:textSize="15sp"
+        android:hint="Tên đăng nhập"
         android:textColor="#54586B"
         android:paddingLeft="10dp"
         android:layout_marginTop="70dp"
         android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
         android:id="@+id/edtUsername"
-        android:text="hailt@elcom.com.vn"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_width="match_parent"
         android:layout_height="40dp" />
     <EditText
+        android:textSize="15sp"
+        android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:textColor="#54586B"
         android:paddingLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/radius_edittext_white_bg_gray_srtoke_layout"
         android:id="@+id/edtPw"
-        android:text="12345678"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_width="match_parent"
         android:layout_height="40dp" />
     <TextView
+        android:textSize="14sp"
         android:id="@+id/tvForgetPw"
         android:textColor="#3B71BC"
         android:layout_marginTop="10dp"

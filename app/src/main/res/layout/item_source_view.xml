@@ -7,7 +7,7 @@
 
         <variable
             name="source"
-            type="com.elcom.hailpt.model.data.Source" />
+            type="com.elcom.myelcom.model.data.Source" />
     </data>
 
     <android.support.constraint.ConstraintLayout

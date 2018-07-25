@@ -7,7 +7,7 @@
 
         <variable
             name="comment"
-            type="com.elcom.hailpt.model.api.response.Comment" />
+            type="com.elcom.myelcom.model.api.response.Comment" />
     </data>
     <LinearLayout
         android:orientation="vertical"

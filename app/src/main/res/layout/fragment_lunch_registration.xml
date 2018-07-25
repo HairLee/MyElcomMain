@@ -7,17 +7,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.elcom.hailpt.view.ui.fragment.LunchRegistrationFragment">
+    tools:context="com.elcom.myelcom.view.ui.fragment.LunchRegistrationFragment">
 
 
 
 
     <!-- TODO: Update blank fragment layout -->
-    <com.elcom.hailpt.view.custom.LunchFragmentCalendarView
+    <com.elcom.myelcom.view.custom.LunchFragmentCalendarView
         android:id="@+id/lunchFragmentCalendarView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </com.elcom.hailpt.view.custom.LunchFragmentCalendarView>
+    </com.elcom.myelcom.view.custom.LunchFragmentCalendarView>
 
     <View
         android:layout_marginTop="10dp"
@@ -25,12 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp" />
 
-    <com.elcom.hailpt.view.custom.LunchRegistrationContentView
+    <com.elcom.myelcom.view.custom.LunchRegistrationContentView
         android:id="@+id/lunchRegistrationContentView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    </com.elcom.hailpt.view.custom.LunchRegistrationContentView>
+    </com.elcom.myelcom.view.custom.LunchRegistrationContentView>
 
 </LinearLayout>
 </ScrollView>

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="TimeKeep"
-            type="com.elcom.hailpt.model.data.TimeKeep"/>
+            type="com.elcom.myelcom.model.data.TimeKeep"/>
     </data>
 
     <LinearLayout
