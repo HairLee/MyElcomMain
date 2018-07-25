@@ -17,6 +17,7 @@ public class ArtistViewHolder extends ChildViewHolder {
   private TextView childTextView;
   private ImageView imageView3, imageView4,imvAva,imageView16;
   private AllContactFragmentListener allContactFragmentListener;
+
   private User user;
   public ArtistViewHolder(View itemView) {
     super(itemView);

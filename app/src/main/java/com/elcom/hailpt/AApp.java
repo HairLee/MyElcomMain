@@ -8,6 +8,7 @@ import com.elcom.hailpt.model.data.QbConfigs;
 import com.elcom.hailpt.util.FontsOverride;
 import com.elcom.hailpt.util.QBResRequestExecutor;
 import com.elcom.hailpt.util.configs.CoreConfigUtils;
+import com.onesignal.OneSignal;
 import com.quickblox.auth.session.QBSession;
 import com.quickblox.auth.session.QBSessionManager;
 import com.quickblox.auth.session.QBSessionParameters;
@@ -38,11 +39,21 @@ public class AApp extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        initSignal();
         setupFont();
         initApplication();
         initQBSessionManager();
         initQbConfigs();
         initCredentials();
+    }
+
+    private void initSignal(){
+
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
     }
 
     private void setupFont(){

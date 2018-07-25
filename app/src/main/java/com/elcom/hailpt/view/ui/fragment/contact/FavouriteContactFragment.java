@@ -69,7 +69,7 @@ public class FavouriteContactFragment extends BaseFragment<ContactFavouriteViewM
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favourite_contact, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        contactFavouriteAdapter = new ContactFavouriteAdapter();
+        contactFavouriteAdapter = new ContactFavouriteAdapter(getContext());
         contactFavouriteAdapter.setChatAndCallListener(this);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
         recyclerView.setAdapter(contactFavouriteAdapter);

@@ -1,5 +1,6 @@
 package com.elcom.hailpt.view.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.elcom.hailpt.BR;
 import com.elcom.hailpt.R;
 import com.elcom.hailpt.core.listener.ChatAndCallListener;
@@ -19,6 +21,8 @@ import com.elcom.hailpt.model.data.Article;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author ihsan on 12/19/17.
@@ -30,12 +34,14 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
     private List<User> usertList;
     private ItemSelectedListener listener;
     private ChatAndCallListener chatAndCallListener;
-
+    private Context context;
+    private CircleImageView circleImageView;
     public ContactFavouriteAdapter(List<User> data) {
         this.data = data;
     }
 
-    public ContactFavouriteAdapter() {
+    public ContactFavouriteAdapter(Context context) {
+        this.context = context;
         data = new ArrayList<>();
         usertList = new ArrayList<>();
     }
@@ -140,6 +146,7 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
             imvCall.setOnClickListener(v -> chatAndCallListener.doCall(data));
 
             ImageView imvChat =  binding.getRoot().findViewById(R.id.imageView4);
+            CircleImageView imvAva =  binding.getRoot().findViewById(R.id.imageView2);
             imvChat.setOnClickListener(v -> chatAndCallListener.doChat(data));
 
             ImageView imageView15 = binding.getRoot().findViewById(R.id.imageView15);
@@ -148,6 +155,14 @@ public class ContactFavouriteAdapter extends RecyclerView.Adapter<ContactFavouri
                 imageView15.setVisibility(View.VISIBLE);
             } else {
                 imageView15.setVisibility(View.GONE);
+            }
+
+            if (data.getAvatar() != null){
+                Glide.with(context).load(data.getAvatar())
+                        .thumbnail(0.5f)
+                        .into(imvAva);
+            } else {
+                imvAva.setImageResource(R.drawable.defaul_ava);
             }
 
         }

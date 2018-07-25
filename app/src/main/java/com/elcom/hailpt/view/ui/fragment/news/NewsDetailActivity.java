@@ -22,10 +22,12 @@ import com.elcom.hailpt.model.api.request.SendCommentReq;
 import com.elcom.hailpt.model.api.response.Comment;
 import com.elcom.hailpt.model.api.response.News;
 import com.elcom.hailpt.util.Consts;
+import com.elcom.hailpt.util.KeyBoardUtils;
 import com.elcom.hailpt.view.adapter.CommentAdapter;
 import com.elcom.hailpt.view.adapter.ElcomNewsChildBottomAdapter;
 import com.elcom.hailpt.viewmodel.NewsDetailViewModel;
 import com.google.gson.JsonElement;
+import com.onesignal.OneSignal;
 
 import java.util.List;
 
@@ -65,13 +67,13 @@ public class NewsDetailActivity extends BaseActivity<NewsDetailViewModel,Activit
             }
         });
 
-        newsDetailViewModel.sendComment().observe(this, new Observer<RestData<JsonElement>>() {
-            @Override
-            public void onChanged(@Nullable RestData<JsonElement> jsonElementRestData) {
-                if (jsonElementRestData.status_code == 200){
-                    activityNewsDetailBinding.edtComment.setText("");
-                    getData();
-                }
+        newsDetailViewModel.sendComment().observe(this, jsonElementRestData -> {
+            if (jsonElementRestData.status_code == 200){
+                activityNewsDetailBinding.edtComment.setText("");
+                KeyBoardUtils.hideKeyboard(NewsDetailActivity.this);
+                getData();
+
+
             }
         });
 

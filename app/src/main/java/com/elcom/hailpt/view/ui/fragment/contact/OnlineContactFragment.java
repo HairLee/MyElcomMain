@@ -45,7 +45,7 @@ public class OnlineContactFragment extends BaseFragment<ContactOnlineViewModel> 
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_online_contact, container, false);
-        contactFavouriteAdapter = new ContactFavouriteAdapter();
+        contactFavouriteAdapter = new ContactFavouriteAdapter(getContext());
         contactFavouriteAdapter.setChatAndCallListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, OrientationHelper.VERTICAL));
