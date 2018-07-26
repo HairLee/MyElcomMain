@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def buildVersionCode = new Date().format("yyMMddHHmm", TimeZone.getTimeZone("Europe/Istanbul")).toInteger()
-def buildVersionName = "1.0.2"
+def buildVersionName = "1.0.3"
 
 buildscript {
     repositories {

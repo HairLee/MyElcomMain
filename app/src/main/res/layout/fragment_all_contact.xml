@@ -19,7 +19,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:listitem="@layout/contact_all_suggest_item_layout" />
-
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
         <android.support.v7.widget.RecyclerView
             android:visibility="visible"
             android:id="@+id/recyclerViewBottom"
@@ -30,6 +33,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+</android.support.v4.widget.SwipeRefreshLayout>
+
         <ImageView
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"

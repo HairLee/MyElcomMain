@@ -61,7 +61,7 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
         recyclerViewBottom = view.findViewById(R.id.recyclerViewBottom);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_blue_accent));
-        swipeRefreshLayout.setOnRefreshListener(() -> newsViewModel.setNewsRequest());
+        swipeRefreshLayout.setOnRefreshListener(() ->  getData());
     }
 
     @Override
@@ -72,11 +72,16 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
     @Override
     protected void onCreate(Bundle instance, NewsViewModel viewModel) {
         newsViewModel = viewModel;
+        getData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+    }
+
+    private void getData(){
         newsViewModel.getNews().observe(this, new Observer<RestData<NewsRes>>() {
             @Override
             public void onChanged(@Nullable RestData<NewsRes> newsResRestData) {
@@ -89,6 +94,7 @@ public class NewsFragment extends BaseFragment<NewsViewModel> implements ElcomNe
         });
 
         newsViewModel.setNewsRequest();
+
     }
 
     private void setupRecyclerViewTop(List<News> news){

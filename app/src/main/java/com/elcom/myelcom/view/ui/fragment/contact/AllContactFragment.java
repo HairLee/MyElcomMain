@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -67,7 +70,7 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     private   RecyclerView recyclerView;
     private ImageView imvLoading;
     private User user;
-
+    private SwipeRefreshLayout swipeRefreshLayout;
     private QbUsersDbManager dbManager;
     private PermissionsChecker checker;
     public AllContactFragment() {
@@ -120,13 +123,23 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     protected void onCreate(Bundle instance, AllContactSuggestViewModel viewModel) {
         checker = new PermissionsChecker(getContext());
         allContactSuggestViewModel = viewModel;
-
+        getData();
     }
 
-
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.color_blue_accent));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
+    }
+
+    private void getData(){
         allContactSuggestViewModel.getAllContactSuggest().observe(this, contactSuggestRestData -> {
             Log.e("hailpt"," AllContactFragment onCreate ");
             if(contactSuggestRestData != null){
@@ -135,16 +148,23 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
         });
 
         allContactSuggestViewModel.getAllContact().observe(this, listRestData -> {
-//            allContactAdaprer.setData(listRestData.data);
-//            hideProgressDialog();
+            swipeRefreshLayout.setRefreshing(false);
             contacts = listRestData.data;
+
             imvLoading.setVisibility(View.GONE);
             setupViewTest();
-//            ProgressDialogUtils.dismissProgressDialog();
+
         });
 
 
         allContactSuggestViewModel.setAllContactrequest();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     private void setupViewTest(){
