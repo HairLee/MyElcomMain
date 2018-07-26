@@ -120,6 +120,13 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
     protected void onCreate(Bundle instance, AllContactSuggestViewModel viewModel) {
         checker = new PermissionsChecker(getContext());
         allContactSuggestViewModel = viewModel;
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
         allContactSuggestViewModel.getAllContactSuggest().observe(this, contactSuggestRestData -> {
             Log.e("hailpt"," AllContactFragment onCreate ");
             if(contactSuggestRestData != null){
@@ -131,7 +138,6 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 //            allContactAdaprer.setData(listRestData.data);
 //            hideProgressDialog();
             contacts = listRestData.data;
-//            rotation.cancel();
             imvLoading.setVisibility(View.GONE);
             setupViewTest();
 //            ProgressDialogUtils.dismissProgressDialog();
@@ -140,7 +146,6 @@ public class AllContactFragment extends BaseFragment<AllContactSuggestViewModel>
 
         allContactSuggestViewModel.setAllContactrequest();
     }
-
 
     private void setupViewTest(){
 

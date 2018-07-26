@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 def buildVersionCode = new Date().format("yyMMddHHmm", TimeZone.getTimeZone("Europe/Istanbul")).toInteger()
-def buildVersionName = "1.0.1"
+def buildVersionName = "1.0.2"
 
 buildscript {
     repositories {
@@ -43,7 +43,6 @@ android {
         versionName buildVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_KEY", "\"" + API_KEY + "\"")
-        buildConfigField("String", "END_POINT", "\"https://newsapi.org/v2/\"")
         multiDexEnabled true
     }
 
@@ -54,10 +53,10 @@ android {
     buildTypes {
         release {
             postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                obfuscate true
-                optimizeCode true
+//                removeUnusedCode true
+//                removeUnusedResources true
+//                obfuscate true
+//                optimizeCode true
                 proguardFile 'proguard-rules.pro'
             }
         }
