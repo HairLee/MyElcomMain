@@ -35,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-
             <TextView
                 android:layout_marginTop="5dp"
                 android:id="@+id/tvMonth"
@@ -43,11 +42,9 @@
                 android:textColor="#54586B"
                 android:textSize="17sp"
                 android:gravity="center"
-                android:text="Tháng "
+                android:text=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-
 
 
         <LinearLayout
