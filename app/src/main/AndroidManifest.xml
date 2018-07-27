@@ -52,6 +52,17 @@
 
         <service android:name="com.elcom.myelcom.services.CallService" />
 
+        <service
+            android:name=".services.NotificationExtenderOneSignal"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.onesignal.NotificationExtender" />
+            </intent-filter>
+        </service>
+
+
+
         <meta-data
             android:name="com.quickblox.messages.TYPE"
             android:value="GCM" />
