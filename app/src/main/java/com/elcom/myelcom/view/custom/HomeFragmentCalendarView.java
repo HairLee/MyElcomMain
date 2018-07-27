@@ -162,11 +162,14 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
         this.timeKeeps = pTimeKeeps;
         Gson gson = new Gson();
         String json = gson.toJson(timeKeeps.get(0));
-        Log.e("hailpt"," HomeFragmentCalendarView "+json);
+        Log.e("hailpt"," HomeFragmentCalendarView getStatus_checkin "+pTimeKeeps.get(currentPosDay).getStatus_checkin());
 
         if(pTimeKeeps != null){
             for (int i = 0; i < timeKeeps.size(); i++) {
-                if(timeKeeps.get(i).getCheckIn().equals("")){
+                TimeKeep timeKeep = timeKeeps.get(i);
+                int statusCheckin = timeKeep.getStatus_checkin();
+
+                if(statusCheckin == 0){
                     if (timeKeeps.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                         textViewList.get(i).setBackgroundResource(R.drawable.today_choose_late);
                     } else {
@@ -174,17 +177,14 @@ public class HomeFragmentCalendarView extends RelativeLayout implements View.OnC
                     }
                 } else {
 
-                    int timeCheckIn = Integer.parseInt(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").subSequence(1,2).toString());
-                    String time = textViewList.get(i).getText().toString();
-
-                    if((timeCheckIn < 8 && !DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("PM") ) || DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeeps.get(i).getCheckIn())*1000)+"").contains("08:00:00 AM") ){
+                    if(statusCheckin == 1 ){
                         if (timeKeeps.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                             textViewList.get(i).setBackgroundResource(R.drawable.today_choosed_ic);
                         } else {
                             textViewList.get(i).setBackgroundResource(R.drawable.shape_oval_green);
                         }
 
-                    } else {
+                    } else if(statusCheckin == 2) {
 
                         if (timeKeeps.get(i).getDate().equals(DateTimeUtils.getToDayDateTimeFormat())){
                             textViewList.get(i).setBackgroundResource(R.drawable.late_calendar_ic);

@@ -187,12 +187,12 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
     private void changeColorOfMonth(String month){
 
         for (int i = 0; i < monthList.size(); i++) {
-           if (monthList.get(i).getText().equals(month)){
-               monthList.get(i).setTextColor(getResources().getColor(R.color.color_blue_qb));
+            if (monthList.get(i).getText().equals(month)){
+                monthList.get(i).setTextColor(getResources().getColor(R.color.color_blue_qb));
 //               monthList.get(i).setTypeface(null, Typeface.BOLD);
-           } else {
-               monthList.get(i).setTextColor(getResources().getColor(R.color.color_monthText));
-           }
+            } else {
+                monthList.get(i).setTextColor(getResources().getColor(R.color.color_monthText));
+            }
         }
 
     }
@@ -231,25 +231,22 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         String json = gson.toJson(timeKeep);
         Log.e("hailpt"," TimeKeepingRepository HomeFragmentCheckTimeView "+json);
         rlLate.setVisibility(GONE);
+
         if(!timeKeep.getCheckIn().equals("")){
             tvCheckIn.setText(DateTimeUtils.convertLongToTimeDate((Long.parseLong(timeKeep.getCheckIn())*1000)+""));
 
-            int timeCheckIn = Integer.parseInt(tvCheckIn.getText().subSequence(1,2).toString());
-            String time = tvCheckIn.getText().toString();
-
-            if((time.startsWith("0") && timeCheckIn < 8 && !time.contains("PM")) || time.equals("08:00:00 AM")){
+            if(timeKeep.getStatus_checkin() == 1){
                 tvToday.setText("Đúng giờ");
                 tvToday.setTextColor(getResources().getColor(R.color.onTime));
-            } else {
+            } else if (timeKeep.getStatus_checkin() == 2){
                 tvToday.setText("Đi muộn");
                 rlLate.setVisibility(VISIBLE);
                 tvToday.setTextColor(getResources().getColor(R.color.late));
+            } else {
+                tvToday.setText("Vắng mặt");
+                tvToday.setTextColor(getResources().getColor(R.color.lost));
+                tvCheckIn.setText("--:--");
             }
-
-        } else {
-            tvToday.setText("Vắng mặt");
-            tvToday.setTextColor(getResources().getColor(R.color.lost));
-            tvCheckIn.setText("--:--");
         }
 
         if(!timeKeep.getCheckOut().equals("")){
@@ -265,17 +262,17 @@ public class HomeFragmentCheckTimeView extends RelativeLayout implements View.On
         }
 
         //If tomorrow
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date strDate = null;
-            try {
-                strDate = sdf.parse(timeKeep.getDate());
-                if (System.currentTimeMillis() < strDate.getTime()) {
-                    tvToday.setText("Ngày mai");
-                    tvToday.setTextColor(getResources().getColor(R.color.onTime));
-                }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date strDate = null;
+        try {
+            strDate = sdf.parse(timeKeep.getDate());
+            if (System.currentTimeMillis() < strDate.getTime()) {
+                tvToday.setText("Ngày mai");
+                tvToday.setTextColor(getResources().getColor(R.color.onTime));
+            }
 
-            } catch (ParseException e) {
-                e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

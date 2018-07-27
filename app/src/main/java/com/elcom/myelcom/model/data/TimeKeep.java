@@ -17,9 +17,22 @@ public class TimeKeep {
     @SerializedName("check-out")
     @Expose
     private String checkOut;
+
     @SerializedName("statistic")
     @Expose
     private Statistic statistic;
+
+    @SerializedName("status_checkin")
+    @Expose
+    private int status_checkin;
+
+    public int getStatus_checkin() {
+        return status_checkin;
+    }
+
+    public void setStatus_checkin(int status_checkin) {
+        this.status_checkin = status_checkin;
+    }
 
     public String getDate() {
         return date;
